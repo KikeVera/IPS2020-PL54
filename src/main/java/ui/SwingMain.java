@@ -1,0 +1,95 @@
+package ui;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import util.Database;
+
+import javax.swing.JButton;
+import java.awt.GridLayout;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class SwingMain extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6725140802751372778L;
+	
+	private JPanel panelPrincipal;
+	private JButton btnLanzarAplicacion;
+	private JButton btnCrearBD;
+	private JButton btnCargarDatosBD;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					SwingMain frame = new SwingMain();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public SwingMain() {
+		setTitle("Pantalla inicial");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 608, 398);
+		panelPrincipal = new JPanel();
+		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(panelPrincipal);
+		panelPrincipal.setLayout(new GridLayout(3, 2, 0, 0));
+		panelPrincipal.add(getBtnLanzarAplicacion());
+		panelPrincipal.add(getBtnCargarDatosBD());
+		panelPrincipal.add(getBtnCrearBD());
+	}
+
+	private JButton getBtnLanzarAplicacion() {
+		if (btnLanzarAplicacion == null) {
+			btnLanzarAplicacion = new JButton("Iniciar la aplicacion");
+			btnLanzarAplicacion.setFont(new Font("Tahoma", Font.BOLD, 20));
+		}
+		return btnLanzarAplicacion;
+	}
+	private JButton getBtnCrearBD() {
+		if (btnCrearBD == null) {
+			btnCrearBD = new JButton("Crear la base de datos");
+			btnCrearBD.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Database db=new Database();
+					db.createDatabase(false);
+					db.loadDatabase();
+				}
+			});
+			btnCrearBD.setFont(new Font("Tahoma", Font.BOLD, 20));
+		}
+		return btnCrearBD;
+	}
+	private JButton getBtnCargarDatosBD() {
+		if (btnCargarDatosBD == null) {
+			btnCargarDatosBD = new JButton("Cargar datos de la base de datos");
+			btnCargarDatosBD.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Database db=new Database();
+					db.createDatabase(false);
+				}
+			});
+			btnCargarDatosBD.setFont(new Font("Tahoma", Font.BOLD, 20));
+		}
+		return btnCargarDatosBD;
+	}
+}
