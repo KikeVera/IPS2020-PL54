@@ -8,6 +8,15 @@ public class ProductoEntity {
 	private String descripcion;
 	private Double precio;
 	
+	public ProductoEntity() {}
+	
+	public ProductoEntity(String rowId, String rowNombre, String rowDescripcion, Double rowPrecio) {
+		this.id = rowId;
+		this.nombre = rowNombre;
+		this.descripcion = rowDescripcion;
+		this.precio = rowPrecio; 
+	}
+
 	public String getId() { return this.id; }
 	public String getNombre() { return this.nombre; }
 	public String getDescripcion() { return this.descripcion; }

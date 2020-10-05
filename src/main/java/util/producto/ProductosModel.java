@@ -11,8 +11,8 @@ public class ProductosModel {
 	
 	private Database db=new Database();
 
-	public List<Object[]> getPedidosArray() {
+	public List<ProductoEntity> getListaProductos() {
 		String sql = SQL_LISTA_PRODUCTOS;
-		return db.executeQueryArray(sql);
+		return db.executeQueryPojo(ProductoEntity.class, sql); 
 	}
 }

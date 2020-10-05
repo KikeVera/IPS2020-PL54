@@ -7,6 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import util.database.Database;
+import util.producto.ProductosController;
+import util.producto.ProductosModel;
+import util.producto.ProductosView;
 
 import javax.swing.JButton;
 import java.awt.GridLayout;
@@ -97,6 +100,12 @@ public class SwingMain extends JFrame {
 	private JButton getBtnLanzarPaginaWeb() {
 		if (btnLanzarPaginaWeb == null) {
 			btnLanzarPaginaWeb = new JButton("Iniciar la pagina web");
+			btnLanzarPaginaWeb.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ProductosController controller = new ProductosController(new ProductosModel(), new ProductosView());
+					controller.initController();
+				}
+			});
 			btnLanzarPaginaWeb.setFont(new Font("Tahoma", Font.BOLD, 20));
 		}
 		return btnLanzarPaginaWeb;
