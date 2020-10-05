@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import util.Database;
+import util.database.Database;
 
 import javax.swing.JButton;
 import java.awt.GridLayout;
@@ -22,9 +22,10 @@ public class SwingMain extends JFrame {
 	private static final long serialVersionUID = 6725140802751372778L;
 	
 	private JPanel panelPrincipal;
-	private JButton btnLanzarAplicacion;
+	private JButton btnLanzarAplicacionAlmacen;
 	private JButton btnCrearBD;
 	private JButton btnCargarDatosBD;
+	private JButton btnLanzarPaginaWeb;
 
 	/**
 	 * Launch the application.
@@ -48,22 +49,23 @@ public class SwingMain extends JFrame {
 	public SwingMain() {
 		setTitle("Pantalla inicial");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 608, 398);
+		setBounds(100, 100, 660, 473);
 		panelPrincipal = new JPanel();
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelPrincipal);
-		panelPrincipal.setLayout(new GridLayout(3, 2, 0, 0));
-		panelPrincipal.add(getBtnLanzarAplicacion());
+		panelPrincipal.setLayout(new GridLayout(4, 2, 0, 0));
+		panelPrincipal.add(getBtnLanzarPaginaWeb());
+		panelPrincipal.add(getBtnLanzarAplicacionAlmacen());
 		panelPrincipal.add(getBtnCargarDatosBD());
 		panelPrincipal.add(getBtnCrearBD());
 	}
 
-	private JButton getBtnLanzarAplicacion() {
-		if (btnLanzarAplicacion == null) {
-			btnLanzarAplicacion = new JButton("Iniciar la aplicacion");
-			btnLanzarAplicacion.setFont(new Font("Tahoma", Font.BOLD, 20));
+	private JButton getBtnLanzarAplicacionAlmacen() {
+		if (btnLanzarAplicacionAlmacen == null) {
+			btnLanzarAplicacionAlmacen = new JButton("Iniciar la aplicacion del almacen");
+			btnLanzarAplicacionAlmacen.setFont(new Font("Tahoma", Font.BOLD, 20));
 		}
-		return btnLanzarAplicacion;
+		return btnLanzarAplicacionAlmacen;
 	}
 	private JButton getBtnCrearBD() {
 		if (btnCrearBD == null) {
@@ -91,5 +93,12 @@ public class SwingMain extends JFrame {
 			btnCargarDatosBD.setFont(new Font("Tahoma", Font.BOLD, 20));
 		}
 		return btnCargarDatosBD;
+	}
+	private JButton getBtnLanzarPaginaWeb() {
+		if (btnLanzarPaginaWeb == null) {
+			btnLanzarPaginaWeb = new JButton("Iniciar la pagina web");
+			btnLanzarPaginaWeb.setFont(new Font("Tahoma", Font.BOLD, 20));
+		}
+		return btnLanzarPaginaWeb;
 	}
 }

@@ -1,4 +1,4 @@
-package util;
+package util.pedido;
 
 /**
  * Datos del modelo de dominio de cada una de las carreras
@@ -36,8 +36,4 @@ public class PedidoEntity {
 	public void setDescripcion(String value) { this.descripcion=value; }
 	public void setFecha(Double value) { this.precio=value; }
 	
-	//NOTA: se pueden generar getters y setters de forma automatica usando lombok:  
-	//https://www.sitepoint.com/declutter-pojos-with-lombok-tutorial/
-	//http://www.baeldung.com/intro-to-project-lombok
-	//En un fichero con este mismo nombre, pero con extension .txt se muestra un ejemplo
 }

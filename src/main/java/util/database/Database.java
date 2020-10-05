@@ -1,9 +1,11 @@
-package util;
+package util.database;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
 import org.apache.commons.dbutils.DbUtils;
+
+import util.ApplicationException;
 
 /**
  * Encapsula los datos de acceso JDBC, lectura de la configuracion

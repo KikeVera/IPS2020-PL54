@@ -3,7 +3,7 @@ package negocio.almacen;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.PedidoEntity;
+import util.pedido.PedidoEntity;
 
 public class Recogida {
 	
