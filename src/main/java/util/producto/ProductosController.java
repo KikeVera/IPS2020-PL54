@@ -1,5 +1,11 @@
 package util.producto;
 
+import java.util.List;
+
+import javax.swing.table.TableModel;
+
+import util.swingTables.SwingUtil;
+
 public class ProductosController {
 	
 	private ProductosModel model; 
@@ -9,6 +15,16 @@ public class ProductosController {
 	public ProductosController(ProductosModel m, ProductosView v) {
 		this.model = m; 
 		this.view = v; 
+		this.initView();
+	}
+	
+	public void initView() {
+		//Inicializa la fecha de hoy a un valor que permitira mostrar carreras en diferentes fases 
+		//y actualiza los datos de la vista
+		this.getListaProductos();
+		
+		//Abre la ventana (sustituye al main generado por WindowBuilder)
+		view.getFrame().setVisible(true); 
 	}
 	
 	/**
@@ -23,7 +39,16 @@ public class ProductosController {
 	 * La obtencion de la lista de carreras solo necesita obtener la lista de objetos del modelo 
 	 * y usar metodo de SwingUtil para crear un tablemodel que se asigna finalmente a la tabla.
 	 */
-	public void getListaCarreras() {}
+	public void getListaProductos() {
+		List<ProductoEntity> productos = model.getListaProductos();
+		TableModel tmodel=SwingUtil.getTableModelFromPojos(productos, new String[] {"id", "nombre", "descripcion"});
+		view.getTablaProductos().setModel(tmodel);
+		SwingUtil.autoAdjustColumns(view.getTablaProductos());
+		
+		//Como se guarda la clave del ultimo elemento seleccionado, restaura la seleccion de los detalles
+		this.restoreDetail();
+
+	}
 	
 	/**
 	 * Restaura la informacion del detalle de la carrera para visualizar los valores correspondientes
