@@ -15,4 +15,11 @@ public class ProductosModel {
 		String sql = SQL_LISTA_PRODUCTOS;
 		return db.executeQueryPojo(ProductoEntity.class, sql); 
 	}
+	
+	
+	public List<Object[]> getListaProductosObject() {
+		
+		String sql= SQL_LISTA_PRODUCTOS ;
+		return db.executeQueryArray(sql);
+	}
 }
