@@ -7,7 +7,7 @@ import util.database.Database;
 
  
 public class PedidosModel {
-
+//PENDIENTE DE HACER BIEN
 
 	private Database db=new Database();
 	

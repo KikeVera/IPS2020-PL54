@@ -9,6 +9,8 @@ package util.pedido;
  *  - No utilizar subrayados
  * Seguir tambien estos mismos criterios en los nombres de tablas y campos de la BD
  */
+
+//PENDIENTE DE HACER BIEN
 public class PedidoEntity {
 	private String id;
 	private String nombre; //las fechas son string (vienen de sqlite)
