@@ -77,7 +77,7 @@ public class SwingMain extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					Database db=new Database();
 					db.createDatabase(false);
-					db.loadDatabase();
+					
 				}
 			});
 			btnCrearBD.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -90,7 +90,7 @@ public class SwingMain extends JFrame {
 			btnCargarDatosBD.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Database db=new Database();
-					db.createDatabase(false);
+					db.loadDatabase();
 				}
 			});
 			btnCargarDatosBD.setFont(new Font("Tahoma", Font.BOLD, 20));
