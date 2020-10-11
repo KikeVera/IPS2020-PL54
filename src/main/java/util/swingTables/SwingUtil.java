@@ -15,6 +15,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import util.ApplicationException;
 import util.UnexpectedException;
+import util.producto.Carrito;
+import util.producto.ProductoEntity;
 
 /**
  * Metodos de utilidad para interfaces de usuario con swing (poblar tablas a partir de un objeto POJO
@@ -119,6 +121,38 @@ public class SwingUtil {
 		}
 		return tm;
 	}
+	
+	/**
+	 * Devuelve un modelo de tabla pedido a partir de un carrito.
+	 * @param <E>
+	 * @param colProperties Atributos de la tabla
+	 * @param carrito Carrito del que queremos representar el pedido 
+	 * @return Modelo de tabla con ese pedido en concreto
+	 */
+	public static <E> TableModel getTableModelFromPedido(String[] colProperties, Carrito carrito) {
+		// Creacion inicial del tablemodel y dimensionamiento
+		// tener en cuenta que para que la tabla pueda mostrar las columnas debera estar
+		// dentro de un JScrollPane
+		TableModel tm;
+
+		tm = new DefaultTableModel(colProperties, carrito.getPedido().size());
+		int i = 0; 
+		// carga cada uno de los valores de pojos usando PropertyUtils (de apache
+		// coommons beanutils)
+		for (int id : carrito.getPedido().keySet()) {	
+			ProductoEntity producto = carrito.searchProductById(id);
+			String nombre = producto.getNombre();
+			double precio = producto.getPrecio();
+			int ud = carrito.getPedido().get(id); 
+			tm.setValueAt(id, i, 0);
+			tm.setValueAt(nombre, i, 1);
+			tm.setValueAt(precio, i, 2);
+			tm.setValueAt(ud, i, 3);
+			i++; 
+		}
+		return tm;
+	}
+	
 	public static <E> TableModel getRecordModelFromPojo(E pojo, String[] colProperties) {
 		//Creacion inicial del tablemodel y dimensionamiento
 		//como solo habra dos columnas pongo una cabecera con dos valores vacios, de forma que 

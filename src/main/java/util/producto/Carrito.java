@@ -72,7 +72,7 @@ public class Carrito {
 	 * @param id para identificar el producto a buscar 
 	 * @return Producto encontrado o null si no lo encuentra.
 	 */
-	private ProductoEntity searchProductById(int id) {
+	public ProductoEntity searchProductById(int id) {
 		for(ProductoEntity producto : this.catalogo) {
 			if(producto.getId() == id) {
 				return producto; 
@@ -92,5 +92,13 @@ public class Carrito {
 			precio += producto.getPrecio()*this.pedido.get(id);  
 		}
 		return precio; 
+	}
+	
+	/**
+	 * Devuelve el pedido.
+	 * @return Pedido actual
+	 */
+	public HashMap<Integer, Integer> getPedido() {
+		return this.pedido; 
 	}
 }

@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
@@ -27,14 +26,12 @@ import javax.swing.border.LineBorder;
 public class ProductosView {
 	
 	private JFrame frmTiendaOnline;
-	private JTable tabDetalle;
 	private JTable tabProductos;
 	private JScrollPane scrollPedido;
 	private JSpinner spUnidades;
 	private JButton btnAnadir;
 	private JButton btnEliminar;
 	private JButton btnFinalizarPedido;
-	private JTextArea textPedido;
 	private JPanel pnSuperiorIzquirdo;
 	private JLabel lblTabla;
 	private JPanel pnSuperiorDerecho;
@@ -46,6 +43,7 @@ public class ProductosView {
 	private JPanel pnPrecio;
 	private JLabel lblPrecio;
 	private JTextField textPrecio;
+	private JTable tabPedido;
 	
 	/**
 	 * Create the application.
@@ -141,11 +139,10 @@ public class ProductosView {
 		scrollPedido = new JScrollPane((Component) null);
 		pnSuperiorDerecho.add(scrollPedido);
 		
-		textPedido = new JTextArea();
-		textPedido.setEditable(false);
-		scrollPedido.setViewportView(textPedido);
+		tabPedido = new JTable();
+		scrollPedido.setViewportView(tabPedido);
 		
-		lblPedido = new JLabel("Estado actual del pedido:");
+		lblPedido = new JLabel("(USUARIO: 001) Estado actual del pedido:");
 		lblPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnSuperiorDerecho.add(lblPedido, BorderLayout.NORTH);
 		frmTiendaOnline.getContentPane().setLayout(new GridLayout(0, 2, 0, 0));
@@ -161,13 +158,12 @@ public class ProductosView {
 	
 	//Getters y Setters anyadidos para acceso desde el controlador 
 	public JFrame getFrame() { return this.frmTiendaOnline; }
-	public JTable getDetalleCarrera() { return this.tabDetalle; }
-	public JTable getTablaProductos() { return this.tabProductos; }
+	public JTable getTabProductos() { return this.tabProductos; }
 	public JSpinner getSpUnidades() {return this.spUnidades; }
 	public JButton getBtnAnadir() {return this.btnAnadir; }
 	public JButton getBtnEliminar() {return this.btnEliminar; }
 	public JButton getBtnFinalizarPedido() {return this.btnFinalizarPedido; }
-	public JTextArea getTextPedido() { return this.textPedido;}
+	public JTable getTabPedido() { return this.tabPedido;}
 	public JScrollPane getScrollPedido() {return this.scrollPedido;}
 	public JTextField getTextPrecio() { return this.textPrecio;}
 	public JPanel getPnSuperiorDerecho() { return this.pnSuperiorDerecho;}
