@@ -38,6 +38,7 @@ public class SwingMain extends JFrame {
 			public void run() {
 				try {
 					SwingMain frame = new SwingMain();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -103,6 +104,7 @@ public class SwingMain extends JFrame {
 			btnLanzarPaginaWeb.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					ProductosController controller = new ProductosController(new ProductosModel(), new ProductosView());
+					dispose();
 					controller.initController();
 				}
 			});
