@@ -1,5 +1,10 @@
 package util.pedido;
 
+import java.util.Date;
+import java.util.List;
+
+import util.producto.ProductoEntity;
+
 /**
  * Datos del modelo de dominio de cada una de las carreras
  * IMPORTANTE: Cuando se usan los componentes de Apache Commons DbUtils debe
@@ -12,30 +17,45 @@ package util.pedido;
 
 //PENDIENTE DE HACER BIEN
 public class PedidoEntity {
-	private String id;
-	private String nombre; //las fechas son string (vienen de sqlite)
-	private String descripcion;
-	private Double precio;
+	private int id;
+	private String fecha;
+	private int tamaño ;
+	private String productos;
 	
 	public  PedidoEntity() {}
-	public  PedidoEntity( String id,String nombre,String descripcion,Double precio) {
+	public  PedidoEntity( int id,String fecha,int tamaño,String productos) {
 		this.id=id;
-		this.nombre=nombre;
-		this.descripcion=descripcion;
-		this.precio=precio;
+		this.fecha=fecha;
+		this.tamaño=tamaño;
+		this.productos=productos;
 		
 	}
-		
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getFecha() {
+		return fecha;
+	}
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+	public int getTamaño() {
+		return tamaño;
+	}
+	public void setTamaño(int tamaño) {
+		this.tamaño = tamaño;
+	}
+	public String getProductos() {
+		return productos;
+	}
+	public void setProductos(String productos) {
+		this.productos = productos;
+	}
+	
 
-	public String getId() { return this.id; }
-	public String getNombre() { return this.nombre; }
-	public String getDescripcion() { return this.descripcion; }
-	public Double getPrecio() { return this.precio; }
 	
-	
-	public void setId(String value) { this.id=value; }
-	public void setNombre(String value) { this.nombre=value; }
-	public void setDescripcion(String value) { this.descripcion=value; }
-	public void setFecha(Double value) { this.precio=value; }
 	
 }

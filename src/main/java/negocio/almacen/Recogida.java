@@ -3,14 +3,15 @@ package negocio.almacen;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.pedido.PedidoEntity;
+
+import util.producto.ProductoEntity;
 
 public class Recogida {
 	
-	List <PedidoEntity> pedido;
+	List <ProductoEntity> pedido;
 	List <Incidencia> incidencias;
 	
-	public Recogida(List <PedidoEntity> pedido) {
+	public Recogida(List <ProductoEntity> pedido) {
 		this.pedido=pedido;
 		incidencias= new ArrayList<Incidencia>();
 		
@@ -25,7 +26,7 @@ public class Recogida {
 		return incidencias;
 	}
 	
-	public List<PedidoEntity> getPedido(){
+	public List<ProductoEntity> getPedido(){
 		return pedido;
 		
 	}

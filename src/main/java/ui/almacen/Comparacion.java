@@ -2,8 +2,9 @@ package ui.almacen;
 
 
 import java.awt.Color;
-import java.awt.EventQueue;
+
 import java.awt.Font;
+
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -13,8 +14,15 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+
+import util.producto.ProductoEntity;
+
 public class Comparacion extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnNewButton;
 	private JPanel pnPedido;
@@ -28,34 +36,25 @@ public class Comparacion extends JDialog {
 	private JTextField txDescripcion;
 	private JTextField txprecio;
 	private JLabel lbID_1;
-	private JTextField textField;
+	private JTextField txIdAlmacen;
 	private JLabel lbNombre_1;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField txIdNombre;
+	private JTextField txIdDescripccion;
 	private JLabel lbDescripcion_1;
 	private JLabel lblPrecio_1;
-	private JTextField textField_3;
+	private JTextField txIdPrecio;
+	ProductoEntity pPedido; 
+	ProductoEntity pAlmacen;
+	
+	
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Comparacion frame = new Comparacion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public Comparacion() {
+	public Comparacion(ProductoEntity pPedido ,ProductoEntity pAlmacen) {
+		this.pPedido=pPedido;
+		this.pAlmacen=pAlmacen;
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 621, 451);
 		contentPane = new JPanel();
@@ -99,13 +98,13 @@ public class Comparacion extends JDialog {
 			pnAlmacen.setBounds(325, 44, 251, 263);
 			pnAlmacen.setLayout(null);
 			pnAlmacen.add(getLbID_1());
-			pnAlmacen.add(getTextField());
+			pnAlmacen.add(getTxIdAlmacen());
 			pnAlmacen.add(getLbNombre_1());
-			pnAlmacen.add(getTextField_1());
-			pnAlmacen.add(getTextField_2());
+			pnAlmacen.add(getTxIdNombre());
+			pnAlmacen.add(getTxIdDescripccion());
 			pnAlmacen.add(getLbDescripcion_1());
 			pnAlmacen.add(getLblPrecio_1());
-			pnAlmacen.add(getTextField_3());
+			pnAlmacen.add(getTxIdPrecio());
 		}
 		return pnAlmacen;
 	}
@@ -146,6 +145,7 @@ public class Comparacion extends JDialog {
 			txId = new JTextField();
 			txId.setBounds(129, 50, 86, 20);
 			txId.setColumns(10);
+			txId.setText(Integer.toString(pPedido.getId()));
 		}
 		return txId;
 	}
@@ -154,6 +154,7 @@ public class Comparacion extends JDialog {
 			txNombre = new JTextField();
 			txNombre.setColumns(10);
 			txNombre.setBounds(129, 87, 86, 20);
+			txNombre.setText(pPedido.getNombre());
 		}
 		return txNombre;
 	}
@@ -162,6 +163,7 @@ public class Comparacion extends JDialog {
 			txDescripcion = new JTextField();
 			txDescripcion.setColumns(10);
 			txDescripcion.setBounds(129, 127, 86, 20);
+			txDescripcion.setText(pPedido.getDescripcion());
 		}
 		return txDescripcion;
 	}
@@ -170,6 +172,7 @@ public class Comparacion extends JDialog {
 			txprecio = new JTextField();
 			txprecio.setColumns(10);
 			txprecio.setBounds(129, 174, 86, 20);
+			txprecio.setText(Double.toString(pPedido.getPrecio()));
 		}
 		return txprecio;
 	}
@@ -181,13 +184,14 @@ public class Comparacion extends JDialog {
 		}
 		return lbID_1;
 	}
-	private JTextField getTextField() {
-		if (textField == null) {
-			textField = new JTextField();
-			textField.setColumns(10);
-			textField.setBounds(129, 50, 86, 20);
+	private JTextField getTxIdAlmacen() {
+		if (txIdAlmacen == null) {
+			txIdAlmacen = new JTextField();
+			txIdAlmacen.setColumns(10);
+			txIdAlmacen.setBounds(129, 50, 86, 20);
+			txIdAlmacen.setText(Integer.toString(pAlmacen.getId()));
 		}
-		return textField;
+		return txIdAlmacen;
 	}
 	private JLabel getLbNombre_1() {
 		if (lbNombre_1 == null) {
@@ -197,21 +201,23 @@ public class Comparacion extends JDialog {
 		}
 		return lbNombre_1;
 	}
-	private JTextField getTextField_1() {
-		if (textField_1 == null) {
-			textField_1 = new JTextField();
-			textField_1.setColumns(10);
-			textField_1.setBounds(129, 87, 86, 20);
+	private JTextField getTxIdNombre() {
+		if (txIdNombre == null) {
+			txIdNombre = new JTextField();
+			txIdNombre.setColumns(10);
+			txIdNombre.setBounds(129, 87, 86, 20);
+			txIdNombre.setText(pAlmacen.getNombre());
 		}
-		return textField_1;
+		return txIdNombre;
 	}
-	private JTextField getTextField_2() {
-		if (textField_2 == null) {
-			textField_2 = new JTextField();
-			textField_2.setColumns(10);
-			textField_2.setBounds(129, 127, 86, 20);
+	private JTextField getTxIdDescripccion() {
+		if (txIdDescripccion == null) {
+			txIdDescripccion = new JTextField();
+			txIdDescripccion.setColumns(10);
+			txIdDescripccion.setBounds(129, 127, 86, 20);
+			txIdDescripccion.setText(pAlmacen.getDescripcion());
 		}
-		return textField_2;
+		return txIdDescripccion;
 	}
 	private JLabel getLbDescripcion_1() {
 		if (lbDescripcion_1 == null) {
@@ -229,12 +235,13 @@ public class Comparacion extends JDialog {
 		}
 		return lblPrecio_1;
 	}
-	private JTextField getTextField_3() {
-		if (textField_3 == null) {
-			textField_3 = new JTextField();
-			textField_3.setColumns(10);
-			textField_3.setBounds(129, 174, 86, 20);
+	private JTextField getTxIdPrecio() {
+		if (txIdPrecio == null) {
+			txIdPrecio = new JTextField();
+			txIdPrecio.setColumns(10);
+			txIdPrecio.setBounds(129, 174, 86, 20);
+			txIdPrecio.setText(Double.toString(pAlmacen.getPrecio()));
 		}
-		return textField_3;
+		return txIdPrecio;
 	}
 }

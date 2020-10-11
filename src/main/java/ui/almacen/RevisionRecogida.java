@@ -1,25 +1,30 @@
 package ui.almacen;
 
 
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import negocio.almacen.Incidencia;
+
+import negocio.almacen.Recogida;
+import util.producto.ProductoEntity;
+import util.producto.ProductosModel;
 
 import java.awt.Color;
 
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
+
 import javax.swing.JButton;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class RevisionRecogida extends JFrame {
 
@@ -29,31 +34,20 @@ public class RevisionRecogida extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lbPedido;
-	private JComboBox comboBox;
+	private JComboBox <ProductoEntity> cbPedido;
 	private JButton btComprobar;
 	private JButton btSalir;
 	private JButton btIncidencia;
+	private Recogida recogida;
+	private List<ProductoEntity> almacen= new ProductosModel().getListaProductos();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RevisionRecogida frame = new RevisionRecogida();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
 	 */
-	public RevisionRecogida() {
+	public RevisionRecogida(Recogida recogida) {
+		this.recogida=recogida;
 		setBackground(Color.WHITE);
 		setTitle("Revision");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,8 +60,9 @@ public class RevisionRecogida extends JFrame {
 		contentPane.add(getLbPedido());
 		contentPane.add(getBtComprobar());
 		contentPane.add(getBtIncidencia());
-		contentPane.add(getComboBox());
+		contentPane.add(getCbPedido());
 		contentPane.add(getBtSalir());
+		
 	}
 	private JLabel getLbPedido() {
 		if (lbPedido == null) {
@@ -77,20 +72,29 @@ public class RevisionRecogida extends JFrame {
 		}
 		return lbPedido;
 	}
-	private JComboBox  getComboBox() {
-		if (comboBox == null) {
-			comboBox = new JComboBox();
-			comboBox.setBounds(new Rectangle(10, 75, 170, 21));
-			comboBox.setFont(new Font("Arial", Font.PLAIN, 13));
+	private JComboBox <ProductoEntity>  getCbPedido() {
+		if (cbPedido == null) {
+			cbPedido = new JComboBox <ProductoEntity>();
+			cbPedido.setModel(new DefaultComboBoxModel <ProductoEntity>(getPedido()));
+			cbPedido.setBounds(new Rectangle(10, 75, 170, 21));
+			cbPedido.setFont(new Font("Arial", Font.PLAIN, 13));
 		}
-		return comboBox;
+		return cbPedido;
 	}
+	
+	public ProductoEntity[] getPedido(){
+		List<ProductoEntity> listaProductos= recogida.getPedido();
+		ProductoEntity[] arrayProductos= new ProductoEntity[listaProductos.size()];
+		return listaProductos.toArray(arrayProductos);
+		
+	}
+	
 	private JButton getBtComprobar() {
 		if (btComprobar == null) {
 			btComprobar = new JButton("Comprobar");
 			btComprobar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Comparacion c = new Comparacion();
+					Comparacion c = new Comparacion(getPPedido(),getPAlmacen());
 					c.setModal(true);
 					c.setVisible(true);
 				}
@@ -100,6 +104,21 @@ public class RevisionRecogida extends JFrame {
 		}
 		return btComprobar;
 	}
+	
+	private ProductoEntity getPPedido() {
+		return (ProductoEntity) cbPedido.getSelectedItem();
+		
+	}
+	
+	private ProductoEntity getPAlmacen() {
+		for(ProductoEntity producto: almacen) {
+			if(producto.getId()==getPPedido().getId()) {
+				return producto;
+			}
+		}
+		return new ProductoEntity(0,"Producto no encontrado","",0);
+	}
+	
 	private JButton getBtSalir() {
 		if (btSalir == null) {
 			btSalir = new JButton("Salir");
@@ -113,7 +132,7 @@ public class RevisionRecogida extends JFrame {
 			btIncidencia = new JButton("Incidencia");
 			btIncidencia.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					IncidenciaUI i = new IncidenciaUI();
+					IncidenciaUI i = new IncidenciaUI(recogida);
 					i.setModal(true);
 					i.setVisible(true);
 				}
