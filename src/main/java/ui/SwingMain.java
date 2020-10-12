@@ -7,6 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import util.database.Database;
+import util.pedido.AlmacenController;
+import util.pedido.AlmacenView;
+import util.pedido.PedidosModel;
 import util.producto.ProductosController;
 import util.producto.ProductosModel;
 import util.producto.ProductosView;
@@ -67,6 +70,13 @@ public class SwingMain extends JFrame {
 	private JButton getBtnLanzarAplicacionAlmacen() {
 		if (btnLanzarAplicacionAlmacen == null) {
 			btnLanzarAplicacionAlmacen = new JButton("Iniciar la aplicacion del almacen");
+			btnLanzarAplicacionAlmacen.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel());
+					dispose();
+					controller.initController();
+				}
+			});
 			btnLanzarAplicacionAlmacen.setFont(new Font("Tahoma", Font.BOLD, 20));
 		}
 		return btnLanzarAplicacionAlmacen;
@@ -103,7 +113,7 @@ public class SwingMain extends JFrame {
 			btnLanzarPaginaWeb = new JButton("Iniciar la pagina web");
 			btnLanzarPaginaWeb.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					ProductosController controller = new ProductosController(new ProductosModel(), new ProductosView());
+					ProductosController controller = new ProductosController(new ProductosModel(), new ProductosView(),new PedidosModel());
 					dispose();
 					controller.initController();
 				}

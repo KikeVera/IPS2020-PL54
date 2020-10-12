@@ -54,6 +54,8 @@ public class Carrito {
 		}
 	}
 	
+	
+	
 	/**
 	 * Representa el pedido actual con una cadena.
 	 */

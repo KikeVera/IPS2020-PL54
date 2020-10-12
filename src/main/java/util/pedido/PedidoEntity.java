@@ -1,9 +1,6 @@
 package util.pedido;
 
-import java.util.Date;
-import java.util.List;
 
-import util.producto.ProductoEntity;
 
 /**
  * Datos del modelo de dominio de cada una de las carreras

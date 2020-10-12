@@ -5,11 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import util.pedido.PedidoEntity;
 import util.pedido.PedidoUse;
 import util.producto.ProductoEntity;
+import util.producto.ProductoPedido;
 
 
 
@@ -29,32 +31,32 @@ public class Util {
 	}
 	
 	
-	public static List<ProductoEntity> stringToProductos(String cadena){
-		List<ProductoEntity> lista = new ArrayList<ProductoEntity>();
+	public static HashMap<Integer,Integer> stringToProductos(String cadena){
+		HashMap<Integer,Integer> lista = new HashMap<Integer,Integer>();
 		String[] productos=cadena.split("/");
 		for(String producto: productos) {
 			String[] componentes=producto.split("-");
-			ProductoEntity añadir= new ProductoEntity(Integer.parseInt(componentes[0]),componentes[1],componentes[2],Double.parseDouble(componentes[3]));
-			lista.add(añadir);
+			lista.put(Integer.parseInt(componentes[0]), Integer.parseInt(componentes[1]));
+			
 		}
 		
 		return lista;
 	} 
 	
-	public static String productosToString(List<ProductoEntity> lista) {
+	public static String productosToString(HashMap<Integer,Integer> lista) {
 		StringBuffer buffer= new StringBuffer();
-		for(ProductoEntity producto:lista) {
+		
+		Integer [] keys=lista.keySet ().toArray(new Integer[lista.size()]);
+		Integer[] numbers=lista.values().toArray(new Integer[lista.size()]);
+		
+		
+		for(int i=0;i<lista.size();i++) {
 			buffer.append("/");
-			buffer.append(producto.getId());
+			buffer.append(keys[i]);
 			buffer.append("-");
-			buffer.append(producto.getNombre());
-			buffer.append("-");
-			buffer.append(producto.getDescripcion());
-			buffer.append("-");
-			buffer.append(producto.getPrecio());
-						
-			
+			buffer.append(numbers[i]);
 		}
+		
 		
 		String cadena=buffer.toString();
 		return cadena.substring(1, cadena.length());
@@ -62,19 +64,43 @@ public class Util {
 	}
 
 	
-	public static PedidoUse entityToUse(PedidoEntity entity) {
+	public static List<PedidoUse> entityToUse(List<PedidoEntity> entity) {
 		
+		List<PedidoUse> lista= new ArrayList<PedidoUse>();
 		
-		return new PedidoUse(entity.getId(), isoStringToDate(entity.getFecha()), entity.getTamaño(), stringToProductos(entity.getProductos()));
+		for(PedidoEntity e:entity) {
+		lista.add( new PedidoUse(e.getId(), e.getFecha(), e.getTamaño(), stringToProductos(e.getProductos())));
+		}
 		
-		
+		return lista;
 	}
 	
-public static PedidoEntity useToEntity(PedidoUse use) {
+	public static List<PedidoEntity> useToEntity(List<PedidoUse> use) {
 		
+		List<PedidoEntity> lista= new ArrayList<PedidoEntity>();
+		for(PedidoUse u:use) {
+		lista.add( new PedidoEntity(u.getId(),u.getFecha(),u.getTamaño(),productosToString(u.getProductos())));
 		
-		return new PedidoEntity(use.getId(),dateToIsoString(use.getFecha()),use.getTamaño(),productosToString(use.getProductos()));
+		}
 		
+		return lista;
+	}
+	
+	public static List<ProductoPedido> hashMapToProductsList(HashMap<Integer,Integer> mapa, List<ProductoEntity> catalogo){
+		List<ProductoPedido> lista= new ArrayList<ProductoPedido>();
+		Integer [] keys=mapa.keySet ().toArray(new Integer [mapa.size()]);
+		
+		for(int i=0;i<mapa.size();i++) {
+			for(ProductoEntity producto: catalogo) {
+				if(producto.getId()==keys[i]) {
+					lista.add(new ProductoPedido(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getPrecio(),mapa.get(keys[i])));
+				}
+			}
+			
+			
+		}
+		
+		return lista;
 		
 	}
 	

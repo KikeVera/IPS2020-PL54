@@ -3,5 +3,7 @@
 
 --Para giis.demo.tkrun:
 drop table Producto;
+drop table Pedido;
 create table Producto (id int primary key not null, nombre varchar(32) not null, descripcion varchar(32), precio decimal(4,2));
+create table Pedido (id int primary key not null, fecha varchar(32) not null, tamaño int, productos varchar(8000));
 

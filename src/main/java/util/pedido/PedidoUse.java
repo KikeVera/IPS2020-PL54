@@ -1,18 +1,18 @@
 package util.pedido;
 
-import java.util.Date;
-import java.util.List;
 
-import util.producto.ProductoEntity;
+import java.util.HashMap;
+
+
 
 public class PedidoUse {
 	private int id;
-	private Date fecha;
+	private String fecha;
 	private int tamaño ;
-	private List<ProductoEntity> productos;
+	private HashMap<Integer,Integer> productos;
 	
 	
-	public  PedidoUse( int id,Date fecha,int tamaño,List<ProductoEntity> productos) {
+	public  PedidoUse( int id,String fecha,int tamaño,HashMap<Integer,Integer> productos) {
 		this.id=id;
 		this.fecha=fecha;
 		this.tamaño=tamaño;
@@ -31,12 +31,12 @@ public class PedidoUse {
 	}
 
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
@@ -51,12 +51,12 @@ public class PedidoUse {
 	}
 
 
-	public List<ProductoEntity> getProductos() {
+	public HashMap<Integer,Integer> getProductos() {
 		return productos;
 	}
 
 
-	public void setProductos(List<ProductoEntity> productos) {
+	public void setProductos(HashMap<Integer,Integer> productos) {
 		this.productos = productos;
 	}
 	

@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import util.producto.ProductoEntity;
+
+import util.producto.ProductoPedido;
 
 public class Recogida {
 	
-	List <ProductoEntity> pedido;
+	List <ProductoPedido> pedido;
 	List <Incidencia> incidencias;
 	
-	public Recogida(List <ProductoEntity> pedido) {
+	public Recogida(List <ProductoPedido> pedido) {
 		this.pedido=pedido;
 		incidencias= new ArrayList<Incidencia>();
 		
@@ -26,7 +27,7 @@ public class Recogida {
 		return incidencias;
 	}
 	
-	public List<ProductoEntity> getPedido(){
+	public List<ProductoPedido> getPedido(){
 		return pedido;
 		
 	}

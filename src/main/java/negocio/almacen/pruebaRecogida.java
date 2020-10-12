@@ -1,11 +1,17 @@
 package negocio.almacen;
 
 import java.awt.EventQueue;
-import java.util.ArrayList;
+
 import java.util.List;
 
-import ui.almacen.RevisionRecogida;
+
+import ui.almacen.RevisionView;
+import util.Util;
+import util.pedido.PedidoUse;
+import util.pedido.PedidosModel;
 import util.producto.ProductoEntity;
+import util.producto.ProductoPedido;
+import util.producto.ProductosModel;
 
 public class pruebaRecogida {
 
@@ -13,13 +19,14 @@ public class pruebaRecogida {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					List<ProductoEntity> pedido= new ArrayList<ProductoEntity>();
-					pedido.add(new ProductoEntity(555435,"arroz","esto es arroz",30));
-					pedido.add(new ProductoEntity(555445,"tomate","esto es tomatez",40));
-					pedido.add(new ProductoEntity(455435,"ternera","esto es ternera",50));
-					pedido.add(new ProductoEntity(100,"Producto A","A",21.22));
-					RevisionRecogida frame = new RevisionRecogida(new Recogida(pedido));
-					frame.setVisible(true);
+					List<ProductoEntity> catalogo=new ProductosModel().getListaProductos();
+					PedidoUse pedido=Util.entityToUse(new PedidosModel().getPedidos()).get(0);
+					List<ProductoPedido> productos=Util.hashMapToProductsList(pedido.getProductos(), catalogo);
+					
+					
+					RecogidaController controller= new RecogidaController(new ProductosModel(), new RevisionView(), new Recogida(productos));
+					controller.initController();
+				
 					
 				} catch (Exception e) {
 					e.printStackTrace();

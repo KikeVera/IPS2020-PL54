@@ -7,6 +7,8 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import ui.SwingMain;
+import util.pedido.PedidosModel;
 import util.swingTables.SwingUtil;
 
 public class ProductosController {
@@ -14,9 +16,11 @@ public class ProductosController {
 	private ProductosModel model; 
 	private ProductosView view;
 	private Carrito carrito;
+	private PedidosModel pedidoModel;
 	
 	
-	public ProductosController(ProductosModel m, ProductosView v) {
+	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem) {
+		this.pedidoModel=pem;
 		this.model = m; 
 		this.view = v;  
 		this.initView();
@@ -55,6 +59,19 @@ public class ProductosController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				deleteProduct();
+			}
+		});
+		
+		this.view.getBtnFinalizarPedido().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				guardarPedido();
+				SwingMain frame = new SwingMain();
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				view.getFrame().dispose();
+				
+				
 			}
 		});
 	}
@@ -126,6 +143,15 @@ public class ProductosController {
 		
 		this.carrito.removeProduct(id, ud);
 		updateDetail();
+	}
+	
+	/**
+	 *Guarda el pedido en la base de datos
+	 */
+	
+	private void guardarPedido() {
+		pedidoModel.setPedido(carrito.getPedido());
+		
 	}
 }
 
