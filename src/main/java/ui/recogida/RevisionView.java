@@ -1,4 +1,4 @@
-package ui.almacen;
+package ui.recogida;
 
 
 
@@ -50,6 +50,7 @@ public class RevisionView  {
 	private JLabel lbTitulo;
 	private JScrollPane scrProductos;
 	private JTable tableProductos;
+	private JButton btGuardarIncidencias;
 
 	
 
@@ -91,9 +92,13 @@ public class RevisionView  {
 		btSalir.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		pnBotones = new JPanel();
-		pnBotones.setLayout(new GridLayout(0, 3, 0, 0));
+		pnBotones.setLayout(new GridLayout(0, 4, 0, 0));
 		pnBotones.add(btComprobar);
 		pnBotones.add(btIncidencia);
+		
+		btGuardarIncidencias = new JButton("Guardar Incidencias");
+		btGuardarIncidencias.setFont(new Font("Arial", Font.PLAIN, 14));
+		pnBotones.add(btGuardarIncidencias);
 		pnBotones.add(btSalir);
 		
 		
@@ -147,6 +152,10 @@ public class RevisionView  {
 
 	public JButton getBtSalir() {
 		return btSalir;
+	}
+	
+	public JButton getBtGuardarIncidencias() {
+		return btGuardarIncidencias;
 	}
 
 	public JPanel getPnTitulo() {

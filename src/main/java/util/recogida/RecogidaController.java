@@ -1,17 +1,21 @@
-package negocio.almacen;
+package util.recogida;
 
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 
 import javax.swing.table.TableModel;
 
-import ui.almacen.ComparacionView;
-import ui.almacen.IncidenciaView;
-import ui.almacen.RevisionView;
-
+import negocio.almacen.Incidencia;
+import negocio.almacen.Recogida;
+import ui.recogida.ComparacionView;
+import ui.recogida.IncidenciaView;
+import ui.recogida.RevisionView;
+import util.Util;
+import util.pedido.PedidoUse;
 import util.producto.ProductoEntity;
 import util.producto.ProductoPedido;
 import util.producto.ProductosModel;
@@ -20,16 +24,21 @@ import util.swingTables.SwingUtil;
 public class RecogidaController {
 	
 	private ProductosModel model; 
+	private IncidenciaModel incidenciaModel;
 	private RevisionView view;
+	private PedidoUse pedido;
 	private Recogida recogida;
 	
 	
 	
 	
-	public RecogidaController(ProductosModel m, RevisionView v, Recogida recogida) {
-		this.recogida=recogida;
+	public RecogidaController(ProductosModel m,IncidenciaModel im, RevisionView v, PedidoUse pedido) {
+		this.pedido=pedido;
 		this.model = m; 
 		this.view = v;  
+		this.incidenciaModel=im;
+		
+		recogida= new Recogida(Util.hashMapToProductsList(this.pedido.getProductos(), model.getListaProductos()));
 		this.initView();
 	}
 	
@@ -87,7 +96,26 @@ public class RecogidaController {
 			}
 		});
 		
+		this.view.getBtGuardarIncidencias().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				guardarIncidencias();
+				
+			}
+		});
 		
+		
+	}
+	
+	private void guardarIncidencias() {
+		List<IncidenciaEntity> lista= new ArrayList<IncidenciaEntity>();
+		for(Incidencia incidencia: recogida.getIncidencias()) {
+			lista.add(new IncidenciaEntity(pedido.getId(), incidencia.getDescripcion()));
+		
+		}
+		
+		incidenciaModel.setIncidencias(lista);
 	}
 	
 	private ProductoPedido getSelectedProduct() {

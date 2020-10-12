@@ -2,16 +2,15 @@ package negocio.almacen;
 
 import java.awt.EventQueue;
 
-import java.util.List;
-
-
-import ui.almacen.RevisionView;
+import ui.recogida.RevisionView;
 import util.Util;
 import util.pedido.PedidoUse;
 import util.pedido.PedidosModel;
-import util.producto.ProductoEntity;
-import util.producto.ProductoPedido;
+
 import util.producto.ProductosModel;
+import util.recogida.IncidenciaEntity;
+import util.recogida.IncidenciaModel;
+import util.recogida.RecogidaController;
 
 public class pruebaRecogida {
 
@@ -19,13 +18,17 @@ public class pruebaRecogida {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					List<ProductoEntity> catalogo=new ProductosModel().getListaProductos();
+					
 					PedidoUse pedido=Util.entityToUse(new PedidosModel().getPedidos()).get(0);
-					List<ProductoPedido> productos=Util.hashMapToProductsList(pedido.getProductos(), catalogo);
 					
 					
-					RecogidaController controller= new RecogidaController(new ProductosModel(), new RevisionView(), new Recogida(productos));
+					
+					RecogidaController controller= new RecogidaController(new ProductosModel(),new IncidenciaModel(), new RevisionView(), pedido);
 					controller.initController();
+					for(IncidenciaEntity incidencia: new IncidenciaModel().getIncidencias()) {
+						System.out.println(incidencia.getDescripcion()+incidencia.getIdPedido());
+				}
+					
 				
 					
 				} catch (Exception e) {

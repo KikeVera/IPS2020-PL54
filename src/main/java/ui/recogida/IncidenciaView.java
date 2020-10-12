@@ -1,4 +1,4 @@
-package ui.almacen;
+package ui.recogida;
 
 
 

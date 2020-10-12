@@ -3,7 +3,7 @@ package negocio.almacen;
 public class Incidencia {
 	
 	 String descripcion;
-	 boolean solved= false;
+	 
 	
 	
 	public Incidencia(String descripción) {
@@ -16,12 +16,6 @@ public class Incidencia {
 		
 	}
 	
-	public void solved(boolean solved) {
-		this.solved=solved;
-	}
 	
-	public boolean isSolved() {
-		return solved;
-	}
 
 }
