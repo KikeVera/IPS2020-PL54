@@ -2,6 +2,8 @@ package util.producto;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
@@ -13,16 +15,18 @@ import util.swingTables.SwingUtil;
 
 public class ProductosController {
 	
-	private ProductosModel model; 
-	private ProductosView view;
-	private Carrito carrito;
+	private ProductosModel model; //Acceso a la base de datos en el ambito de los productos 
+	private ProductosView view; //Interfaz usuario 
+	private Carrito carrito; //Carrito que contiene al pedido 
 	private PedidosModel pedidoModel;
+	private int lastSelectedPedidoRow; //Almacena ultima seleccion en la tabla productos 
 	
 	
 	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem) {
 		this.pedidoModel=pem;
 		this.model = m; 
-		this.view = v;  
+		this.view = v; 
+		this.lastSelectedPedidoRow = 0; 
 		this.initView();
 	}
 	
@@ -62,6 +66,16 @@ public class ProductosController {
 			}
 		});
 		
+		
+		view.getTabPedido().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				//no usa mouseClicked porque al establecer seleccion simple en la tabla de carreras
+				//el usuario podria arrastrar el raton por varias filas e interesa solo la ultima
+				setLastSelectedPedido(); 
+			}
+		});
+		
 		this.view.getBtnFinalizarPedido().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -92,10 +106,13 @@ public class ProductosController {
 
 	}
 	
+	/**
+	 * Inicializa la tabla que representa el pedido al iniciar la interfaz de usuario 
+	 */
 	private void inicializarTablaPedido() {
 		TableModel tmodel= new DefaultTableModel(new String[] {"id","nombre","precio","unidades"},0);
 		view.getTabPedido().setModel(tmodel);
-		SwingUtil.autoAdjustColumns(view.getTabProductos());
+		SwingUtil.autoAdjustColumns(view.getTabPedido());
 	}
 	
 	/**
@@ -114,6 +131,7 @@ public class ProductosController {
 		String[] properties = new String[] {"id","nombre","precio","unidades"};
 		TableModel tm = SwingUtil.getTableModelFromPedido(properties, carrito);
 		this.view.getTabPedido().setModel(tm);
+		this.view.getTabPedido().getSelectionModel().setSelectionInterval(lastSelectedPedidoRow,lastSelectedPedidoRow);
 		
 		//Actualizamos el precio
 		this.view.getTextPrecio().setText(String.format("%.2f",this.carrito.calcPrecio()) + "€");
@@ -136,13 +154,23 @@ public class ProductosController {
 	 * Elimina un producto del carrito. Es el actionListener perteneciente al boton eliminar.
 	 */
 	private void deleteProduct() {
-		int selectedRow = view.getTabProductos().getSelectedRow();
+		int selectedRow = view.getTabPedido().getSelectedRow();
 		int ud = (int) view.getSpUnidades().getValue(); 
 		
-		int id = (int) view.getTabProductos().getValueAt(selectedRow, 0); 
+		int id = (int) view.getTabPedido().getValueAt(selectedRow, 0); 
 		
 		this.carrito.removeProduct(id, ud);
 		updateDetail();
+		
+		
+	
+	}
+	
+	/**
+	 * Actualiza la ultima seleccion en la tabla referente al pedido 
+	 */
+	private void setLastSelectedPedido() {
+		this.lastSelectedPedidoRow = this.view.getTabPedido().getSelectedRow(); 
 	}
 	
 	/**
@@ -153,5 +181,7 @@ public class ProductosController {
 		pedidoModel.setPedido(carrito.getPedido());
 		
 	}
+	
+
 }
 

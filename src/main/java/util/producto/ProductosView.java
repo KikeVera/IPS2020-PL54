@@ -140,6 +140,7 @@ public class ProductosView {
 		pnSuperiorDerecho.add(scrollPedido);
 		
 		tabPedido = new JTable();
+		tabPedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPedido.setViewportView(tabPedido);
 		
 		lblPedido = new JLabel("(USUARIO: 001) Estado actual del pedido:");
