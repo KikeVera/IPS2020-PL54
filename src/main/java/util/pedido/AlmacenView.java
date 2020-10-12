@@ -17,6 +17,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import javax.swing.border.LineBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Clase encargada de la interfaz de usuario de la tienda online.
@@ -34,6 +36,7 @@ public class AlmacenView {
 	private JLabel lblPedido;
 	private JTable tabProductos;
 	private JButton btVerPedido;
+	private JButton btAsignar;
 	
 	/**
 	 * Create the application.
@@ -96,12 +99,18 @@ public class AlmacenView {
 		pnSuperiorIzquirdo.add(btVerPedido, BorderLayout.SOUTH);
 		frmTiendaOnline.getContentPane().add(pnSuperiorDerecho);
 		
+		btAsignar = new JButton("Asignar");	
+		btAsignar.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		pnSuperiorDerecho.add(btAsignar, BorderLayout.SOUTH);
+
+		
 	}
 	
 	//Getters y Setters anyadidos para acceso desde el controlador 
 	public JFrame getFrame() { return this.frmTiendaOnline; }
 	public JTable getTabPedidos() { return this.tabPedidos; }
 	public JButton getbtVerPedido() {return this.btVerPedido;}
+	public JButton getbtAsignar() {return this.btAsignar;}
 	
 	public JTable getTabProductos() { return this.tabProductos;}
 	public JScrollPane getScrollProductos() {return this.scrollProductos;}

@@ -57,6 +57,14 @@ public class AlmacenController {
 			}
 		});
 		
+		this.view.getbtAsignar().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				asignarOT();
+			}
+		});
+		
+		
 	}
 	
 	/**
@@ -80,8 +88,14 @@ public class AlmacenController {
 		
 		this.view.getTabProductos().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTabProductos());
+	}
+	
+	private void asignarOT() {
+		PedidoUse pedido=Util.entityToUse(pedidoModel.getPedidos()).get(view.getTabPedidos().getSelectedRow());
 		
 	}
+	
+	
 	
 	
 	

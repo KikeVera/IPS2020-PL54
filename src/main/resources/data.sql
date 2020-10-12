@@ -2,6 +2,8 @@
 delete from Producto;
 delete from Pedido;
 delete from Incidencia;
+delete from OrdenTrabajo;
+delete from Almacenero;
 insert into Producto(id,nombre,descripcion,precio) values 
 	(100,'Producto A','A',21.22),
 	(101,'Producto B','B',21.22),
