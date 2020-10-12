@@ -73,7 +73,6 @@ public class SwingMain extends JFrame {
 			btnLanzarAplicacionAlmacen.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel());
-					dispose();
 					controller.initController();
 				}
 			});
