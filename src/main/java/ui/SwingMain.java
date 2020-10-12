@@ -113,7 +113,6 @@ public class SwingMain extends JFrame {
 			btnLanzarPaginaWeb.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					ProductosController controller = new ProductosController(new ProductosModel(), new ProductosView(),new PedidosModel());
-					dispose();
 					controller.initController();
 				}
 			});
