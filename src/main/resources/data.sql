@@ -10,3 +10,6 @@ insert into Producto(id,nombre,descripcion,precio) values
 	(102,'Producto C','C',21.22),
 	(103,'Producto D','D',21.22),
 	(104,'Producto E','E',21.22);
+
+insert into Almacenero(idAlmacenero) values (1);
+

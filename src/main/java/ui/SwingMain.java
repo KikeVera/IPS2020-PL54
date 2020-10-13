@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import util.almacenero.OTModel;
 import util.database.Database;
 import util.pedido.AlmacenController;
 import util.pedido.AlmacenView;
@@ -72,7 +73,7 @@ public class SwingMain extends JFrame {
 			btnLanzarAplicacionAlmacen = new JButton("Iniciar la aplicacion del almacen");
 			btnLanzarAplicacionAlmacen.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel());
+					AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
 					controller.initController();
 				}
 			});

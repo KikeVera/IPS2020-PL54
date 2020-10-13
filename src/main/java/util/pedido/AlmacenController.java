@@ -10,6 +10,9 @@ import javax.swing.table.TableModel;
 
 
 import util.Util;
+import util.almacenero.AlmaceneroModel;
+import util.almacenero.OTEntity;
+import util.almacenero.OTModel;
 import util.producto.ProductoEntity;
 import util.producto.ProductoPedido;
 import util.producto.ProductosModel;
@@ -21,12 +24,14 @@ public class AlmacenController {
 	private AlmacenView view;
 	
 	private PedidosModel pedidoModel;
+	private OTModel otmodel;
 	
 	
-	public AlmacenController(ProductosModel m, AlmacenView v, PedidosModel pem) {
+	public AlmacenController(ProductosModel m, AlmacenView v, PedidosModel pem,OTModel otm) {
 		this.pedidoModel=pem;
 		this.model = m; 
 		this.view = v;  
+		this.otmodel=otm;
 		this.initView();
 	}
 	
@@ -90,9 +95,16 @@ public class AlmacenController {
 		SwingUtil.autoAdjustColumns(view.getTabProductos());
 	}
 	
+	//Guardamos la orden de trabajo en la base de datos
 	private void asignarOT() {
 		PedidoUse pedido=Util.entityToUse(pedidoModel.getPedidos()).get(view.getTabPedidos().getSelectedRow());
 		
+		//De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
+		otmodel.setOT(pedido.getId(), 1);	
+		
+		for(OTEntity ot:otmodel.getOTs()) {
+			System.out.println(ot.getId_ot()+" "+ot.getStatus()+" "+ot.getId_almacenero()+" "+ot.getId_pedido());
+		}
 	}
 	
 	
