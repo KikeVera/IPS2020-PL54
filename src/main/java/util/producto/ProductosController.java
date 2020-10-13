@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -139,31 +140,45 @@ public class ProductosController {
 	
 	/**
 	 * Añade un producto al carrito. Es el actionListener perteneciente al boton anadir.
+	 * En caso de que no haya ningun producto a añadir , se mostrará un aviso al usuario.
 	 */
 	private void addProduct() {
-		int selectedRow = view.getTabProductos().getSelectedRow();
-		int ud = (int) view.getSpUnidades().getValue(); 
 		
-		int id = (int) view.getTabProductos().getValueAt(selectedRow, 0); 
-		
-		this.carrito.addProduct(id, ud);
-		updateDetail();
+		if(view.getTabProductos().getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this.view.getFrame(),"Debe seleccionar un producto disponible para "
+					+ "agregarlo al carrito","Tienda online: Advertencia",JOptionPane.WARNING_MESSAGE);
+		}	
+		else {
+			int selectedRow = view.getTabProductos().getSelectedRow();
+			int ud = (int) view.getSpUnidades().getValue(); 
+
+			int id = (int) view.getTabProductos().getValueAt(selectedRow, 0); 
+			
+			this.carrito.addProduct(id, ud);
+			updateDetail();
+		}
 	}
 	
 	/**
 	 * Elimina un producto del carrito. Es el actionListener perteneciente al boton eliminar.
+	 * En caso de que no haya ningun producto a eliminar , se mostrará un aviso al usuario.
 	 */
 	private void deleteProduct() {
-		int selectedRow = view.getTabPedido().getSelectedRow();
-		int ud = (int) view.getSpUnidades().getValue(); 
 		
-		int id = (int) view.getTabPedido().getValueAt(selectedRow, 0); 
-		
-		this.carrito.removeProduct(id, ud);
-		updateDetail();
-		
-		
-	
+		if(view.getTabPedido().getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this.view.getFrame(),"Debe seleccionar el producto que desea eliminar de su carrito para "
+					+ "elimnarlo","Tienda online: Advertencia",JOptionPane.WARNING_MESSAGE);
+		}	
+		else {
+			int selectedRow = view.getTabPedido().getSelectedRow();
+			int ud = (int) view.getSpUnidades().getValue(); 
+			
+			int id = (int) view.getTabPedido().getValueAt(selectedRow, 0); 
+			
+			this.carrito.removeProduct(id, ud);
+			updateDetail();
+		}
+
 	}
 	
 	/**

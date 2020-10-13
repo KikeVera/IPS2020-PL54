@@ -11,14 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import javax.swing.JTable;
-
 import javax.swing.ListSelectionModel;
-
 import javax.swing.border.LineBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * Clase encargada de la interfaz de usuario de la tienda online.

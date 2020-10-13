@@ -5,12 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-
 import javax.swing.table.TableModel;
 
-
 import util.Util;
-import util.almacenero.AlmaceneroModel;
 import util.almacenero.OTEntity;
 import util.almacenero.OTModel;
 import util.producto.ProductoEntity;

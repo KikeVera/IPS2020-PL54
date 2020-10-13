@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.UUID;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -101,6 +102,7 @@ public class ProductosView {
 		pnPrecio.add(lblPrecio, BorderLayout.NORTH);
 		pnPrecio.add(getTextPrecio());
 		btnFinalizarPedido = new JButton("Finalizar Pedido");
+		btnFinalizarPedido.setToolTipText("Una vez tenga claro su pedido, para finalizar pulse este bot\u00F3n.");
 		btnFinalizarPedido.setBackground(new Color(50, 205, 50));
 		btnFinalizarPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnInferiorDerecho.add(btnFinalizarPedido);
@@ -123,10 +125,12 @@ public class ProductosView {
 		pnUnidades.add(spUnidades);
 		spUnidades.setModel(new SpinnerNumberModel(1, 1, null, 1));
 		btnAnadir = new JButton("A\u00F1adir");
+		btnAnadir.setToolTipText("Para a\u00F1adir un producto al carrito en especifico, debe seleccionarlo en la tabla de productos disponibles, establecer  las unidades deseadas y darle a este bot\u00F3n.");
 		btnAnadir.setBackground(new Color(50, 205, 50));
 		btnAnadir.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnInferiorIzquierdo.add(btnAnadir);
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setToolTipText("Para eliminar un producto del carrito en especifico, debe seleccionarlo en el carrito, establecer  las unidades que desea eliminar de su pedido y darle a este bot\u00F3n.");
 		btnEliminar.setBackground(new Color(255, 0, 0));
 		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnInferiorIzquierdo.add(btnEliminar);
@@ -143,7 +147,7 @@ public class ProductosView {
 		tabPedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPedido.setViewportView(tabPedido);
 		
-		lblPedido = new JLabel("(USUARIO: 001) Estado actual del pedido:");
+		lblPedido = new JLabel("(USUARIO:  " +  UUID.randomUUID().toString().substring(0, 5) + ") Estado actual del pedido:");
 		lblPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnSuperiorDerecho.add(lblPedido, BorderLayout.NORTH);
 		frmTiendaOnline.getContentPane().setLayout(new GridLayout(0, 2, 0, 0));
