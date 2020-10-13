@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
 import negocio.almacen.Incidencia;
@@ -28,6 +28,8 @@ public class RecogidaController {
 	private RevisionView view;
 	private PedidoUse pedido;
 	private Recogida recogida;
+	private IncidenciaView incidencia;
+	private ComparacionView compara;
 	
 	
 	
@@ -66,12 +68,17 @@ public class RecogidaController {
 		this.view.getBtComprobar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(view.getTableProductos().getSelectedRow() == -1) {
+					JOptionPane.showMessageDialog(view.getFrame(),"Debe seleccionar un producto para comparar "
+							,"Recogida: Advertencia",JOptionPane.WARNING_MESSAGE);
+				}	
 				
-				ComparacionView compara= new ComparacionView(getSelectedProduct(), getAlmacenProduct());
+				else {
+			    compara= new ComparacionView(getSelectedProduct(), getAlmacenProduct());
 				compara.setLocationRelativeTo(view.getFrame());
 				compara.setModal(true);
 				compara.setVisible(true);
-				
+				}
 			}
 		});
 		
@@ -79,10 +86,18 @@ public class RecogidaController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				IncidenciaView compara= new IncidenciaView(recogida);
-				compara.setLocationRelativeTo(view.getFrame());
-				compara.setModal(true);
-				compara.setVisible(true);
+			    incidencia= new IncidenciaView();
+			    incidencia.getBtAñadir_1().addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						añadirIncidencia(incidencia);
+						
+					}
+				});
+				incidencia.setLocationRelativeTo(view.getFrame());
+				incidencia.setModal(true);
+				incidencia.setVisible(true);
+				
 				
 			}
 		});
@@ -99,12 +114,57 @@ public class RecogidaController {
 		this.view.getBtGuardarIncidencias().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				int resp=JOptionPane.showConfirmDialog(view.getFrame(), "¿Está seguro de añadir esta incidencia?","Confirmar incidencia",JOptionPane.YES_NO_OPTION);
+				if(resp==JOptionPane.YES_OPTION) {
 				guardarIncidencias();
-				
+				view.getFrame().dispose();
+				}
 			}
 		});
 		
+		
+		this.view.getBtBorrarIncidencia().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(view.getTableIncidencias().getSelectedRow() == -1) {
+					JOptionPane.showMessageDialog(view.getFrame(),"Debe seleccionar una incidencia para borrar "
+							,"Recogida: Advertencia",JOptionPane.WARNING_MESSAGE);
+				}	
+				else {
+				borrarIncidencia();
+				}
+			}
+		});
+		
+		
+	}
+	
+	private void borrarIncidencia() {
+		recogida.getIncidencias().remove(view.getTableIncidencias().getSelectedRow());
+		updateDetail();
+		
+	}
+	private void añadirIncidencia(IncidenciaView iw) {
+		
+		if(iw.getTxIncidencia().getText().trim().length()!=0) {
+		int resp=JOptionPane.showConfirmDialog(iw, "¿Está seguro de añadir esta incidencia?","Confirmar incidencia",JOptionPane.YES_NO_OPTION);
+		if(resp==JOptionPane.YES_OPTION)
+		recogida.setIncidencia(new Incidencia(iw.getTxIncidencia().getText()));
+		updateDetail();
+			
+		
+			
+		}
+		
+	}
+	private void updateDetail() {
+		
+		//Actualizamos la tabla correspondiente al pedido 
+		String[] properties = new String[] {"Descripcion"};
+		TableModel tm = SwingUtil.getTableModelFromPojos(recogida.getIncidencias(),properties);
+		this.view.getTableIncidencias().setModel(tm);
+		
+		//Actualizamos el precio
 		
 	}
 	
@@ -142,9 +202,14 @@ public class RecogidaController {
 	
 	private void inicializarTabla() {
 		List<ProductoPedido> productos=recogida.getPedido();
-		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","descripcion","precio","unidades"});
+		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"Id","Nombre","Descripcion","Precio","Unidades"});
+		
 		this.view.getTableProductos().setModel(tmodel);
-		SwingUtil.autoAdjustColumns(view.getTableProductos());
+		
+		String[] properties = new String[] {"Descripcion"};
+		TableModel tm = SwingUtil.getTableModelFromPojos(recogida.getIncidencias(),properties);
+		this.view.getTableIncidencias().setModel(tm);
+		
 	}
 	
 	

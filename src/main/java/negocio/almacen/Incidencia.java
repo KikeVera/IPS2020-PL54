@@ -6,6 +6,8 @@ public class Incidencia {
 	 
 	
 	
+	public Incidencia() {}
+	
 	public Incidencia(String descripción) {
 		this.descripcion=descripción;
 		
@@ -14,6 +16,10 @@ public class Incidencia {
 	public String getDescripcion() {
 		return descripcion;
 		
+	}
+	
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	
 	
