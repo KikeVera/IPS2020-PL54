@@ -102,7 +102,7 @@ public class AlmacenController {
 		otmodel.setOT(pedido.getId(), 1);	
 		
 		for(OTEntity ot:otmodel.getOTs()) {
-			System.out.println(ot.getId_ot()+" "+ot.getStatus()+" "+ot.getId_almacenero()+" "+ot.getId_pedido());
+			System.out.println(ot.getIdOt()+" "+ot.getEstado()+" "+ot.getIdAlmacenero()+" "+ot.getIdPedido());
 		}
 	}
 	

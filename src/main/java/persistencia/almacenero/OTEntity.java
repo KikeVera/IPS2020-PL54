@@ -1,51 +1,50 @@
 package persistencia.almacenero;
 
 public class OTEntity {
-	private int idot;
-	private int idalmacenero;
-	private int idpedido;
+	private int idOt;
+	private int idAlmacenero;
+	private int idPedido;
 	private String estado;
 	
 	public OTEntity() {		}
 	
-	public OTEntity(int id_ot,String status, int id_al,int id_ped) {	
-		this.setId_ot(id_ot);
-		this.idalmacenero=id_al;
-		this.idpedido=id_ped;
+	public OTEntity(int idot,String status, int idal,int idped) {	
+		this.idOt=idot;
+		this.idAlmacenero=idal;
+		this.idPedido=idped;
 		this.estado=status;
 	}
 
-	public int getId_almacenero() {
-		return idalmacenero;
+	public int getIdOt() {
+		return idOt;
 	}
 
-	public void setId_almacenero(int id_almacenero) {
-		this.idalmacenero = id_almacenero;
+	public void setIdOt(int idOt) {
+		this.idOt = idOt;
 	}
 
-	public int getId_pedido() {
-		return idpedido;
+	public int getIdAlmacenero() {
+		return idAlmacenero;
 	}
 
-	public void setId_pedido(int id_pedido) {
-		this.idpedido = id_pedido;
+	public void setIdAlmacenero(int idAlmacenero) {
+		this.idAlmacenero = idAlmacenero;
 	}
 
-	public String getStatus() {
+	public int getIdPedido() {
+		return idPedido;
+	}
+
+	public void setIdPedido(int idPedido) {
+		this.idPedido = idPedido;
+	}
+
+	public String getEstado() {
 		return estado;
 	}
 
-	public void setStatus(String status) {
-		this.estado = status;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
-
-	public int getId_ot() {
-		return idot;
-	}
-
-	public void setId_ot(int id_ot) {
-		this.idot = id_ot;
-	}
-	
 
 }
