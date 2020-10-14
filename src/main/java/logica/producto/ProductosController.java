@@ -95,7 +95,7 @@ public class ProductosController {
 	}
 	
 	/**
-	 * La obtencion de la lista de carreras solo necesita obtener la lista de objetos del modelo 
+	 * La obtencion de la lista de productos solo necesita obtener la lista de objetos del modelo 
 	 * y usar metodo de SwingUtil para crear un tablemodel que se asigna finalmente a la tabla.
 	 */
 	public List<ProductoEntity> getListaProductos() {

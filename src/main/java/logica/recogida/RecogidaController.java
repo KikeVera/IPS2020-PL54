@@ -191,7 +191,7 @@ public class RecogidaController {
 				return entity;
 			}
 		}
-		return new ProductoEntity(-1,"Producto no encontrado","",0);
+		return new ProductoEntity(-1,"Producto no encontrado","",0,0,0);
 	}
 	
 	/**

@@ -7,7 +7,7 @@ drop table Pedido;
 drop table Incidencia;
 drop table OrdenTrabajo;
 drop table Almacenero;
-create table Producto (id int primary key not null, nombre varchar(32) not null, descripcion varchar(32), precio decimal(4,2));
+create table Producto (id int primary key not null, nombre varchar(32) not null, descripcion varchar(32), precio decimal(5,2), pasillo int, estanteria int );
 create table Pedido (id int primary key not null, fecha varchar(32) not null, tamaño int, productos varchar(8000));
 create table Incidencia (idPedido int  not null, descripcion varchar(1000));
 create table Almacenero(idalmacenero int primary key not null);
