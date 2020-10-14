@@ -10,6 +10,6 @@ drop table Almacenero;
 create table Producto (id int primary key not null, nombre varchar(32) not null, descripcion varchar(32), precio decimal(4,2));
 create table Pedido (id int primary key not null, fecha varchar(32) not null, tamaño int, productos varchar(8000));
 create table Incidencia (idPedido int  not null, descripcion varchar(1000));
-create table Almacenero(idAlmacenero int primary key not null);
-create table OrdenTrabajo (idOT int primary key not null, estado varchar(20), idAlmacenero int not null, idPedido int not null, FOREIGN KEY (idAlmacenero) REFERENCES Almacenero(idAlmacenero), FOREIGN KEY (idPedido) REFERENCES Pedido(id));
+create table Almacenero(idalmacenero int primary key not null);
+create table OrdenTrabajo (idot int primary key not null, estado varchar(20), idalmacenero int not null, idpedido int not null, FOREIGN KEY (idalmacenero) REFERENCES Almacenero(idalmacenero), FOREIGN KEY (idpedido) REFERENCES Pedido(id));
 
