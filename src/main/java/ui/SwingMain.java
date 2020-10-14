@@ -6,14 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import util.almacenero.OTModel;
-import util.database.Database;
-import util.pedido.AlmacenController;
-import util.pedido.AlmacenView;
-import util.pedido.PedidosModel;
-import util.producto.ProductosController;
-import util.producto.ProductosModel;
-import util.producto.ProductosView;
+import logica.pedido.AlmacenController;
+import logica.producto.ProductosController;
+import persistencia.almacenero.OTModel;
+import persistencia.database.Database;
+import persistencia.pedido.PedidosModel;
+import persistencia.producto.ProductosModel;
+import ui.almacen.AlmacenView;
+import ui.producto.ProductosView;
 
 import javax.swing.JButton;
 import java.awt.GridLayout;

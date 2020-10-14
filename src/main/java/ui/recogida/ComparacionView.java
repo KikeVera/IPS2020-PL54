@@ -13,10 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import logica.producto.ProductoPedido;
+import persistencia.producto.ProductoEntity;
 
-
-import util.producto.ProductoEntity;
-import util.producto.ProductoPedido;
 import java.awt.BorderLayout;
 
 import java.awt.GridLayout;

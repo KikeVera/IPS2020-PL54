@@ -13,10 +13,10 @@ import javax.swing.table.TableModel;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
-import util.ApplicationException;
-import util.UnexpectedException;
-import util.producto.Carrito;
-import util.producto.ProductoEntity;
+import logica.producto.Carrito;
+import persistencia.producto.ProductoEntity;
+import util.exception.ApplicationException;
+import util.exception.UnexpectedException;
 
 /**
  * Metodos de utilidad para interfaces de usuario con swing (poblar tablas a partir de un objeto POJO

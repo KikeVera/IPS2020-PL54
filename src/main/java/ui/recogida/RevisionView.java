@@ -7,12 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
-import negocio.almacen.Recogida;
-import util.producto.ProductoEntity;
-
-import util.producto.ProductosModel;
-
+import logica.recogida.Recogida;
+import persistencia.producto.ProductoEntity;
+import persistencia.producto.ProductosModel;
 
 import java.awt.Color;
 
