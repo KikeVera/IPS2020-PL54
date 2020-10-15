@@ -13,7 +13,6 @@ import javax.swing.table.TableModel;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
-import persistencia.usuario.UsuarioEntity;
 import ui.SwingMain;
 import ui.producto.ProductosView;
 import util.swingTables.SwingUtil;
@@ -26,16 +25,12 @@ public class ProductosController {
 	private PedidosModel pedidoModel;
 	private int lastSelectedPedidoRow; //Almacena ultima seleccion en la tabla productos 
 	
-	//Representa al usuario que esta realizando la compra 
-	private UsuarioEntity usuario; 
-	
-	
+ 
 	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem) {
 		this.pedidoModel=pem;
 		this.model = m; 
 		this.view = v; 
-		this.lastSelectedPedidoRow = 0; 
-		this.usuario = new UsuarioEntity(); 
+		this.lastSelectedPedidoRow = 0;  
 		this.initView();
 	}
 	
@@ -48,7 +43,7 @@ public class ProductosController {
 		//Inicializamos la tabla que representara al pedido 
 		inicializarTablaPedido();
 		
-		view.getLblPedido().setText("(USUARIO: " + this.usuario.getId() + ")" + view.getLblPedido().getText());
+		view.getLblPedido().setText("(USUARIO: " + this.carrito.getUsuario().getId() + ")" + view.getLblPedido().getText());
 		
 		//Abre la ventana (sustituye al main generado por WindowBuilder)
 		view.getFrame().setVisible(true);

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import persistencia.producto.ProductoEntity;
+import persistencia.usuario.UsuarioEntity;
 
 /**
  * Esta clase representa el carrito de la compra en la pagina web.
@@ -18,6 +19,8 @@ public class Carrito {
 	//Copia de la lista de productos disponibles.
 	private List<ProductoEntity> catalogo; 
 	
+	//Representa al usuario que esta realizando la compra 
+	private UsuarioEntity usuario;
 	
 	/**
 	 * Constructor 
@@ -25,6 +28,7 @@ public class Carrito {
 	 */
 	public Carrito(List<ProductoEntity> catalogo) {
 		this.catalogo = catalogo;
+		this.usuario = new UsuarioEntity(); 
 	}
 	
 	/**
@@ -105,5 +109,13 @@ public class Carrito {
 	 */
 	public HashMap<Integer, Integer> getPedido() {
 		return this.pedido; 
+	}
+	
+	/**
+	 * Devuelve el usuario que esta realizando el pedido
+	 * @return Usuario actual
+	 */
+	public UsuarioEntity getUsuario() {
+		return this.usuario; 
 	}
 }
