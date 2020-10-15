@@ -7,8 +7,8 @@ package ui.recogida;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
-
+import logica.recogida.Incidencia;
+import logica.recogida.Recogida;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -16,7 +16,7 @@ import javax.swing.JDialog;
 
 import java.awt.Font;
 import javax.swing.JLabel;
-
+import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -34,21 +34,23 @@ public class IncidenciaView extends JDialog
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lbIncidencia;
-
+	private Recogida recogida;
 	private JTextArea txIncidencia;
 	private JPanel pnBotones;
 	private JButton btSalir;
 	private JButton btAñadir;
+	private RevisionView r;
 
 	
 
 	/**
 	 * Create the frame.
 	 */
-	public IncidenciaView() {
-		
+	public IncidenciaView(Recogida recogida, RevisionView r) {
+		this.r=r;
+		this.recogida=recogida;
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 627, 413);
+		setBounds(100, 100, 387, 413);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -65,7 +67,7 @@ public class IncidenciaView extends JDialog
 		}
 		return lbIncidencia;
 	}
-	public JTextArea getTxIncidencia() {
+	private JTextArea getTxIncidencia() {
 		if (txIncidencia == null) {
 			txIncidencia = new JTextArea();
 			txIncidencia.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -81,7 +83,7 @@ public class IncidenciaView extends JDialog
 		}
 		return pnBotones;
 	}
-	public JButton getBtCacelar_1() {
+	private JButton getBtCacelar_1() {
 		if (btSalir == null) {
 			btSalir = new JButton("Salir");
 			btSalir.addActionListener(new ActionListener() {
@@ -93,14 +95,29 @@ public class IncidenciaView extends JDialog
 		}
 		return btSalir;
 	}
-	public JButton getBtAñadir_1() {
+	private JButton getBtAñadir_1() {
 		if (btAñadir == null) {
 			btAñadir = new JButton("A\u00F1adir Incidencia");
+			btAñadir.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					añadirIncidencia();
+				}
+			});
 			
 				
 			btAñadir.setFont(new Font("Arial", Font.PLAIN, 14));
 		}
 		return btAñadir;
+	}
+	
+	private void añadirIncidencia() {
+		int resp=JOptionPane.showConfirmDialog(this,"¿Está seguro de añadir esta incidencia? la orden de trabajo quedará bloqueada" ,"Confirmar incidencia",JOptionPane.YES_NO_OPTION);
+		if(resp==JOptionPane.YES_OPTION) {
+			recogida.setIncidencia(new Incidencia(txIncidencia.getText()));
+			r.getBtescanear().setEnabled(false);
+			r.getBtTerminar().setEnabled(false);
+			dispose();
+		}
 	}
 	
 	

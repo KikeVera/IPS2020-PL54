@@ -3,14 +3,14 @@ package logica.recogida;
 import java.util.ArrayList;
 import java.util.List;
 
-import logica.producto.ProductoPedido;
+import logica.producto.ProductoOT;
 
 public class Recogida {
 	
-	List <ProductoPedido> pedido;
+	List <ProductoOT> pedido;
 	List <Incidencia> incidencias;
 	
-	public Recogida(List <ProductoPedido> pedido) {
+	public Recogida(List <ProductoOT> pedido) {
 		this.pedido=pedido;
 		incidencias= new ArrayList<Incidencia>();
 		
@@ -25,9 +25,40 @@ public class Recogida {
 		return incidencias;
 	}
 	
-	public List<ProductoPedido> getPedido(){
+	public List<ProductoOT> getPedido(){
 		return pedido;
 		
 	}
+	public boolean isVacia() {
+		for(ProductoOT producto: pedido) {
+			if(producto.getUnidades()!=0) {
+				return false;
+			}
+		}
+		
+		
+		return true;
+		
+		
+	}
+	
+	public int escanear(int id) {
+		for(ProductoOT producto: pedido) {
+			if(producto.getId()==id) {
+				if(producto.getUnidades()>0) {
+					producto.setUnidades(producto.getUnidades()-1);
+					return 0;
+				}
+				
+				else {
+					return 3;
+				}
+			}
+			
+		}
+		return 2;
+	}
+	
+	
 	
 }

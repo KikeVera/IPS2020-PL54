@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.table.TableModel;
 
-import logica.producto.ProductoPedido;
+import logica.producto.ProductoOT;
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
 import persistencia.pedido.PedidosModel;
@@ -78,7 +78,7 @@ public class AlmacenController {
 	
 	
 	private void inicializarTablaPedido() {
-		List<PedidoUse> pedidos=Util.entityToUse(pedidoModel.getPedidos());
+		List<PedidoUse> pedidos=Util.entityToUseList(pedidoModel.getPedidos());
 		TableModel tmodel= SwingUtil.getTableModelFromPojos(pedidos,new String[] {"id","fecha","tamaño"});
 		view.getTabPedidos().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTabPedidos());
@@ -86,9 +86,9 @@ public class AlmacenController {
 	
 	private void verPedido() {
 		List<ProductoEntity> catalogo=model.getListaProductos();
-		PedidoUse pedido=Util.entityToUse(pedidoModel.getPedidos()).get(view.getTabPedidos().getSelectedRow());
-		List<ProductoPedido> productos=Util.hashMapToProductsList(pedido.getProductos(), catalogo);
-		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","descripcion","precio","unidades"});
+		PedidoUse pedido=Util.entityToUseList(pedidoModel.getPedidos()).get(view.getTabPedidos().getSelectedRow());
+		List<ProductoOT> productos=Util.hashMapToProductsList(pedido.getProductos(), catalogo);
+		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades"});
 		
 		this.view.getTabProductos().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTabProductos());
@@ -96,7 +96,7 @@ public class AlmacenController {
 	
 	//Guardamos la orden de trabajo en la base de datos
 	private void asignarOT() {
-		PedidoUse pedido=Util.entityToUse(pedidoModel.getPedidos()).get(view.getTabPedidos().getSelectedRow());
+		PedidoUse pedido=Util.entityToUseList(pedidoModel.getPedidos()).get(view.getTabPedidos().getSelectedRow());
 		
 		//De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
 		otmodel.setOT(pedido.getId(), 1);	

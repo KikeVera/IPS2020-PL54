@@ -2,13 +2,15 @@ package logica.recogida;
 
 import java.awt.EventQueue;
 
-import logica.pedido.PedidoUse;
+
+import persistencia.almacenero.OTEntity;
+import persistencia.almacenero.OTModel;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductosModel;
 import persistencia.recogida.IncidenciaEntity;
 import persistencia.recogida.IncidenciaModel;
 import ui.recogida.RevisionView;
-import util.Util;
+
 
 public class pruebaRecogida {
 
@@ -17,11 +19,11 @@ public class pruebaRecogida {
 			public void run() {
 				try {
 					
-					PedidoUse pedido=Util.entityToUse(new PedidosModel().getPedidos()).get(0);
+					OTEntity ot=new OTModel().getOTs().get(1);
 					
 					
 					
-					RecogidaController controller= new RecogidaController(new ProductosModel(),new IncidenciaModel(), new RevisionView(), pedido);
+					RecogidaController controller= new RecogidaController(new ProductosModel(),new IncidenciaModel(),new PedidosModel(),new OTModel(), new RevisionView(), ot);
 					controller.initController();
 					for(IncidenciaEntity incidencia: new IncidenciaModel().getIncidencias()) {
 						System.out.println(incidencia.getDescripcion()+incidencia.getIdPedido());

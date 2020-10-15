@@ -37,6 +37,13 @@ public class PedidosModel {
 		
 	}
 	
+	public PedidoEntity getPedidoID(int id){
+		String sql= "Select id,fecha,tamaño,productos from pedido where id= ?";
+		
+		return db.executePojo(PedidoEntity.class, sql, id);
+		
+	}
+	
 	public void setPedido(HashMap<Integer,Integer> pedido) {
 		int id=getPedidos().size()+1;
 		int tamaño=0;

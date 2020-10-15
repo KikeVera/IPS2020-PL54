@@ -25,4 +25,14 @@ public class OTModel {
 		String sql="insert into ordentrabajo values (?,?,?,?)";
 		db.executeUpdate(sql,idot,estado,idalmacenero,idpedido);		
 	}
+	
+	public void updateStatus(int id,String status) {
+			
+		
+		String sql="update ordentrabajo set estado = ? where idot = ?";
+		db.executeUpdate(sql,status,id);		
+	}
+	
+	
+	
 }

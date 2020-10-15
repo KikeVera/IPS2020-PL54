@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import logica.pedido.PedidoUse;
-import logica.producto.ProductoPedido;
+import logica.producto.ProductoOT;
 import persistencia.pedido.PedidoEntity;
 import persistencia.producto.ProductoEntity;
 import util.exception.ApplicationException;
@@ -65,7 +65,7 @@ public class Util {
 	}
 
 	
-	public static List<PedidoUse> entityToUse(List<PedidoEntity> entity) {
+	public static List<PedidoUse> entityToUseList(List<PedidoEntity> entity) {
 		
 		List<PedidoUse> lista= new ArrayList<PedidoUse>();
 		
@@ -76,7 +76,16 @@ public class Util {
 		return lista;
 	}
 	
-	public static List<PedidoEntity> useToEntity(List<PedidoUse> use) {
+	public static PedidoUse entityToUse(PedidoEntity e) {
+		
+		
+		
+	return new PedidoUse(e.getId(), e.getFecha(), e.getTamaño(), stringToProductos(e.getProductos()));
+		
+		
+	}
+	
+	public static List<PedidoEntity> useToEntityList(List<PedidoUse> use) {
 		
 		List<PedidoEntity> lista= new ArrayList<PedidoEntity>();
 		for(PedidoUse u:use) {
@@ -87,14 +96,14 @@ public class Util {
 		return lista;
 	}
 	
-	public static List<ProductoPedido> hashMapToProductsList(HashMap<Integer,Integer> mapa, List<ProductoEntity> catalogo){
-		List<ProductoPedido> lista= new ArrayList<ProductoPedido>();
+	public static List<ProductoOT> hashMapToProductsList(HashMap<Integer,Integer> mapa, List<ProductoEntity> catalogo){
+		List<ProductoOT> lista= new ArrayList<ProductoOT>();
 		Integer [] keys=mapa.keySet ().toArray(new Integer [mapa.size()]);
 		
 		for(int i=0;i<mapa.size();i++) {
 			for(ProductoEntity producto: catalogo) {
 				if(producto.getId()==keys[i]) {
-					lista.add(new ProductoPedido(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getPrecio(),mapa.get(keys[i])));
+					lista.add(new ProductoOT(producto.getId(),producto.getNombre(),mapa.get(keys[i])));
 				}
 			}
 			

@@ -15,6 +15,7 @@ import java.util.Map;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
@@ -57,6 +58,22 @@ public abstract class DbUtil {
 			BeanListHandler<T> beanListHandler=new BeanListHandler<>(pojoClass);
 			QueryRunner runner=new QueryRunner();
 			return runner.query(conn, sql, beanListHandler, params);
+			
+		} catch (SQLException e) {
+			throw new UnexpectedException(e);
+		} finally {
+			DbUtils.closeQuietly(conn);
+		}
+	}
+	
+	public <T> T executePojo(Class<T> pojoClass, String sql, Object... params) {
+		Connection conn=null;
+		try {
+			conn=this.getConnection();
+			BeanHandler<T> beanListHandler=new BeanHandler<>(pojoClass);
+			QueryRunner runner=new QueryRunner();
+			return runner.query(conn, sql, beanListHandler, params);
+			
 		} catch (SQLException e) {
 			throw new UnexpectedException(e);
 		} finally {

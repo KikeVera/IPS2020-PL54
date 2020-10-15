@@ -4,18 +4,22 @@ package logica.recogida;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
-import logica.pedido.PedidoUse;
-import logica.producto.ProductoPedido;
+
+import logica.producto.ProductoOT;
+import persistencia.almacenero.OTEntity;
+import persistencia.almacenero.OTModel;
+import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
 import persistencia.recogida.IncidenciaEntity;
 import persistencia.recogida.IncidenciaModel;
-import ui.recogida.ComparacionView;
+
 import ui.recogida.IncidenciaView;
 import ui.recogida.RevisionView;
 import util.Util;
@@ -26,21 +30,29 @@ public class RecogidaController {
 	private ProductosModel model; 
 	private IncidenciaModel incidenciaModel;
 	private RevisionView view;
-	private PedidoUse pedido;
+	private OTEntity ot;
 	private Recogida recogida;
 	private IncidenciaView incidencia;
-	private ComparacionView compara;
+	private PedidosModel pem;
+	private List<ProductoEntity> catalogo;
+	private OTModel otm;
 	
 	
 	
 	
-	public RecogidaController(ProductosModel m,IncidenciaModel im, RevisionView v, PedidoUse pedido) {
-		this.pedido=pedido;
+	public RecogidaController(ProductosModel m,IncidenciaModel im,PedidosModel pem,OTModel otm, RevisionView v, OTEntity ot) {
+		this.ot=ot;
 		this.model = m; 
 		this.view = v;  
-		this.incidenciaModel=im;
 		
-		recogida= new Recogida(Util.hashMapToProductsList(this.pedido.getProductos(), model.getListaProductos()));
+		this.incidenciaModel=im;
+		this.pem=pem;
+		this.otm=otm;
+		catalogo=model.getListaProductos();
+		
+		HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(ot.getIdPedido())).getProductos();
+		
+		recogida= new Recogida(Util.hashMapToProductsList(mapa,catalogo));
 		this.initView();
 	}
 	
@@ -65,35 +77,14 @@ public class RecogidaController {
 	 */
 	public void initController() {
 		
-		this.view.getBtComprobar().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(view.getTableProductos().getSelectedRow() == -1) {
-					JOptionPane.showMessageDialog(view.getFrame(),"Debe seleccionar un producto para comparar "
-							,"Recogida: Advertencia",JOptionPane.WARNING_MESSAGE);
-				}	
-				
-				else {
-			    compara= new ComparacionView(getSelectedProduct(), getAlmacenProduct());
-				compara.setLocationRelativeTo(view.getFrame());
-				compara.setModal(true);
-				compara.setVisible(true);
-				}
-			}
-		});
+		
 		
 		this.view.getBtIncidencia().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-			    incidencia= new IncidenciaView();
-			    incidencia.getBtAñadir_1().addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						añadirIncidencia(incidencia);
-						
-					}
-				});
+			    incidencia= new IncidenciaView(recogida,view);
+			  
 				incidencia.setLocationRelativeTo(view.getFrame());
 				incidencia.setModal(true);
 				incidencia.setVisible(true);
@@ -102,97 +93,106 @@ public class RecogidaController {
 			}
 		});
 		
-		this.view.getBtSalir().addActionListener(new ActionListener() {
+		this.view.getBtCancelar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
 				view.getFrame().dispose();
-				
-			}
-		});
-		
-		this.view.getBtGuardarIncidencias().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int resp=JOptionPane.showConfirmDialog(view.getFrame(), "¿Está seguro de añadir esta incidencia?","Confirmar incidencia",JOptionPane.YES_NO_OPTION);
-				if(resp==JOptionPane.YES_OPTION) {
 				guardarIncidencias();
-				view.getFrame().dispose();
-				}
+				
+				
 			}
 		});
 		
-		
-		this.view.getBtBorrarIncidencia().addActionListener(new ActionListener() {
+		this.view.getBtescanear().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(view.getTableIncidencias().getSelectedRow() == -1) {
-					JOptionPane.showMessageDialog(view.getFrame(),"Debe seleccionar una incidencia para borrar "
-							,"Recogida: Advertencia",JOptionPane.WARNING_MESSAGE);
-				}	
-				else {
-				borrarIncidencia();
-				}
+				escanearProducto();
+				
+				
 			}
 		});
 		
+		this.view.getBtTerminar().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				view.getFrame().dispose();
+				otm.updateStatus(ot.getIdOt(), "RECOGIDO");
+				
+			}
+		});
+		
+	
 		
 	}
 	
-	private void borrarIncidencia() {
-		recogida.getIncidencias().remove(view.getTableIncidencias().getSelectedRow());
-		updateDetail();
+	
+	private void escanearProducto() {
 		
-	}
-	private void añadirIncidencia(IncidenciaView iw) {
+		int id=Integer.parseInt(view.getTxIDEsacaner().getText());
+		int codeResultado=1;
 		
-		if(iw.getTxIncidencia().getText().trim().length()!=0) {
-		int resp=JOptionPane.showConfirmDialog(iw, "¿Está seguro de añadir esta incidencia?","Confirmar incidencia",JOptionPane.YES_NO_OPTION);
-		if(resp==JOptionPane.YES_OPTION)
-		recogida.setIncidencia(new Incidencia(iw.getTxIncidencia().getText()));
-		updateDetail();
+		for (ProductoEntity producto: catalogo) {
+			if(producto.getId()==id) {
+				codeResultado=recogida.escanear(id);
+			}
 			
+		}
 		
-			
+		if(codeResultado==0) {
+			updateDetail();
+		}
+		
+		else if(codeResultado==1) {
+			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: No se puede escanear este código","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
+		}
+		
+		else if(codeResultado==2) {
+			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: El artículo escaneado no se encuentra en el pedido","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
+		}
+		
+		else if(codeResultado==3) {
+			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: No se deben recoger mas unidades de este artículo","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
+		}
+		
+		else {
+			JOptionPane.showMessageDialog(view.getFrame(), "ERROR desconocido","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 		}
 		
 	}
 	private void updateDetail() {
 		
 		//Actualizamos la tabla correspondiente al pedido 
-		String[] properties = new String[] {"Descripcion"};
-		TableModel tm = SwingUtil.getTableModelFromPojos(recogida.getIncidencias(),properties);
-		this.view.getTableIncidencias().setModel(tm);
+		List<ProductoOT> productos=recogida.getPedido();
+		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"Id","Nombre","Unidades"});
+		
+		this.view.getTableProductos().setModel(tmodel);
+		if(recogida.isVacia()) {
+			view.getBtTerminar().setEnabled(true);
+		}
+		
 		
 		//Actualizamos el precio
 		
 	}
 	
 	private void guardarIncidencias() {
+		if(!recogida.getIncidencias().isEmpty()) {
 		List<IncidenciaEntity> lista= new ArrayList<IncidenciaEntity>();
 		for(Incidencia incidencia: recogida.getIncidencias()) {
-			lista.add(new IncidenciaEntity(pedido.getId(), incidencia.getDescripcion()));
+			lista.add(new IncidenciaEntity(ot.getIdOt(), incidencia.getDescripcion()));
 		
 		}
 		
 		incidenciaModel.setIncidencias(lista);
-	}
-	
-	private ProductoPedido getSelectedProduct() {
-		return recogida.getPedido().get(view.getTableProductos().getSelectedRow());
-		
-	}
-	
-	private ProductoEntity getAlmacenProduct() {
-		List<ProductoEntity> catalogo= model.getListaProductos();
-		ProductoPedido buscado= getSelectedProduct();
-		for(ProductoEntity entity:catalogo) {
-			if (entity.getId()==buscado.getId()) {
-				return entity;
-			}
+		otm.updateStatus(ot.getIdOt(), "BLOQUEADO");
 		}
-		return new ProductoEntity(-1,"Producto no encontrado","",0,0,0);
 	}
+	
+	
+	
+	
 	
 	/**
 	 * La obtencion de la lista de carreras solo necesita obtener la lista de objetos del modelo 
@@ -201,14 +201,13 @@ public class RecogidaController {
 	
 	
 	private void inicializarTabla() {
-		List<ProductoPedido> productos=recogida.getPedido();
-		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"Id","Nombre","Descripcion","Precio","Unidades"});
+		List<ProductoOT> productos=recogida.getPedido();
+		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"Id","Nombre","Unidades"});
 		
 		this.view.getTableProductos().setModel(tmodel);
+		view.getBtTerminar().setEnabled(false);
 		
-		String[] properties = new String[] {"Descripcion"};
-		TableModel tm = SwingUtil.getTableModelFromPojos(recogida.getIncidencias(),properties);
-		this.view.getTableIncidencias().setModel(tm);
+		
 		
 	}
 	

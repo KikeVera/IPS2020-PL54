@@ -5,40 +5,36 @@ package logica.producto;
  * @author Moises
  *
  */
-public class ProductoPedido {
+public class ProductoOT {
 	
 	private int id;
 	private String nombre; 
-	private String descripcion;
-	private double precio;
+	
 	private int unidades;
 	
-	public ProductoPedido() {}
+	public ProductoOT() {}
 	
-	public ProductoPedido(int rowId, String rowNombre, String rowDescripcion, double rowPrecio, int unidades) {
+	public ProductoOT(int rowId, String rowNombre, int unidades) {
 		this.id = rowId;
 		this.nombre = rowNombre;
-		this.descripcion = rowDescripcion;
-		this.precio = rowPrecio; 
+		
 		this.setUnidades(unidades);
 	}
 	
 	@Override
 	public String toString() {
-		String cadena = id + " - " + nombre + " - " + precio; 
+		String cadena = id + " - " + nombre; 
 		return cadena; 
 	}
 
 	public int getId() { return this.id; }
 	public String getNombre() { return this.nombre; }
-	public String getDescripcion() { return this.descripcion; }
-	public double getPrecio() { return this.precio; }
+	
 	public int getUnidades() {return unidades;}
 	
 	public void setId(int value) { this.id=value; }
 	public void setNombre(String value) { this.nombre=value; }
-	public void setDescripcion(String value) { this.descripcion=value; }
-	public void setPrecio(double value) { this.precio=value; }
+	
 	public void setUnidades(int unidades) {this.unidades = unidades;}
 	
 

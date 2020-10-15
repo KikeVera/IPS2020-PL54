@@ -28,6 +28,7 @@ import javax.swing.JTable;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.JTextField;
 
 public class RevisionView  {
 
@@ -41,22 +42,19 @@ public class RevisionView  {
 	private Recogida recogida;
 	private List<ProductoEntity> almacen= new ProductosModel().getListaProductos();
 	private JPanel pnBotones;
-	private JButton btComprobar;
+	private JButton btEscanear;
 	private JButton btIncidencia;
-	private JButton btSalir;
+	private JButton btCancelar;
 	private JPanel pnTitulo;
 	private JLabel lbTitulo;
 	private JScrollPane scrProductos;
 	private JTable tableProductos;
-	private JButton btGuardarIncidencias;
-	private JButton btBorrarIncidencia;
 	private JPanel pnCentral;
 	private JPanel pnProductos;
-	private JPanel pnIncidencias;
 	private JLabel lbProductos;
-	private JScrollPane scrIncidencias;
-	private JLabel lbIncidencias;
-	private JTable tableIncidencias;
+	private JLabel lbIDEscaner;
+	private JTextField txIDEsacaner;
+	private JButton btTerminar;
 
 	
 
@@ -76,7 +74,7 @@ public class RevisionView  {
 		frame.setBackground(Color.WHITE);
 		frame.setTitle("Revision");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 833, 512);
+		frame.setBounds(100, 100, 575, 512);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -88,28 +86,29 @@ public class RevisionView  {
 		
 		
 		
-		btComprobar = new JButton("Comprobar producto");
-		btComprobar.setFont(new Font("Arial", Font.PLAIN, 13));
+		btEscanear = new JButton("Escanear");
+		btEscanear.setFont(new Font("Arial", Font.PLAIN, 13));
 		
-		btIncidencia = new JButton("A\u00F1adir Incidencia");
+		btIncidencia = new JButton(" Incidencia");
 		btIncidencia.setFont(new Font("Arial", Font.PLAIN, 13));
 		
-		btSalir = new JButton("Salir");
-		btSalir.setFont(new Font("Arial", Font.PLAIN, 13));
+		btCancelar = new JButton("Cancelar");
+		btCancelar.setFont(new Font("Arial", Font.PLAIN, 13));
 		
 		pnBotones = new JPanel();
-		pnBotones.setLayout(new GridLayout(0, 5, 0, 0));
-		pnBotones.add(btComprobar);
+		pnBotones.setLayout(new GridLayout(2, 3, 0, 0));
+		
+		lbIDEscaner = new JLabel("ID Producto: ");
+		lbIDEscaner.setFont(new Font("Arial", Font.PLAIN, 13));
+		pnBotones.add(lbIDEscaner);
+		
+		txIDEsacaner = new JTextField();
+		txIDEsacaner.setFont(new Font("Arial", Font.PLAIN, 13));
+		pnBotones.add(txIDEsacaner);
+		txIDEsacaner.setColumns(10);
+		pnBotones.add(btEscanear);
 		pnBotones.add(btIncidencia);
-		
-		btBorrarIncidencia = new JButton("Borrar incidencia");
-		btBorrarIncidencia.setFont(new Font("Arial", Font.PLAIN, 13));
-		pnBotones.add(btBorrarIncidencia);
-		
-		btGuardarIncidencias = new JButton("Guardar Incidencias");
-		btGuardarIncidencias.setFont(new Font("Arial", Font.PLAIN, 13));
-		pnBotones.add(btGuardarIncidencias);
-		pnBotones.add(btSalir);
+		pnBotones.add(btCancelar);
 		
 		
 		
@@ -128,6 +127,10 @@ public class RevisionView  {
 		
 		
 		contentPane.add(pnBotones, BorderLayout.SOUTH);
+		
+		btTerminar = new JButton("Terminar");
+		btTerminar.setFont(new Font("Arial", Font.PLAIN, 13));
+		pnBotones.add(btTerminar);
 		contentPane.add(pnTitulo, BorderLayout.NORTH);
 		
 		
@@ -138,24 +141,6 @@ public class RevisionView  {
 		
 		pnProductos = new JPanel();
 		pnCentral.add(pnProductos);
-		
-		pnIncidencias = new JPanel();
-		pnCentral.add(pnIncidencias);
-		pnIncidencias.setLayout(new BorderLayout(0, 0));
-		
-		scrIncidencias = new JScrollPane();
-		scrIncidencias.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		pnIncidencias.add(scrIncidencias);
-		
-		tableIncidencias = new JTable();
-		tableIncidencias.setFont(new Font("Arial", Font.PLAIN, 15));
-		tableIncidencias.getTableHeader().setFont(new Font("Arial", Font.BOLD, 15));
-		scrIncidencias.setViewportView(tableIncidencias);
-		
-		lbIncidencias = new JLabel("Incidencias");
-		lbIncidencias.setHorizontalAlignment(SwingConstants.CENTER);
-		lbIncidencias.setFont(new Font("Arial", Font.PLAIN, 18));
-		pnIncidencias.add(lbIncidencias, BorderLayout.NORTH);
 		pnProductos.setLayout(new BorderLayout(0, 0));
 		pnProductos.add(scrProductos, BorderLayout.CENTER);
 		
@@ -163,6 +148,10 @@ public class RevisionView  {
 		lbProductos.setHorizontalAlignment(SwingConstants.CENTER);
 		lbProductos.setFont(new Font("Arial", Font.PLAIN, 18));
 		pnProductos.add(lbProductos, BorderLayout.NORTH);
+	}
+
+	public JTextField getTxIDEsacaner() {
+		return txIDEsacaner;
 	}
 
 	public JFrame getFrame() {
@@ -185,24 +174,21 @@ public class RevisionView  {
 		return pnBotones;
 	}
 
-	public JButton getBtComprobar() {
-		return btComprobar;
-	}
 
 	public JButton getBtIncidencia() {
 		return btIncidencia;
 	}
 
-	public JButton getBtSalir() {
-		return btSalir;
+	public JButton getBtCancelar() {
+		return btCancelar;
 	}
 	
-	public JButton getBtGuardarIncidencias() {
-		return btGuardarIncidencias;
+	public JButton getBtescanear() {
+		return btEscanear;
 	}
 	
-	public JButton getBtBorrarIncidencia() {
-		return btBorrarIncidencia;
+	public JButton getBtTerminar() {
+		return btTerminar;
 	}
 
 	public JPanel getPnTitulo() {
@@ -221,9 +207,6 @@ public class RevisionView  {
 		return tableProductos;
 	}
 	
-	public JTable getTableIncidencias() {
-		return tableIncidencias;
-	}
 	
 	
 	
