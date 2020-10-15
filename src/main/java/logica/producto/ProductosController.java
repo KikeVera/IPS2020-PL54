@@ -13,6 +13,7 @@ import javax.swing.table.TableModel;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
+import persistencia.usuario.UsuarioEntity;
 import ui.SwingMain;
 import ui.producto.ProductosView;
 import util.swingTables.SwingUtil;
@@ -25,12 +26,16 @@ public class ProductosController {
 	private PedidosModel pedidoModel;
 	private int lastSelectedPedidoRow; //Almacena ultima seleccion en la tabla productos 
 	
+	//Representa al usuario que esta realizando la compra 
+	private UsuarioEntity usuario; 
+	
 	
 	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem) {
 		this.pedidoModel=pem;
 		this.model = m; 
 		this.view = v; 
 		this.lastSelectedPedidoRow = 0; 
+		this.usuario = new UsuarioEntity(); 
 		this.initView();
 	}
 	
@@ -42,6 +47,8 @@ public class ProductosController {
 		
 		//Inicializamos la tabla que representara al pedido 
 		inicializarTablaPedido();
+		
+		view.getLblPedido().setText("(USUARIO: " + this.usuario.getId() + ")" + view.getLblPedido().getText());
 		
 		//Abre la ventana (sustituye al main generado por WindowBuilder)
 		view.getFrame().setVisible(true);
@@ -114,7 +121,7 @@ public class ProductosController {
 	 * Inicializa la tabla que representa el pedido al iniciar la interfaz de usuario 
 	 */
 	private void inicializarTablaPedido() {
-		TableModel tmodel= new DefaultTableModel(new String[] {"id","nombre","precio","unidades"},0);
+		TableModel tmodel= new DefaultTableModel(new String[] {"id","nombre","unidades","precio/ud","precio total"},0);
 		view.getTabPedido().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTabPedido());
 	}
@@ -132,7 +139,7 @@ public class ProductosController {
 	public void updateDetail() {
 		
 		//Actualizamos la tabla correspondiente al pedido 
-		String[] properties = new String[] {"id","nombre","precio","unidades"};
+		String[] properties = new String[] {"id","nombre","unidades","precio/ud","precio total"};
 		TableModel tm = SwingUtil.getTableModelFromPedido(properties, carrito);
 		this.view.getTabPedido().setModel(tm);
 		this.view.getTabPedido().getSelectionModel().setSelectionInterval(lastSelectedPedidoRow,lastSelectedPedidoRow);
@@ -168,7 +175,7 @@ public class ProductosController {
 	 */
 	private void deleteProduct() {
 		
-		if(view.getTabPedido().getSelectedRow() == -1) {
+		if(view.getTabPedido().getRowCount() == 0) {
 			JOptionPane.showMessageDialog(this.view.getFrame(),"Debe seleccionar el producto que desea eliminar de su carrito para "
 					+ "elimnarlo","Tienda online: Advertencia",JOptionPane.WARNING_MESSAGE);
 		}	

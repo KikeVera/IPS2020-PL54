@@ -142,12 +142,15 @@ public class SwingUtil {
 		for (int id : carrito.getPedido().keySet()) {	
 			ProductoEntity producto = carrito.searchProductById(id);
 			String nombre = producto.getNombre();
-			double precio = producto.getPrecio();
-			int ud = carrito.getPedido().get(id); 
+			int ud = carrito.getPedido().get(id);
+			double precioUd = producto.getPrecio();
+			float precioTotal = (float) (producto.getPrecio() * ud); 
+			 
 			tm.setValueAt(id, i, 0);
 			tm.setValueAt(nombre, i, 1);
-			tm.setValueAt(precio, i, 2);
-			tm.setValueAt(ud, i, 3);
+			tm.setValueAt(ud, i, 2);
+			tm.setValueAt(precioUd, i, 3);
+			tm.setValueAt(precioTotal, i, 4);
 			i++; 
 		}
 		return tm;

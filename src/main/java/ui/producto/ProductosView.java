@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.UUID;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -147,7 +146,7 @@ public class ProductosView {
 		tabPedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPedido.setViewportView(tabPedido);
 		
-		lblPedido = new JLabel("(USUARIO:  " +  UUID.randomUUID().toString().substring(0, 5) + ") Estado actual del pedido:");
+		lblPedido = new JLabel("Estado actual del pedido:");
 		lblPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnSuperiorDerecho.add(lblPedido, BorderLayout.NORTH);
 		frmTiendaOnline.getContentPane().setLayout(new GridLayout(0, 2, 0, 0));
@@ -175,6 +174,7 @@ public class ProductosView {
 	public JPanel getPnSuperiorIzquierdo() { return this.pnSuperiorIzquirdo;}
 	public JPanel getPnInferiorDerecho() { return this.pnInferiorDerecho;}
 	public JPanel getPnInferiorIzquierdo() { return this.pnInferiorIzquierdo;}
+	public JLabel getLblPedido() {return this.lblPedido;}
 	
 }
 

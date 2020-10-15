@@ -18,12 +18,13 @@ public class Carrito {
 	//Copia de la lista de productos disponibles.
 	private List<ProductoEntity> catalogo; 
 	
+	
 	/**
 	 * Constructor 
 	 * @param catalogo Lista de productos disponibles 
 	 */
 	public Carrito(List<ProductoEntity> catalogo) {
-		this.catalogo = catalogo; 
+		this.catalogo = catalogo;
 	}
 	
 	/**
