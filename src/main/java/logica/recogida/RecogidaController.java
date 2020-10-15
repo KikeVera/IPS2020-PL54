@@ -34,7 +34,7 @@ public class RecogidaController {
 	private Recogida recogida;
 	private IncidenciaView incidencia;
 	private PedidosModel pem;
-	private List<ProductoEntity> catalogo;
+
 	private OTModel otm;
 	
 	
@@ -48,11 +48,11 @@ public class RecogidaController {
 		this.incidenciaModel=im;
 		this.pem=pem;
 		this.otm=otm;
-		catalogo=model.getListaProductos();
+		List<ProductoEntity> catalogo=model.getListaProductos();
 		
 		HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(ot.getIdPedido())).getProductos();
 		
-		recogida= new Recogida(Util.hashMapToProductsList(mapa,catalogo));
+		recogida= new Recogida(Util.hashMapToProductsList(mapa,catalogo),catalogo);
 		this.initView();
 	}
 	
@@ -129,11 +129,23 @@ public class RecogidaController {
 	
 	
 	private void escanearProducto() {
+		String idProductoTx=view.getTxIDEsacaner().getText();
+		if(idProductoTx.length()==0) {
+			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: No se ha detectado ningñun producto","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		
-		int id=Integer.parseInt(view.getTxIDEsacaner().getText());
+		for(Character ch: idProductoTx.toCharArray()) {
+			if(!Character.isDigit(ch)) {
+				JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Código de producto no válido","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+		}
+		
+		int id=Integer.parseInt(idProductoTx);
 		int codeResultado=1;
 		
-		for (ProductoEntity producto: catalogo) {
+		for (ProductoEntity producto: recogida.getCatalogo()) {
 			if(producto.getId()==id) {
 				codeResultado=recogida.escanear(id);
 			}
@@ -149,7 +161,7 @@ public class RecogidaController {
 		}
 		
 		else if(codeResultado==2) {
-			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: El artículo escaneado no se encuentra en el pedido","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: El artículo escaneado no se encuentra en la OT","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 		}
 		
 		else if(codeResultado==3) {
@@ -164,7 +176,7 @@ public class RecogidaController {
 	private void updateDetail() {
 		
 		//Actualizamos la tabla correspondiente al pedido 
-		List<ProductoOT> productos=recogida.getPedido();
+		List<ProductoOT> productos=recogida.getOT();
 		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"Id","Nombre","Unidades"});
 		
 		this.view.getTableProductos().setModel(tmodel);
@@ -201,7 +213,7 @@ public class RecogidaController {
 	
 	
 	private void inicializarTabla() {
-		List<ProductoOT> productos=recogida.getPedido();
+		List<ProductoOT> productos=recogida.getOT();
 		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"Id","Nombre","Unidades"});
 		
 		this.view.getTableProductos().setModel(tmodel);
