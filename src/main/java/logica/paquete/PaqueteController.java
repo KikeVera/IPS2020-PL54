@@ -5,9 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-
 import java.util.List;
+import java.util.UUID;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
@@ -21,12 +25,14 @@ import persistencia.paquete.PaqueteModel;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
-
 import ui.paquete.PaqueteView;
-
 import util.Util;
 import util.swingTables.SwingUtil;
 
+/**
+ * Controlador de los paquetes 
+ *
+ */
 public class PaqueteController implements Controller {
 	
 	private ProductosModel model; 
@@ -42,10 +48,15 @@ public class PaqueteController implements Controller {
 	private PaqueteModel pam;
 
 	
-	
-	
-	
-	
+	/**
+	 * Constructor 
+	 * @param m 
+	 * @param pem
+	 * @param otm
+	 * @param pam
+	 * @param v
+	 * @param ot
+	 */
 	public PaqueteController(ProductosModel m,PedidosModel pem,OTModel otm,PaqueteModel pam, PaqueteView v, OTEntity ot) {
 		this.ot=ot;
 		this.model = m; 
@@ -71,6 +82,9 @@ public class PaqueteController implements Controller {
 		this.initView();
 	}
 	
+	/**
+	 * Inicializa la vista 
+	 */
 	public void initView() {
 
 		//Inicializamos el carrito pasandole el catalogo de productos disponibles. Inicializamos 
@@ -144,8 +158,95 @@ public class PaqueteController implements Controller {
 	
 	private void empaquetarPedidos() {
 		for(PedidoUse pedido: empaquetado.getPedidos()) {
-			pam.createPaquete(pedido.getId());
+			String idPaquete = UUID.randomUUID().toString().substring(0, 5);
+			pam.createPaquete(pedido.getId(),idPaquete);
+			generarDocumentacion(pedido,idPaquete);
 		}
+	}
+	
+	/**
+	 * Genera documentacion de un paquete. Tanto la etiqueta como el albaran
+	 * @param pedido Pedido del que se genera la documentacion
+	 * @param idPaquete ID del paquete a generar 
+	 */
+	public void generarDocumentacion(PedidoUse pedido, String idPaquete) {
+		File etiqueta = new File ("files","etiqueta" + pedido.getId() + ".txt");
+		File albaran = new File ("files","albaran" + pedido.getId() + ".txt");
+		
+		generarEtiqueta(etiqueta,pedido,idPaquete);
+		generarAlbaran(albaran,pedido,idPaquete);
+		
+	}
+	
+	/**
+	 * Genera la etiqueta de un pedido 
+	 * @param etiqueta Fichero donde se almacenara la etiqueta.
+	 * @param pedido Pedido del que se realizará la etiqueta 
+	 * @param idPaquete ID del paquete a generar 
+	 */
+	private void generarEtiqueta(File etiqueta,PedidoUse pedido, String idPaquete) {
+		FileWriter fw = null;
+		BufferedWriter bw = null;  
+				
+        try
+        {
+        	fw = new FileWriter(etiqueta); 
+            bw = new BufferedWriter(fw); 
+            
+            bw.write("----Etiqueta----\n");
+            bw.write("Id paquete: " + idPaquete + "\n");
+            bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
+            bw.write("Fecha de envio: " + pedido.getFecha() + "\n");
+
+        } catch (IOException e) {
+            System.out.println("Error al crear la etiqueta del paquete: " + idPaquete);
+        } finally {
+           try {
+           if (bw != null)
+              bw.close();
+           if (fw != null)
+               fw.close();
+           } catch (IOException e) {
+        	   System.out.println("Error al cerrar la etiqueta del paquete: " + idPaquete);
+           }
+        }
+	}
+	
+	/**
+	 * Genera el albaran de un paquete.
+	 * @param albaran Fichero donde se almacenara el albaran 
+	 * @param pedido Pedido que se va a empaquetar 
+	 * @param idPaquete ID del paquete a generar 
+	 */
+	private void generarAlbaran(File albaran, PedidoUse pedido, String idPaquete) {
+		FileWriter fw = null;
+		BufferedWriter bw = null;  
+				
+        try
+        {
+        	fw = new FileWriter(albaran); 
+            bw = new BufferedWriter(fw);
+            
+            bw.write("----Albaran----\n");
+            bw.write("Id paquete: " + idPaquete + "\n");
+            bw.write("Id pedido: " + pedido.getId() + "\n");
+            bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
+            bw.write("Fecha de envio: " + pedido.getFecha() + "\n");
+            bw.write("Tamaño: " + pedido.getTamaño() + "\n");
+            bw.write("Lista productos: " + pedido.getProductos() + "\n");
+
+        } catch (IOException e) {
+            System.out.println("Error al crear el albaran del paquete: " + idPaquete);
+        } finally {
+           try {
+           if (bw != null)
+              bw.close();
+           if (fw != null)
+               fw.close();
+           } catch (IOException e) {
+        	   System.out.println("Error al cerrar el albaran del paquete: " + idPaquete);
+           }
+        }
 	}
 	
 	
