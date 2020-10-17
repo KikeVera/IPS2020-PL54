@@ -32,6 +32,10 @@ public class AlmacenView {
 	private JTable tabProductos;
 	private JButton btVerPedido;
 	private JButton btAsignar;
+	private JPanel pnBotones;
+	private JPanel pnTablas;
+	private JButton btOperacionesOT;
+	private JButton btSalir;
 	
 	/**
 	 * Create the application.
@@ -49,7 +53,7 @@ public class AlmacenView {
 		frmTiendaOnline = new JFrame();
 		frmTiendaOnline.setTitle("Tienda online");
 		frmTiendaOnline.setName("Tienda online");
-		frmTiendaOnline.setBounds(0, 0, 766, 732);
+		frmTiendaOnline.setBounds(0,0,491,569);
 		frmTiendaOnline.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmTiendaOnline.setLocationRelativeTo(null);
 		
@@ -83,20 +87,42 @@ public class AlmacenView {
 		lblPedido = new JLabel("Pedido seleccionado:");
 		lblPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnSuperiorDerecho.add(lblPedido, BorderLayout.NORTH);
-		frmTiendaOnline.getContentPane().setLayout(new GridLayout(0, 2, 0, 0));
 		
 		
 		//Añadimos todo al panel principal 
-		frmTiendaOnline.getContentPane().add(pnSuperiorIzquirdo);
+		
 		
 		btVerPedido = new JButton("Ver Pedido");
-		btVerPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		pnSuperiorIzquirdo.add(btVerPedido, BorderLayout.SOUTH);
-		frmTiendaOnline.getContentPane().add(pnSuperiorDerecho);
+		btVerPedido.setFont(new Font("Arial", Font.PLAIN, 14));
+		
+		
 		
 		btAsignar = new JButton("Asignar");	
-		btAsignar.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		pnSuperiorDerecho.add(btAsignar, BorderLayout.SOUTH);
+		btAsignar.setFont(new Font("Arial", Font.PLAIN, 14));
+		frmTiendaOnline.getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		
+		pnTablas = new JPanel();
+		
+		frmTiendaOnline.getContentPane().add(pnTablas);
+		pnTablas.setLayout(new GridLayout(1, 0, 0, 0));
+		pnTablas.add(pnSuperiorIzquirdo);
+		pnTablas.add(pnSuperiorDerecho);
+		
+		pnBotones = new JPanel();
+		pnBotones.setLayout(new GridLayout(0, 2, 0, 0));
+		pnBotones.add(btAsignar);
+		pnBotones.add(btVerPedido);
+		pnBotones.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
+		frmTiendaOnline.getContentPane().add(pnBotones, BorderLayout.SOUTH);
+		
+		btOperacionesOT = new JButton("Operaciones OT");
+		btOperacionesOT.setFont(new Font("Arial", Font.PLAIN, 14));
+		pnBotones.add(btOperacionesOT);
+		
+		btSalir = new JButton("Salir");
+		btSalir.setFont(new Font("Arial", Font.PLAIN, 14));
+		pnBotones.add(btSalir);
 
 		
 	}
@@ -106,7 +132,8 @@ public class AlmacenView {
 	public JTable getTabPedidos() { return this.tabPedidos; }
 	public JButton getbtVerPedido() {return this.btVerPedido;}
 	public JButton getbtAsignar() {return this.btAsignar;}
-	
+	public JButton getbtSalir() {return this.btSalir;}
+	public JButton getbtOperacionesOT() {return this.btOperacionesOT;}
 	public JTable getTabProductos() { return this.tabProductos;}
 	public JScrollPane getScrollProductos() {return this.scrollProductos;}
 

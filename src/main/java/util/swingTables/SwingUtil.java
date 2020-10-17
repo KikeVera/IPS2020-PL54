@@ -112,7 +112,7 @@ public class SwingUtil {
 			for (int j=0; j<colProperties.length; j++) {
 				try {
 					Object pojo=pojos.get(i);
-					Object value=PropertyUtils.getSimpleProperty(pojo, colProperties[j].toLowerCase());
+					Object value=PropertyUtils.getSimpleProperty(pojo, colProperties[j]);
 					tm.setValueAt(value, i, j);
 				} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 					throw new UnexpectedException(e);

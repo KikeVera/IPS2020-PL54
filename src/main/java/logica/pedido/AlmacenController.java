@@ -5,8 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
+import logica.Controller;
 import logica.producto.ProductoOT;
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
@@ -14,10 +16,11 @@ import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
 import ui.almacen.AlmacenView;
+import ui.almacen.OperacionesOTView;
 import util.Util;
 import util.swingTables.SwingUtil;
 
-public class AlmacenController {
+public class AlmacenController implements Controller {
 	
 	private ProductosModel model; 
 	private AlmacenView view;
@@ -68,6 +71,21 @@ public class AlmacenController {
 			}
 		});
 		
+		this.view.getbtSalir().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.getFrame().dispose();
+			}
+		});
+		
+		this.view.getbtOperacionesOT().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				OperacionesOTController controller=new OperacionesOTController(new OperacionesOTView(), new OTModel());
+				controller.initController();
+			}
+		});
+		
 		
 	}
 	
@@ -85,8 +103,16 @@ public class AlmacenController {
 	}
 	
 	private void verPedido() {
+		
+		
+		int index=view.getTabPedidos().getSelectedRow();
+		if(index==-1) {
+			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Pedido no seleccionado","Advertencia operacion", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
 		List<ProductoEntity> catalogo=model.getListaProductos();
-		PedidoUse pedido=Util.entityToUseList(pedidoModel.getPedidos()).get(view.getTabPedidos().getSelectedRow());
+		PedidoUse pedido=Util.entityToUseList(pedidoModel.getPedidos()).get(index);
 		List<ProductoOT> productos=Util.hashMapToProductsList(pedido.getProductos(), catalogo);
 		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades"});
 		

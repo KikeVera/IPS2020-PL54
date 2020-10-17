@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
+import logica.Controller;
 import logica.pedido.PedidoUse;
 import logica.producto.ProductoOT;
 import persistencia.almacenero.OTEntity;
@@ -26,7 +27,7 @@ import ui.paquete.PaqueteView;
 import util.Util;
 import util.swingTables.SwingUtil;
 
-public class PaqueteController {
+public class PaqueteController implements Controller {
 	
 	private ProductosModel model; 
 	
@@ -222,7 +223,7 @@ public class PaqueteController {
 			
 			
 			List<ProductoOT> productos=Util.hashMapToProductsList(pedido.getProductos(), empaquetado.getCatalogo());
-			TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"Id","Nombre","Unidades"});
+			TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades"});
 			
 			this.view.getTableProductos().setModel(tmodel);
 		
@@ -250,7 +251,7 @@ public class PaqueteController {
 	
 	private void inicializarTabla() {
 		
-		TableModel tmodel= SwingUtil.getTableModelFromPojos(empaquetado.getPedidos(),new String[] {"Id","Fecha","Tamaño"});
+		TableModel tmodel= SwingUtil.getTableModelFromPojos(empaquetado.getPedidos(),new String[] {"id","fecha","tamaño"});
 		
 		this.view.getTablePedidos().setModel(tmodel);
 		view.getBtTerminar().setEnabled(false);

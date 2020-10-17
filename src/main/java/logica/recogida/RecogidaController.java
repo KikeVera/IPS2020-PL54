@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
-
+import logica.Controller;
 import logica.producto.ProductoOT;
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
@@ -25,7 +25,7 @@ import ui.recogida.RevisionView;
 import util.Util;
 import util.swingTables.SwingUtil;
 
-public class RecogidaController {
+public class RecogidaController implements Controller {
 	
 	private ProductosModel model; 
 	private IncidenciaModel incidenciaModel;
@@ -97,8 +97,9 @@ public class RecogidaController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				view.getFrame().dispose();
+				
 				guardarIncidencias();
+				view.getFrame().dispose();
 				
 				
 			}
@@ -177,7 +178,7 @@ public class RecogidaController {
 		
 		//Actualizamos la tabla correspondiente al pedido 
 		List<ProductoOT> productos=recogida.getOT();
-		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"Id","Nombre","Unidades"});
+		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades"});
 		
 		this.view.getTableProductos().setModel(tmodel);
 		if(recogida.isVacia()) {
@@ -214,7 +215,7 @@ public class RecogidaController {
 	
 	private void inicializarTabla() {
 		List<ProductoOT> productos=recogida.getOT();
-		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"Id","Nombre","Unidades"});
+		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades"});
 		
 		this.view.getTableProductos().setModel(tmodel);
 		view.getBtTerminar().setEnabled(false);

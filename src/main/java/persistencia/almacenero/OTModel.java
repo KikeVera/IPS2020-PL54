@@ -19,9 +19,16 @@ public class OTModel {
 		
 		return db.executeQueryPojo(OTEntity.class, sql);
 	}
+	
+	public List<OTEntity> getOTsByStatus(String status) {
+		String sql= "Select idot,estado,idalmacenero,idpedido from ordentrabajo where estado = ?";		
+		
+		return db.executeQueryPojo(OTEntity.class, sql,status);
+	}
+	
 	public void setOT(int idpedido,int idalmacenero) {
 		int idot=getOTs().size()+1;		
-		String estado="asignado";
+		String estado="ASIGNADO";
 		String sql="insert into ordentrabajo values (?,?,?,?)";
 		db.executeUpdate(sql,idot,estado,idalmacenero,idpedido);		
 	}

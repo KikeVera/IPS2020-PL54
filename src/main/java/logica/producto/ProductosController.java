@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import logica.Controller;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
@@ -17,7 +18,7 @@ import ui.SwingMain;
 import ui.producto.ProductosView;
 import util.swingTables.SwingUtil;
 
-public class ProductosController {
+public class ProductosController implements Controller {
 	
 	private ProductosModel model; //Acceso a la base de datos en el ambito de los productos 
 	private ProductosView view; //Interfaz usuario 
