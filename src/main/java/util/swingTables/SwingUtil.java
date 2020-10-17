@@ -143,8 +143,8 @@ public class SwingUtil {
 			ProductoEntity producto = carrito.searchProductById(id);
 			String nombre = producto.getNombre();
 			int ud = carrito.getPedido().get(id);
-			double precioUd = producto.getPrecio();
-			float precioTotal = (float) (producto.getPrecio() * ud); 
+			String precioUd = String.format("%.2f",producto.getPrecio());
+			String precioTotal = String.format("%.2f",producto.getPrecio() * ud); 
 			 
 			tm.setValueAt(id, i, 0);
 			tm.setValueAt(nombre, i, 1);
