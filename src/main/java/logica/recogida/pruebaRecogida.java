@@ -19,7 +19,7 @@ public class pruebaRecogida {
 			public void run() {
 				try {
 					
-					OTEntity ot=new OTModel().getOTs().get(1);
+					OTEntity ot=new OTModel().getOTs().get(0);
 					
 					
 					

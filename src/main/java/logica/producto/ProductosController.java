@@ -198,7 +198,7 @@ public class ProductosController {
 	 */
 	
 	private void guardarPedido() {
-		pedidoModel.setPedido(carrito.getPedido());
+		pedidoModel.setPedido(carrito.getPedido(),carrito.getUsuario().getId());
 		
 	}
 	

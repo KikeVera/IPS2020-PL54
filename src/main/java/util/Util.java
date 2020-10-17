@@ -70,7 +70,7 @@ public class Util {
 		List<PedidoUse> lista= new ArrayList<PedidoUse>();
 		
 		for(PedidoEntity e:entity) {
-		lista.add( new PedidoUse(e.getId(), e.getFecha(), e.getTamaño(), stringToProductos(e.getProductos())));
+		lista.add( new PedidoUse(e.getId(), e.getFecha(), e.getTamaño(),e.getIdUsuario(), stringToProductos(e.getProductos())));
 		}
 		
 		return lista;
@@ -80,7 +80,7 @@ public class Util {
 		
 		
 		
-	return new PedidoUse(e.getId(), e.getFecha(), e.getTamaño(), stringToProductos(e.getProductos()));
+	return new PedidoUse(e.getId(), e.getFecha(), e.getTamaño(),e.getIdUsuario(), stringToProductos(e.getProductos()));
 		
 		
 	}
@@ -89,7 +89,7 @@ public class Util {
 		
 		List<PedidoEntity> lista= new ArrayList<PedidoEntity>();
 		for(PedidoUse u:use) {
-		lista.add( new PedidoEntity(u.getId(),u.getFecha(),u.getTamaño(),productosToString(u.getProductos())));
+		lista.add( new PedidoEntity(u.getId(),u.getFecha(),u.getTamaño(),u.getIdUsuario(),productosToString(u.getProductos())));
 		
 		}
 		

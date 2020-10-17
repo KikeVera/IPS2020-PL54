@@ -9,14 +9,19 @@ public class PedidoUse {
 	private int id;
 	private String fecha;
 	private int tamaño ;
+	private String idUsuario;
+	
+
+
 	private HashMap<Integer,Integer> productos;
 	
 	
-	public  PedidoUse( int id,String fecha,int tamaño,HashMap<Integer,Integer> productos) {
+	public  PedidoUse( int id,String fecha,int tamaño,String idUsuario,HashMap<Integer,Integer> productos) {
 		this.id=id;
 		this.fecha=fecha;
 		this.tamaño=tamaño;
 		this.productos=productos;
+		this.idUsuario=idUsuario;
 		
 	}
 
@@ -58,6 +63,15 @@ public class PedidoUse {
 
 	public void setProductos(HashMap<Integer,Integer> productos) {
 		this.productos = productos;
+	}
+	
+	public String getIdUsuario() {
+		return idUsuario;
+	}
+
+
+	public void setIdUsuario(String idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 	
 	

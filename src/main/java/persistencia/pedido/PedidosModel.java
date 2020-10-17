@@ -18,12 +18,12 @@ public class PedidosModel {
 	
 	public List<Object[]> getPedidosArray() {
 		
-		String sql= "Select id,fecha,tamaño,productos from pedido order by fecha";
+		String sql= "Select id,fecha,tamaño,idUsuario,productos from pedido order by fecha";
 		return db.executeQueryArray(sql);
 	}
 	
 	public List<PedidoEntity> getPedidos() {
-		String sql= "Select id,fecha,tamaño,productos from pedido order by fecha";
+		String sql= "Select id,fecha,tamaño,idUsuario,productos from pedido order by fecha";
 		
 	
 		return db.executeQueryPojo(PedidoEntity.class, sql);
@@ -31,20 +31,20 @@ public class PedidosModel {
 	
 	
 	public List<PedidoEntity> getPedidoFecha(Date fecha){
-		String sql= "Select id,fecha,tamaño,productos from pedido where fecha= ?";
+		String sql= "Select id,fecha,tamaño,idUsuario,productos from pedido where fecha= ?";
 		String d=util.Util.dateToIsoString(fecha);
 		return db.executeQueryPojo(PedidoEntity.class, sql, d);
 		
 	}
 	
 	public PedidoEntity getPedidoID(int id){
-		String sql= "Select id,fecha,tamaño,productos from pedido where id= ?";
+		String sql= "Select id,fecha,tamaño,idUsuario,productos from pedido where id= ?";
 		
 		return db.executePojo(PedidoEntity.class, sql, id);
 		
 	}
 	
-	public void setPedido(HashMap<Integer,Integer> pedido) {
+	public void setPedido(HashMap<Integer,Integer> pedido, String idUsuario) {
 		int id=getPedidos().size()+1;
 		int tamaño=0;
 		Integer[] numbers=pedido.values().toArray(new Integer[pedido.size()]);
@@ -54,8 +54,8 @@ public class PedidosModel {
 		
 		String fecha=Util.dateToIsoString(new Date());
 		String productos=Util.productosToString(pedido);
-		String sql="insert into Pedido values (?,?,?,?)";
-		db.executeUpdate(sql,id,fecha,tamaño,productos);
+		String sql="insert into Pedido values (?,?,?,?,?)";
+		db.executeUpdate(sql,id,fecha,tamaño,idUsuario,productos);
 		
 		
 	}

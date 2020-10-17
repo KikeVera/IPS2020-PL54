@@ -11,24 +11,26 @@ public class PaqueteEntity {
 	
 	private String idPaquete; 
 	private int idPedido; 
-	private String idUsuario;
+
 	private String fecha; 
 	
-	public PaqueteEntity(String rowIdPaquete, int rowIdPedido, String rowIdUsuario, String rowFecha) {
+	public PaqueteEntity() {}
+	
+	public PaqueteEntity(String rowIdPaquete, int rowIdPedido, String rowFecha) {
 		this.idPaquete = rowIdPaquete; 
 		this.idPedido = rowIdPedido; 
-		this.idUsuario = rowIdUsuario; 
+		
 		this.fecha = rowFecha; 
 	}
 	
 	public String getIdPaquete() { return this.idPaquete;}
 	public int getIdPedido() {return this.idPedido;}
-	public String getIdUsuario() {return this.idUsuario;}
+	
 	public String getFecha() {return this.fecha;}
 	
 	public void setIdPaquete(String idPaquete) {this.idPaquete = idPaquete;}
 	public void setIdPedido(int idPedido) {this.idPedido = idPedido;}
-	public void setIdUsuario(String idUsuario) {this.idUsuario = idUsuario;}
+	
 	public void setFecha(String fecha) {this.fecha = fecha;}
 	
 
@@ -49,10 +51,12 @@ public class PaqueteEntity {
         {
         	fw = new FileWriter(etiquta); 
             bw = new BufferedWriter(fw);
+            PaqueteModel pm = new PaqueteModel(); 
+            PedidoEntity pedido = pm.getPedido(this.idPedido); 
             
             bw.write("----Etiqueta----\n");
             bw.write("Id paquete: " + this.idPaquete + "\n");
-            bw.write("Usuario: " + this.idUsuario + "\n");
+            bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
             bw.write("Fecha de envio: " + this.fecha + "\n");
 
         } catch (IOException e) {
@@ -83,7 +87,7 @@ public class PaqueteEntity {
             bw.write("----Albaran----\n");
             bw.write("Id paquete: " + this.idPaquete + "\n");
             bw.write("Id pedido: " + this.idPedido + "\n");
-            bw.write("Usuario: " + this.idUsuario + "\n");
+            bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
             bw.write("Fecha de envio: " + this.fecha + "\n");
             bw.write("Tamaño: " + pedido.getTamaño() + "\n");
             bw.write("Lista productos: " + pedido.getProductos() + "\n");

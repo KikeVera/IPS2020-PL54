@@ -9,13 +9,16 @@ public class PedidoEntity {
 	private String fecha;
 	private int tamaño ;
 	private String productos;
+	private String idUsuario;
+	
 	
 	public  PedidoEntity() {}
-	public  PedidoEntity( int id,String fecha,int tamaño,String productos) {
+	public  PedidoEntity( int id,String fecha,int tamaño,String idUsuario,String productos) {
 		this.id=id;
 		this.fecha=fecha;
 		this.tamaño=tamaño;
 		this.productos=productos;
+		this.idUsuario=idUsuario;
 		
 	}
 	public int getId() {
@@ -41,6 +44,12 @@ public class PedidoEntity {
 	}
 	public void setProductos(String productos) {
 		this.productos = productos;
+	}
+	public String getIdUsuario() {
+		return idUsuario;
+	}
+	public void setIdUsuario(String idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 	
 
