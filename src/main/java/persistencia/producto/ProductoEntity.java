@@ -5,7 +5,7 @@ package persistencia.producto;
  * @author Moises
  *
  */
-public class ProductoEntity implements Comparable<ProductoEntity> {
+public class ProductoEntity{
 	
 	private int id;
 	private String nombre; 
@@ -46,14 +46,4 @@ public class ProductoEntity implements Comparable<ProductoEntity> {
 	public void setPasillo(int pasillo) {this.pasillo=pasillo;}
 	public void setEstanteria(int estanteria) {this.estanteria=estanteria;}
 
-	@Override
-	public int compareTo(ProductoEntity pe) {		
-		if(pe.getPasillo()>this.pasillo){
-            return -1;
-        }else if(pe.getPasillo()==this.pasillo){
-            return 0;
-        }else{
-            return 1;
-        }
-	}
 }

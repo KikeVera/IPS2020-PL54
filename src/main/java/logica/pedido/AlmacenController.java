@@ -3,9 +3,6 @@ package logica.pedido;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -13,7 +10,6 @@ import javax.swing.table.TableModel;
 
 import logica.Controller;
 import logica.producto.ProductoOT;
-import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
@@ -125,44 +121,16 @@ public class AlmacenController implements Controller {
 	
 	//Guardamos la orden de trabajo en la base de datos
 	private void asignarOT() {
+		int index=view.getTabPedidos().getSelectedRow();
+		if(index==-1) {
+			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Orden no seleccionada","Advertencia operacion", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		PedidoUse pedido=Util.entityToUseList(pedidoModel.getPedidos()).get(view.getTabPedidos().getSelectedRow());
 		
 		//De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
 		otmodel.setOT(pedido.getId(), 1);	
-		
-		//-----------------Pruebas--------------
-		List<Integer> idPedidos=new ArrayList<>();
-		List<PedidoUse> Pedidos=new ArrayList<>();
-
-
-		for(OTEntity ot:otmodel.getOTs()) {
-			System.out.println(ot.getIdOt()+" "+ot.getEstado()+" "+ot.getIdAlmacenero()+" "+ot.getIdPedido());
-			
-			idPedidos.add(ot.getIdPedido());
-		}
-		
-		for(Integer id: idPedidos) {
-			Pedidos.add(Util.entityToUse(this.pedidoModel.getPedidoID(id)));
-		}
-		
-		List<ProductoEntity> catalogo=model.getListaProductos();
-		List<ProductoEntity> productos=Util.hashMapToProductEntityList(Pedidos.get(0).getProductos(), catalogo);
-		
-
-		Collections.sort(productos);
-		
-		for(ProductoEntity p:productos)
-			System.out.println(p.getPasillo()+" "+p.getEstanteria()+" "+p.getNombre());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
 
