@@ -33,6 +33,7 @@ public class OTModel {
 		db.executeUpdate(sql,idot,estado,idalmacenero,idpedido);		
 	}
 	
+	
 	public void updateStatus(int id,String status) {
 			
 		

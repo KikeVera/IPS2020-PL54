@@ -113,8 +113,23 @@ public class Util {
 		return lista;
 		
 	}
-	
-	
-	
-	
+	public static List<ProductoEntity> hashMapToProductEntityList(HashMap<Integer,Integer> mapa, List<ProductoEntity> catalogo){
+		List<ProductoEntity> lista= new ArrayList<ProductoEntity>();
+		Integer [] keys=mapa.keySet ().toArray(new Integer [mapa.size()]);
+		
+		for(int i=0;i<mapa.size();i++) {
+			for(ProductoEntity producto: catalogo) {
+				if(producto.getId()==keys[i]) {
+					lista.add(new ProductoEntity(producto.getId(),producto.getNombre(),producto.getDescripcion(),
+							producto.getPrecio(),producto.getPasillo(),producto.getEstanteria()));
+				}
+			}
+			
+			
+		}
+		
+		return lista;
+		
+	}
+		
 }
