@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import logica.Controller;
@@ -104,7 +105,11 @@ public class ProductosController implements Controller {
 	public List<ProductoEntity> getListaProductos() {
 		List<ProductoEntity> productos = model.getListaProductos();
 		TableModel tmodel=SwingUtil.getTableModelFromPojos(productos, new String[] {"id","nombre", "descripcion", "precio"});
+		
+		//Se cambia tambien la columna del precio para expresar la moneda usada
 		view.getTabProductos().setModel(tmodel);
+		TableColumn columna = view.getTabProductos().getColumn("precio"); 
+		columna.setHeaderValue("precio(€)");
 		SwingUtil.autoAdjustColumns(view.getTabProductos());
 		
 		//Como se guarda la clave del ultimo elemento seleccionado, restaura la seleccion de los detalles
@@ -117,7 +122,7 @@ public class ProductosController implements Controller {
 	 * Inicializa la tabla que representa el pedido al iniciar la interfaz de usuario 
 	 */
 	private void inicializarTablaPedido() {
-		TableModel tmodel= new DefaultTableModel(new String[] {"id","nombre","unidades","precio/ud","precio total"},0);
+		TableModel tmodel= new DefaultTableModel(new String[] {"id","nombre","unidades","precio/ud(€)","precio total(€)"},0);
 		view.getTabPedido().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTabPedido());
 	}
@@ -135,7 +140,7 @@ public class ProductosController implements Controller {
 	public void updateDetail() {
 		
 		//Actualizamos la tabla correspondiente al pedido 
-		String[] properties = new String[] {"id","nombre","unidades","precio/ud","precio total"};
+		String[] properties = new String[] {"id","nombre","unidades","precio/ud(€)","precio total(€)"};
 		TableModel tm = SwingUtil.getTableModelFromPedido(properties, carrito);
 		this.view.getTabPedido().setModel(tm);
 		this.view.getTabPedido().getSelectionModel().setSelectionInterval(lastSelectedPedidoRow,lastSelectedPedidoRow);

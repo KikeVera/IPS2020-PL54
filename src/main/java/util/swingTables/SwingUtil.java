@@ -122,6 +122,7 @@ public class SwingUtil {
 		return tm;
 	}
 	
+	
 	/**
 	 * Devuelve un modelo de tabla pedido a partir de un carrito.
 	 * @param <E>

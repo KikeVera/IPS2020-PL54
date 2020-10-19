@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -159,8 +160,9 @@ public class PaqueteController implements Controller {
 	private void empaquetarPedidos() {
 		for(PedidoUse pedido: empaquetado.getPedidos()) {
 			String idPaquete = UUID.randomUUID().toString().substring(0, 5);
-			pam.createPaquete(pedido.getId(),idPaquete);
-			generarDocumentacion(pedido,idPaquete);
+			String fecha=Util.dateToIsoString(new Date());
+			pam.createPaquete(pedido.getId(),idPaquete,fecha);
+			generarDocumentacion(pedido,idPaquete,fecha);
 		}
 	}
 	
@@ -168,13 +170,14 @@ public class PaqueteController implements Controller {
 	 * Genera documentacion de un paquete. Tanto la etiqueta como el albaran
 	 * @param pedido Pedido del que se genera la documentacion
 	 * @param idPaquete ID del paquete a generar 
+	 * @param fecha Fecha de empaquetado (No confundir con la de pedido)
 	 */
-	public void generarDocumentacion(PedidoUse pedido, String idPaquete) {
-		File etiqueta = new File ("files","etiqueta" + pedido.getId() + ".txt");
-		File albaran = new File ("files","albaran" + pedido.getId() + ".txt");
+	public void generarDocumentacion(PedidoUse pedido, String idPaquete, String fecha) {
+		File etiqueta = new File ("files","etiqueta" + idPaquete + ".txt");
+		File albaran = new File ("files","albaran" + idPaquete + ".txt");
 		
-		generarEtiqueta(etiqueta,pedido,idPaquete);
-		generarAlbaran(albaran,pedido,idPaquete);
+		generarEtiqueta(etiqueta,pedido,idPaquete,fecha);
+		generarAlbaran(albaran,pedido,idPaquete,fecha);
 		
 	}
 	
@@ -183,8 +186,9 @@ public class PaqueteController implements Controller {
 	 * @param etiqueta Fichero donde se almacenara la etiqueta.
 	 * @param pedido Pedido del que se realizará la etiqueta 
 	 * @param idPaquete ID del paquete a generar 
+	 * @param fecha Fecha de empaquetado (No confundir con la de pedido)
 	 */
-	private void generarEtiqueta(File etiqueta,PedidoUse pedido, String idPaquete) {
+	private void generarEtiqueta(File etiqueta,PedidoUse pedido, String idPaquete, String fecha) {
 		FileWriter fw = null;
 		BufferedWriter bw = null;  
 				
@@ -195,8 +199,9 @@ public class PaqueteController implements Controller {
             
             bw.write("----Etiqueta----\n");
             bw.write("Id paquete: " + idPaquete + "\n");
+            bw.write("Id pedido: " + pedido.getId() + "\n");
             bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
-            bw.write("Fecha de envio: " + pedido.getFecha() + "\n");
+            bw.write("Fecha de envio: " + fecha + "\n");
 
         } catch (IOException e) {
             System.out.println("Error al crear la etiqueta del paquete: " + idPaquete);
@@ -216,9 +221,10 @@ public class PaqueteController implements Controller {
 	 * Genera el albaran de un paquete.
 	 * @param albaran Fichero donde se almacenara el albaran 
 	 * @param pedido Pedido que se va a empaquetar 
-	 * @param idPaquete ID del paquete a generar 
+	 * @param idPaquete ID del paquete a generar
+	 * @param fecha Fecha de empaquetado (No confundir con la de pedido)  
 	 */
-	private void generarAlbaran(File albaran, PedidoUse pedido, String idPaquete) {
+	private void generarAlbaran(File albaran, PedidoUse pedido, String idPaquete, String fecha) {
 		FileWriter fw = null;
 		BufferedWriter bw = null;  
 				
@@ -231,8 +237,8 @@ public class PaqueteController implements Controller {
             bw.write("Id paquete: " + idPaquete + "\n");
             bw.write("Id pedido: " + pedido.getId() + "\n");
             bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
-            bw.write("Fecha de envio: " + pedido.getFecha() + "\n");
-            bw.write("Tamaño: " + pedido.getTamaño() + "\n");
+            bw.write("Fecha de envio: " + fecha + "\n");
+            bw.write("Tamaño total: " + pedido.getTamaño() + "\n");
             bw.write("Lista productos: " + pedido.getProductos() + "\n");
 
         } catch (IOException e) {
