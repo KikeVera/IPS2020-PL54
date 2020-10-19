@@ -23,6 +23,7 @@ import logica.producto.ProductoOT;
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
 import persistencia.paquete.PaqueteModel;
+import persistencia.pedido.PedidoEntity;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
@@ -162,17 +163,18 @@ public class PaqueteController implements Controller {
 			String idPaquete = UUID.randomUUID().toString().substring(0, 5);
 			String fecha=Util.dateToIsoString(new Date());
 			pam.createPaquete(pedido.getId(),idPaquete,fecha);
-			generarDocumentacion(pedido,idPaquete,fecha);
+			generarDocumentacion(pedido.getId(),idPaquete,fecha);
 		}
 	}
 	
 	/**
 	 * Genera documentacion de un paquete. Tanto la etiqueta como el albaran
-	 * @param pedido Pedido del que se genera la documentacion
+	 * @param idPedido Pedido del que se genera la documentacion
 	 * @param idPaquete ID del paquete a generar 
 	 * @param fecha Fecha de empaquetado (No confundir con la de pedido)
 	 */
-	public void generarDocumentacion(PedidoUse pedido, String idPaquete, String fecha) {
+	public void generarDocumentacion(int idPedido, String idPaquete, String fecha) {
+		PedidoEntity pedido = this.pem.getPedido(idPedido); 
 		File etiqueta = new File ("files","etiqueta" + idPaquete + ".txt");
 		File albaran = new File ("files","albaran" + idPaquete + ".txt");
 		
@@ -188,7 +190,7 @@ public class PaqueteController implements Controller {
 	 * @param idPaquete ID del paquete a generar 
 	 * @param fecha Fecha de empaquetado (No confundir con la de pedido)
 	 */
-	private void generarEtiqueta(File etiqueta,PedidoUse pedido, String idPaquete, String fecha) {
+	private void generarEtiqueta(File etiqueta,PedidoEntity pedido, String idPaquete, String fecha) {
 		FileWriter fw = null;
 		BufferedWriter bw = null;  
 				
@@ -224,7 +226,7 @@ public class PaqueteController implements Controller {
 	 * @param idPaquete ID del paquete a generar
 	 * @param fecha Fecha de empaquetado (No confundir con la de pedido)  
 	 */
-	private void generarAlbaran(File albaran, PedidoUse pedido, String idPaquete, String fecha) {
+	private void generarAlbaran(File albaran, PedidoEntity pedido, String idPaquete, String fecha) {
 		FileWriter fw = null;
 		BufferedWriter bw = null;  
 				
