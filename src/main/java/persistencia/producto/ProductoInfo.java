@@ -28,7 +28,7 @@ public class ProductoInfo implements Comparable<ProductoInfo> {
 
 	@Override
 	public int compareTo(ProductoInfo pe) {		
-		if(pe.getPasillo()>this.pasillo){
+		if(pe.getPasillo()>this.pasillo && pe.getEstanteria()>this.estanteria){
             return -1;
         }else if(pe.getPasillo()==this.pasillo){
             return 0;

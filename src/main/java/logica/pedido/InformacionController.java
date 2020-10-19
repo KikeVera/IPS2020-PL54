@@ -22,17 +22,16 @@ public class InformacionController implements Controller {
 	
 	private ProductosModel model; 
 	private InformacionView view;
-	private OTEntity ot;
-	
+	private OTEntity ot;	
 	private PedidosModel pem;
-	List<Integer> idPedidos;
 	
-	public InformacionController(OTEntity ote,ProductosModel pm,PedidosModel pedmod) {		
+	
+	public InformacionController(OTEntity ote,InformacionView infoview, ProductosModel pm,PedidosModel pedmod) {		
 		this.ot=ote;
 		this.model=pm;
 		this.pem=pedmod;
+		this.view=infoview;
 		
-		idPedidos=new ArrayList<>();
 		this.initView();
 
 	}
@@ -67,6 +66,7 @@ public class InformacionController implements Controller {
 		List<ProductoEntity> catalogo=model.getListaProductos();
 		
 		List<PedidoUse> Pedidos=new ArrayList<>();
+		List<Integer> idPedidos=new ArrayList<>();
 
 		idPedidos.add(ot.getIdPedido());
 
@@ -76,9 +76,6 @@ public class InformacionController implements Controller {
 
 		List<ProductoInfo> productos=Util.hashMapToProductEntityList(Pedidos.get(0).getProductos(), catalogo);
 		Collections.sort(productos);
-		
-		/*for(ProductoInfo pi:productos)
-			System.out.println(pi);*/
 		
 		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"nombre","pasillo","estanteria"});
 		view.getTableProductos().setModel(tmodel);

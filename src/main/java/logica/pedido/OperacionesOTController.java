@@ -121,7 +121,7 @@ public class OperacionesOTController implements Controller {
 		InformacionView ventana= new InformacionView();
 		ventana.getFrame().setLocationRelativeTo(view.getFrame());
 		
-		selectedController=new InformacionController(recoger.get(index),new ProductosModel(),new PedidosModel());
+		selectedController=new InformacionController(recoger.get(index),ventana,new ProductosModel(),new PedidosModel());
 		selectedController.initController();
 	}
 	

@@ -32,7 +32,7 @@ public class InformacionView  {
 	 * 
 	 */
 
-	private JFrame frame;
+	private JFrame frmInformacion;
 	private JPanel contentPane;
 	
 	private Recogida recogida;
@@ -58,18 +58,18 @@ public class InformacionView  {
 	}
 	
 	private void initialize() {
-		frame= new JFrame();
-		frame.setBackground(Color.WHITE);
-		frame.setTitle("Revision");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 575, 512);
+		frmInformacion= new JFrame();
+		frmInformacion.setBackground(Color.WHITE);
+		frmInformacion.setTitle("Informacion");
+		frmInformacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmInformacion.setBounds(100, 100, 575, 512);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		contentPane.setLayout(new BorderLayout(0, 0));
-		frame.setContentPane(contentPane);
+		frmInformacion.setContentPane(contentPane);
 		
 		pnBotones = new JPanel();
 		pnBotones.setLayout(new GridLayout(2, 3, 0, 0));
@@ -92,7 +92,7 @@ public class InformacionView  {
 		
 		contentPane.add(pnBotones, BorderLayout.SOUTH);
 		
-		btTerminar = new JButton("Terminar");
+		btTerminar = new JButton("Aceptar");
 		btTerminar.setFont(new Font("Arial", Font.PLAIN, 13));
 		pnBotones.add(btTerminar);
 		contentPane.add(pnTitulo, BorderLayout.NORTH);
@@ -115,7 +115,7 @@ public class InformacionView  {
 	}
 
 	public JFrame getFrame() {
-		return frame;
+		return frmInformacion;
 	}
 
 	public JPanel getContentPane() {
