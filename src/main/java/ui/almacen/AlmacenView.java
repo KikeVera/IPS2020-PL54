@@ -68,6 +68,7 @@ public class AlmacenView {
 		
 		tabPedidos = new JTable();
 		tabPedidos.setName("tabProductos");
+		tabPedidos.setDefaultEditor(Object.class, null);
 		tabPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabPedidos.setDefaultEditor(Object.class, null);
 		JScrollPane scrollPedidos = new JScrollPane(tabPedidos);
@@ -82,6 +83,8 @@ public class AlmacenView {
 		pnSuperiorDerecho.add(scrollProductos);
 		
 		tabProductos = new JTable();
+		tabProductos.setDefaultEditor(Object.class, null);
+		tabProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollProductos.setViewportView(tabProductos);
 		
 		lblPedido = new JLabel("Pedido seleccionado:");

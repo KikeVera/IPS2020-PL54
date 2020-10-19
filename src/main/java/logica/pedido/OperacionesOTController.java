@@ -174,10 +174,12 @@ public class OperacionesOTController implements Controller {
 		
 		if(selected.equals("Recogida")) {
 			 ots= recoger;
+			 this.view.getbtInformacion().setEnabled(true);
 		}
 		
 		if(selected.equals("Empaquetado")) {
 		 ots= empaquetar;
+		 this.view.getbtInformacion().setEnabled(false);
 		}
 		
 		TableModel tmodel= SwingUtil.getTableModelFromPojos(ots,new String[] {"idOt","idAlmacenero","idPedido"});

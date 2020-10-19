@@ -121,6 +121,7 @@ public class PaqueteView  {
 		pnTitulo = new JPanel();
 		pnTitulo.add(lbTitulo);
 		tableProductos = new JTable();
+		tableProductos.setDefaultEditor(Object.class, null);
 		tableProductos.setFont(new Font("Arial", Font.PLAIN, 15));
 		tableProductos.getTableHeader().setFont(new Font("Arial", Font.BOLD, 15));
 		
@@ -176,6 +177,7 @@ public class PaqueteView  {
 		
 		tablePedidos = new JTable();
 		
+		tablePedidos.setDefaultEditor(Object.class, null);
 		tablePedidos.setFont(new Font("Arial", Font.PLAIN, 15));
 		tablePedidos.getTableHeader().setFont(new Font("Arial", Font.BOLD, 15));
 	    scrPedidos.setViewportView(tablePedidos);

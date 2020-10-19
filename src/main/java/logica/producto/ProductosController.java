@@ -123,6 +123,7 @@ public class ProductosController implements Controller {
 	 */
 	private void inicializarTablaPedido() {
 		TableModel tmodel= new DefaultTableModel(new String[] {"id","nombre","unidades","precio/ud(€)","precio total(€)"},0);
+		
 		view.getTabPedido().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTabPedido());
 	}
@@ -147,6 +148,7 @@ public class ProductosController implements Controller {
 		
 		//Actualizamos el precio
 		this.view.getTextPrecio().setText(String.format("%.2f",this.carrito.calcPrecio()) + "€");
+		this.view.getSpUnidades().setValue(1);
 	}
 	
 	/**
@@ -204,6 +206,10 @@ public class ProductosController implements Controller {
 	 */
 	
 	private void guardarPedido() {
+		if(carrito.getPedido().isEmpty()) {
+			JOptionPane.showMessageDialog(this.view.getFrame(),"El pedido esta vacío ","Tienda online: Advertencia",JOptionPane.WARNING_MESSAGE);
+			return;
+			}
 		pedidoModel.setPedido(carrito.getPedido(),carrito.getUsuario().getId());
 		
 	}

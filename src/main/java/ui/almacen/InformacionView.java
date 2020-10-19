@@ -82,6 +82,7 @@ public class InformacionView  {
 		pnTitulo = new JPanel();
 		pnTitulo.add(lbTitulo);
 		tableProductos = new JTable();
+		tableProductos.setDefaultEditor(Object.class, null);
 		tableProductos.setFont(new Font("Arial", Font.PLAIN, 15));
 		tableProductos.getTableHeader().setFont(new Font("Arial", Font.BOLD, 15));
 		

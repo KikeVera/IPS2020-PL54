@@ -38,7 +38,6 @@ public class RevisionView  {
 
 	private JFrame frame;
 	private JPanel contentPane;
-	
 	private Recogida recogida;
 	private List<ProductoEntity> almacen= new ProductosModel().getListaProductos();
 	private JPanel pnBotones;
@@ -118,6 +117,7 @@ public class RevisionView  {
 		pnTitulo = new JPanel();
 		pnTitulo.add(lbTitulo);
 		tableProductos = new JTable();
+		tableProductos.setDefaultEditor(Object.class, null);
 		tableProductos.setFont(new Font("Arial", Font.PLAIN, 15));
 		tableProductos.getTableHeader().setFont(new Font("Arial", Font.BOLD, 15));
 		

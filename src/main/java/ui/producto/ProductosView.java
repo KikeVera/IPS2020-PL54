@@ -143,6 +143,7 @@ public class ProductosView {
 		pnSuperiorDerecho.add(scrollPedido);
 		
 		tabPedido = new JTable();
+		tabPedido.setDefaultEditor(Object.class, null);
 		tabPedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPedido.setViewportView(tabPedido);
 		
