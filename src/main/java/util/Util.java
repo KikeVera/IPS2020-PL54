@@ -45,6 +45,45 @@ public class Util {
 		return lista;
 	} 
 	
+	public static List<HashMap<Integer,Integer>> dividePedido(HashMap<Integer,Integer> mapa, int maxCarrito){
+		List<HashMap<Integer,Integer>> lista= new ArrayList<>();
+		HashMap<Integer,Integer> trozo=new HashMap<>();
+		int hueco=maxCarrito;
+		
+		for(Integer ID: mapa.keySet()) {
+			if(mapa.get(ID)<=hueco) {
+				trozo.put(ID, mapa.get(ID));
+				mapa.put(ID, 0);
+				hueco=hueco-mapa.get(ID);
+			}
+			
+			else {
+				while(mapa.get(ID)>hueco) {
+					trozo.put(ID, hueco);
+					mapa.put(ID, mapa.get(ID)-hueco);
+					lista.add(trozo);
+					hueco=maxCarrito;
+					trozo=new HashMap<>();
+					
+					
+				}
+				
+			}
+			
+			if(hueco==0) {
+				lista.add(trozo);
+				hueco=maxCarrito;
+				trozo=new HashMap<>();
+			}
+			
+			
+		}
+		return lista;
+	}
+	
+	
+	
+	
 	public static String productosToString(HashMap<Integer,Integer> lista) {
 		StringBuffer buffer= new StringBuffer();
 		
