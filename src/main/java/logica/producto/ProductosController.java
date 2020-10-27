@@ -122,7 +122,7 @@ public class ProductosController implements Controller {
 	 * Inicializa la tabla que representa el pedido al iniciar la interfaz de usuario 
 	 */
 	private void inicializarTablaPedido() {
-		TableModel tmodel= new DefaultTableModel(new String[] {"id","nombre","unidades","precio/ud(€)","precio total(€)"},0);
+		TableModel tmodel= new DefaultTableModel(new String[] {"id","nombre","unidades","precio total(€)"},0);
 		
 		view.getTabPedido().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTabPedido());
@@ -141,7 +141,7 @@ public class ProductosController implements Controller {
 	public void updateDetail() {
 		
 		//Actualizamos la tabla correspondiente al pedido 
-		String[] properties = new String[] {"id","nombre","unidades","precio/ud(€)","precio total(€)"};
+		String[] properties = new String[] {"id","nombre","unidades","precio total(€)"};
 		TableModel tm = SwingUtil.getTableModelFromPedido(properties, carrito);
 		this.view.getTabPedido().setModel(tm);
 		this.view.getTabPedido().getSelectionModel().setSelectionInterval(lastSelectedPedidoRow,lastSelectedPedidoRow);

@@ -144,14 +144,12 @@ public class SwingUtil {
 			ProductoEntity producto = carrito.searchProductById(id);
 			String nombre = producto.getNombre();
 			int ud = carrito.getPedido().get(id);
-			String precioUd = String.format("%.2f",producto.getPrecio());
 			String precioTotal = String.format("%.2f",producto.getPrecio() * ud); 
 			 
 			tm.setValueAt(id, i, 0);
 			tm.setValueAt(nombre, i, 1);
 			tm.setValueAt(ud, i, 2);
-			tm.setValueAt(precioUd, i, 3);
-			tm.setValueAt(precioTotal, i, 4);
+			tm.setValueAt(precioTotal, i, 3);
 			i++; 
 		}
 		return tm;
