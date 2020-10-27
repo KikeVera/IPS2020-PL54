@@ -45,7 +45,7 @@ public class ProductosController implements Controller {
 		//Inicializamos la tabla que representara al pedido 
 		inicializarTablaPedido();
 		
-		view.getLblPedido().setText("(USUARIO: " + this.carrito.getUsuario().getId() + ")" + view.getLblPedido().getText());
+		view.getLblUsuario().setText(view.getLblUsuario().getText() + this.carrito.getUsuario().getId());
 		
 		//Abre la ventana (sustituye al main generado por WindowBuilder)
 		view.getFrame().setVisible(true);
