@@ -33,7 +33,7 @@ public class ProductosView {
 	private JScrollPane scrollPedido;
 	private JSpinner spUnidades;
 	private JButton btnAnadir;
-	private JPanel pnSuperiorIzquirdo;
+	private JPanel pnSuperiorIzquierdo;
 	private JLabel lblTabla;
 	private JPanel pnSuperiorDerecho;
 	private JLabel lblPedido;
@@ -74,20 +74,20 @@ public class ProductosView {
 		frmTiendaOnline.setLocationRelativeTo(null);
 		
 		//Inicializa el panel superior izquierdo 
-		pnSuperiorIzquirdo = new JPanel();
-		pnSuperiorIzquirdo.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
-		pnSuperiorIzquirdo.setLayout(new BorderLayout(0, 0));
+		pnSuperiorIzquierdo = new JPanel();
+		pnSuperiorIzquierdo.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
+		pnSuperiorIzquierdo.setLayout(new BorderLayout(0, 0));
 		
 		lblTabla = new JLabel("Productos disponibles:");
 		lblTabla.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnSuperiorIzquirdo.add(lblTabla, BorderLayout.NORTH);
+		pnSuperiorIzquierdo.add(lblTabla, BorderLayout.NORTH);
 		
 		tabProductos = new JTable();
 		tabProductos.setName("tabProductos");
 		tabProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabProductos.setDefaultEditor(Object.class, null);
 		JScrollPane tablePanel = new JScrollPane(tabProductos);
-		pnSuperiorIzquirdo.add(tablePanel);
+		pnSuperiorIzquierdo.add(tablePanel);
 		
 		//Inicializa el panel inferior derecho
 		pnInferiorDerecho = new JPanel();
@@ -182,8 +182,8 @@ public class ProductosView {
 		
 		
 		//Añadimos todo al panel principal 
-		pnNorte.add(pnSuperiorIzquirdo, BorderLayout.CENTER);
-		pnNorte.add(pnSuperiorDerecho, BorderLayout.WEST);
+		pnNorte.add(pnSuperiorDerecho, BorderLayout.CENTER);
+		pnNorte.add(pnSuperiorIzquierdo, BorderLayout.WEST);
 		pnSur.setLayout(new GridLayout(0, 2, 0, 0));
 		pnSur.add(pnInferiorIzquierdo);
 		pnSur.add(pnInferiorDerecho);
@@ -208,7 +208,7 @@ public class ProductosView {
 	public JScrollPane getScrollPedido() {return this.scrollPedido;}
 	public JTextField getTextPrecio() {return this.textField;}
 	public JPanel getPnSuperiorDerecho() { return this.pnSuperiorDerecho;}
-	public JPanel getPnSuperiorIzquierdo() { return this.pnSuperiorIzquirdo;}
+	public JPanel getPnSuperiorIzquierdo() { return this.pnSuperiorIzquierdo;}
 	public JPanel getPnInferiorDerecho() { return this.pnInferiorDerecho;}
 	public JPanel getPnInferiorIzquierdo() { return this.pnInferiorIzquierdo;}
 	public JLabel getLblPedido() {return this.lblPedido;}
