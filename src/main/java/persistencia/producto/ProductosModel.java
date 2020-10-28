@@ -11,7 +11,7 @@ import persistencia.database.Database;
  */
 public class ProductosModel {
 
-	public static final String SQL_LISTA_PRODUCTOS = "SELECT id,nombre,descripcion,precio,pasillo,estanteria from Producto";
+	public static final String SQL_LISTA_PRODUCTOS = "SELECT id,nombre,descripcion,precio,pasillo,estanteria,altura from Producto";
 	
 	private Database db=new Database();
 

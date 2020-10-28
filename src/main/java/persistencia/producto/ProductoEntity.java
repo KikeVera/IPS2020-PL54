@@ -25,6 +25,7 @@ public class ProductoEntity{
 		this.precio = rowPrecio; 
 		this.pasillo = rowPasillo;
 		this.estanteria = rowEstanteria; 
+		this.altura=altura;
 	}
 	
 	@Override
