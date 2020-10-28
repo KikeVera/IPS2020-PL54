@@ -43,7 +43,6 @@ public class PaqueteView  {
 	private Recogida recogida;
 	private List<ProductoEntity> almacen= new ProductosModel().getListaProductos();
 	private JPanel pnInferior;
-	private JButton btEmpaquetar;
 	private JButton btCancelar;
 	private JPanel pnTitulo;
 	private JLabel lbTitulo;
@@ -61,8 +60,7 @@ public class PaqueteView  {
 	private JTable tablePedidos;
 	private JPanel pnBotones;
 	private JPanel pnID;
-	private JLabel lbIDPedido;
-	private JTextField txIDPedido;
+	private JButton btEscanear;
 
 	
 
@@ -90,12 +88,6 @@ public class PaqueteView  {
 		
 		contentPane.setLayout(new BorderLayout(0, 0));
 		frame.setContentPane(contentPane);
-		
-		
-		
-		
-		btEmpaquetar = new JButton("Empaquetar");
-		btEmpaquetar.setFont(new Font("Arial", Font.PLAIN, 13));
 		
 		btCancelar = new JButton("Cancelar");
 		btCancelar.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -136,27 +128,21 @@ public class PaqueteView  {
 		btTerminar.setFont(new Font("Arial", Font.PLAIN, 13));
 		
 		pnID = new JPanel();
-		pnInferior.add(pnID);
-		pnID.setLayout(new GridLayout(0, 4, 0, 0));
+		
+		pnID.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		pnID.add(lbIDProducto);
 		pnID.add(txIDProducto);
 		
-		lbIDPedido = new JLabel("IDPedido:");
-		lbIDPedido.setHorizontalAlignment(SwingConstants.CENTER);
-		lbIDPedido.setFont(new Font("Arial", Font.PLAIN, 13));
-		pnID.add(lbIDPedido);
-		
-		txIDPedido = new JTextField();
-		pnID.add(txIDPedido);
-		txIDPedido.setColumns(10);
-		
 		
 		pnBotones = new JPanel();
 		pnInferior.add(pnBotones);
-		pnBotones.setLayout(new GridLayout(0, 3, 0, 0));
+		pnInferior.add(pnID);
 		
-		pnBotones.add(btEmpaquetar);
+		btEscanear = new JButton("Escanear");
+		btEscanear.setFont(new Font("Arial", Font.PLAIN, 13));
+		pnID.add(btEscanear);
+		pnBotones.setLayout(new GridLayout(0, 2, 0, 0));
 		pnBotones.add(btCancelar);
 		
 		pnBotones.add(btTerminar);
@@ -202,9 +188,6 @@ public class PaqueteView  {
 		return txIDProducto;
 	}
 	
-	public JTextField getTxIDPedido() {
-		return txIDPedido;
-	}
 
 	public JFrame getFrame() {
 		return frame;
@@ -233,8 +216,8 @@ public class PaqueteView  {
 		return btCancelar;
 	}
 	
-	public JButton getBtEmpaquetar() {
-		return btEmpaquetar;
+	public JButton getBtEscanear() {
+		return btEscanear;
 	}
 	
 	public JButton getBtTerminar() {

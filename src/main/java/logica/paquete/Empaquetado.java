@@ -55,14 +55,9 @@ public class Empaquetado {
 		}
 		
 			
-		for(PedidoUse pedido: pedidos) {
-			ProductoOT pr= selectProducto(idProducto, pedido);
-			if(pr!=null) {
-				return 4;
-			}
-		}
 		
-		return 5;
+		
+		return 4;
 		
 	}
 	

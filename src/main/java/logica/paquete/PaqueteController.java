@@ -123,7 +123,7 @@ public class PaqueteController implements Controller {
 			}
 		});
 		
-		this.view.getBtEmpaquetar().addActionListener(new ActionListener() {
+		this.view.getBtEscanear().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				escanearProducto();
@@ -273,22 +273,18 @@ public class PaqueteController implements Controller {
 			}
 		}
 		
-		String idPedidoTx=view.getTxIDPedido().getText();
 		
-		if(idPedidoTx.length()==0) {
-			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Pedido no seleccionado","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
-			return;
+		if(view.getTablePedidos().getSelectedRow()==-1){
+			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Ningún pedido seleccionado","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
+			
 		}
+		int idPedido=empaquetado.getPedidos().get(view.getTablePedidos().getSelectedRow()).getId();
 		
-		for(Character ch: idPedidoTx.toCharArray()) {
-			if(!Character.isDigit(ch)) {
-				JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Pedido no válido","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
-				return;
-			}
-		}
+		
+		
 		
 		int idProducto=Integer.parseInt(idProductoTx);
-		int idPedido=Integer.parseInt(idPedidoTx);
+		
 		
 		
 		int codeResultado=empaquetado.empaquetarProducto(idPedido, idProducto);
@@ -311,11 +307,8 @@ public class PaqueteController implements Controller {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: No se deben recoger mas unidades de este artículo","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 		}
 		
-		else if(codeResultado==4) {
-			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: El producto corresponde a otro pedido de esta OT","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
-		}
 		
-		else if(codeResultado==5) {
+		else if(codeResultado==4) {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: El producto no corresponde a esta OT ","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 		}
 		
