@@ -51,8 +51,9 @@ public class RecogidaController implements Controller {
 		List<ProductoEntity> catalogo=model.getListaProductos();
 		
 		HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(ot.getIdPedido())).getProductos();
+		List<ProductoOT> lista=Util.hashMapToProductsList(mapa,catalogo);
 		
-		recogida= new Recogida(Util.hashMapToProductsList(mapa,catalogo),catalogo);
+		recogida= new Recogida(lista,catalogo);
 		this.initView();
 	}
 	
