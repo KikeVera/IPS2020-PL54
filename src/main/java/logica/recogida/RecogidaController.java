@@ -4,6 +4,7 @@ package logica.recogida;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,6 +54,8 @@ public class RecogidaController implements Controller {
 		HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(ot.getIdPedido())).getProductos();
 		
 		List<ProductoOT> lista=Util.hashMapToProductsList(mapa,catalogo);
+		Collections.sort(lista);
+		
 		//Aquí se deberá ordenar la lista
 		recogida= new Recogida(lista,catalogo);
 		this.initView();
