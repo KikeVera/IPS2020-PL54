@@ -100,7 +100,7 @@ public class AlmacenView {
 		
 		
 		
-		btAsignar = new JButton("Asignar");	
+		btAsignar = new JButton("Generar OT");	
 		btAsignar.setFont(new Font("Arial", Font.PLAIN, 14));
 		frmTiendaOnline.getContentPane().setLayout(new BorderLayout(0, 0));
 		
