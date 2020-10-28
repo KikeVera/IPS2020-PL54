@@ -16,6 +16,7 @@ public class ProductoInfo implements Comparable<ProductoInfo> {
 		this.nombre = rowNombre;
 		this.pasillo = rowPasillo;
 		this.estanteria = rowEstanteria; 
+		
 	}
 	
 	public String getNombre() { return this.nombre; }

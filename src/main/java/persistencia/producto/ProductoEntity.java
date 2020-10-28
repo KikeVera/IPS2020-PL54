@@ -13,10 +13,12 @@ public class ProductoEntity{
 	private double precio;
 	private int pasillo; 
 	private int estanteria; 
-	
+	private int altura; 
+
 	public ProductoEntity() {}
 	
-	public ProductoEntity(int rowId, String rowNombre, String rowDescripcion, double rowPrecio,int rowPasillo,int rowEstanteria) {
+	public ProductoEntity(int rowId, String rowNombre, String rowDescripcion, double rowPrecio,
+			int rowPasillo,int rowEstanteria, int altura) {
 		this.id = rowId;
 		this.nombre = rowNombre;
 		this.descripcion = rowDescripcion;
@@ -37,7 +39,8 @@ public class ProductoEntity{
 	public double getPrecio() { return this.precio; }
 	public int getPasillo() {return this.pasillo;}
 	public int getEstanteria() {return this.estanteria;}
-	
+	public int getAltura() { return altura;}
+
 	
 	public void setId(int value) { this.id=value; }
 	public void setNombre(String value) { this.nombre=value; }
@@ -45,5 +48,8 @@ public class ProductoEntity{
 	public void setPrecio(double value) { this.precio=value; }
 	public void setPasillo(int pasillo) {this.pasillo=pasillo;}
 	public void setEstanteria(int estanteria) {this.estanteria=estanteria;}
+	public void setAltura(int altura) { this.altura = altura; }
+
+
 
 }

@@ -143,7 +143,8 @@ public class Util {
 		for(int i=0;i<mapa.size();i++) {
 			for(ProductoEntity producto: catalogo) {
 				if(producto.getId()==keys[i]) {
-					lista.add(new ProductoOT(producto.getId(),producto.getNombre(),mapa.get(keys[i])));
+					lista.add(new ProductoOT(producto.getId(),producto.getNombre(),mapa.get(keys[i]),
+							producto.getPasillo(),producto.getEstanteria(),producto.getAltura()));
 				}
 			}
 			
