@@ -52,7 +52,7 @@ public class RecogidaController implements Controller {
 		
 		HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(ot.getIdPedido())).getProductos();
 		List<ProductoOT> lista=Util.hashMapToProductsList(mapa,catalogo);
-		
+		//Aquí se deberá ordenar la lista
 		recogida= new Recogida(lista,catalogo);
 		this.initView();
 	}
