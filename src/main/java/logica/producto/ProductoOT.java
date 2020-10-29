@@ -6,7 +6,7 @@ package logica.producto;
  * @author Moises
  *
  */
-public class ProductoOT implements Comparable<ProductoOT>  {
+public class ProductoOT  {
 	
 	private int id;
 	private String nombre; 
@@ -49,14 +49,4 @@ public class ProductoOT implements Comparable<ProductoOT>  {
 	public void setUnidades(int unidades) {this.unidades = unidades;}
 	public void setAltura(int altura) {this.altura = altura;}
 	
-	@Override
-	public int compareTo(ProductoOT pe) {		
-		if(pe.getPasillo()>this.pasillo){
-            return -1;
-        }else if(pe.getPasillo()==this.pasillo){
-            return 0;
-        }else{
-            return 1;
-        }
-	}
 }

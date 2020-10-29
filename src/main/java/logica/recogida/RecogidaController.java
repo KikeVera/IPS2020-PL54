@@ -54,8 +54,8 @@ public class RecogidaController implements Controller {
 		HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(ot.getIdPedido())).getProductos();
 		
 		List<ProductoOT> lista=Util.hashMapToProductsList(mapa,catalogo);
-		Collections.sort(lista);
-		
+
+		lista=ordenaProductos(lista);
 		//Aquí se deberá ordenar la lista
 		recogida= new Recogida(lista,catalogo);
 		this.initView();
@@ -133,6 +133,39 @@ public class RecogidaController implements Controller {
 		
 	}
 	
+	private List<ProductoOT> ordenaProductos(List<ProductoOT> lista){
+		
+		 for (int x = 0; x < lista.size(); x++) {
+		        for (int i = 0; i < lista.size()-x-1; i++) {
+		            if(lista.get(i).getPasillo() > lista.get(i+1).getPasillo()){
+		            	ProductoOT tmp = lista.get(i+1);
+		            	lista.remove(i+1);
+		            	lista.add(i+1,lista.get(i));	 
+		            	lista.remove(i);
+		                lista.add(i,tmp);
+		            }
+		            if(lista.get(i).getPasillo() == lista.get(i+1).getPasillo()){
+		            	if(lista.get(i).getEstanteria() > lista.get(i+1).getEstanteria()) {
+		            		ProductoOT tmp = lista.get(i+1);
+		            		lista.remove(i+1);
+		            		lista.add(i+1,lista.get(i));	 
+		            		lista.remove(i);
+		            		lista.add(i,tmp);
+		            	}
+		            	if(lista.get(i).getEstanteria() == lista.get(i+1).getEstanteria()) {
+		            		if(lista.get(i).getAltura() > lista.get(i+1).getAltura()) {
+		            			ProductoOT tmp = lista.get(i+1);
+			            		lista.remove(i+1);
+			            		lista.add(i+1,lista.get(i));	 
+			            		lista.remove(i);
+			            		lista.add(i,tmp);
+		            		}
+		            	}
+		            }
+		        }
+		 }
+		return lista;
+	}
 	
 	private void escanearProducto() {
 		String idProductoTx=view.getTxIDEsacaner().getText();
