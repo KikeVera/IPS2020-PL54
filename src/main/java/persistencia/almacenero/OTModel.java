@@ -20,6 +20,11 @@ public class OTModel {
 		return db.executeQueryPojo(OTEntity.class, sql);
 	}
 	
+	public List<OTEntity> getOTByIdPedido(int idpedido) {
+		String sql= "Select idot,estado,idalmacenero,idpedido from ordentrabajo where idpedido = ?";		
+		
+		return db.executeQueryPojo(OTEntity.class, sql,idpedido);
+	}
 	public List<OTEntity> getOTsByStatus(String status) {
 		String sql= "Select idot,estado,idalmacenero,idpedido from ordentrabajo where estado = ?";		
 		
