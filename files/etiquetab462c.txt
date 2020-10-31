@@ -1,5 +1,0 @@
-----Etiqueta----
-Id paquete: b462c
-Id pedido: 1
-Usuario: 63be5
-Fecha de envio: 2020-10-21

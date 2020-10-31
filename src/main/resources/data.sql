@@ -5,6 +5,7 @@ delete from Incidencia;
 delete from OrdenTrabajo;
 delete from Almacenero;
 delete from Paquete;
+delete from Usuario; 
 insert into Producto(id,nombre,descripcion,precio,pasillo,estanteria,altura) values 
 	(100,'Producto A','A',2.22,0,1,3),
 	(101,'Producto B','B',21.2,1,1,0),
@@ -14,5 +15,7 @@ insert into Producto(id,nombre,descripcion,precio,pasillo,estanteria,altura) val
 	(105,'Producto F','F',5.22,1,4,1),
     (106,'Producto G','G',14.34,1,2,5),
     (107,'Producto H','H',8.5,1,2,7);
-
+insert into Usuario(id,codigo,tipo) values 
+	('usuario','usuario','usuario'),
+	('empresa','empresa','empresa');
 

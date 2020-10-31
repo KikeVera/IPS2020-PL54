@@ -1,5 +1,0 @@
-----Etiqueta----
-Id paquete: d6a49
-Id pedido: 2
-Usuario: 40677
-Fecha de envio: 2020-10-28

@@ -1,7 +1,0 @@
-----Albaran----
-Id paquete: b462c
-Id pedido: 1
-Usuario: 63be5
-Fecha de envio: 2020-10-21
-Tamaño total: 9
-Lista productos: 100-5/101-3/102-1

@@ -1,7 +1,0 @@
-----Albaran----
-Id paquete: d6a49
-Id pedido: 2
-Usuario: 40677
-Fecha de envio: 2020-10-28
-Tamaño total: 7
-Lista productos: 101-3/104-2/107-2
