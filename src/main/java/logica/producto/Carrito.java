@@ -26,9 +26,9 @@ public class Carrito {
 	 * Constructor 
 	 * @param catalogo Lista de productos disponibles 
 	 */
-	public Carrito(List<ProductoEntity> catalogo) {
+	public Carrito(List<ProductoEntity> catalogo,UsuarioEntity usuario) {
 		this.catalogo = catalogo;
-		this.usuario = new UsuarioEntity(); 
+		this.usuario = usuario; 
 	}
 	
 	/**

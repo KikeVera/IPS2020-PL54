@@ -9,29 +9,29 @@ import java.util.UUID;
  */
 public class UsuarioEntity {
 	
-	private String id;
+
 	private String codigo; 
-	private String tipo; 
+	private String tipo;
+	private String direccion; 
 	
-	public UsuarioEntity(String rowId, String rowCodigo, String rowTipo) {
-		this.id = rowId; 
+	public UsuarioEntity(String rowCodigo, String rowTipo,String rowDireccion) { 
 		this.codigo = rowCodigo; 
 		this.tipo = rowTipo; 
+		this.direccion = rowDireccion; 
 	}
 	
 	public UsuarioEntity() {
-		this.id = UUID.randomUUID().toString().substring(0,5); 
-		this.codigo = ""; 
-		this.tipo = ""; 
+		this.codigo = UUID.randomUUID().toString().substring(0,5); 
+		this.tipo = "anonimo"; 
 	}
 	
-	public String getId() {return this.id;}
 	public String getCodigo() {return this.codigo;}
 	public String getTipo() {return this.tipo;}
+	public String getDireccion() {return this.direccion;}
 	
-	public void setId(String value) { this.id=value; }
 	public void setCodigo(String value) { this.codigo=value; }
 	public void setTipo(String value) { this.tipo=value; }
+	public void setDireccn(String value) { this.direccion=value; }
 
 
 }

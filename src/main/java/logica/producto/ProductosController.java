@@ -15,6 +15,7 @@ import logica.Controller;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
+import persistencia.usuario.UsuarioEntity;
 import ui.SwingMain;
 import ui.producto.ProductosView;
 import util.swingTables.SwingUtil;
@@ -25,14 +26,16 @@ public class ProductosController implements Controller {
 	private ProductosView view; //Interfaz usuario 
 	private Carrito carrito; //Carrito que contiene al pedido 
 	private PedidosModel pedidoModel;
-	private int lastSelectedPedidoRow; //Almacena ultima seleccion en la tabla productos 
+	private int lastSelectedPedidoRow; //Almacena ultima seleccion en la tabla productos
+	private UsuarioEntity usuario; //Usuario actual
 	
  
-	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem) {
+	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem,UsuarioEntity usuario) {
 		this.pedidoModel=pem;
 		this.model = m; 
 		this.view = v; 
 		this.lastSelectedPedidoRow = 0;  
+		this.usuario = usuario; 
 		this.initView();
 	}
 	
@@ -40,12 +43,12 @@ public class ProductosController implements Controller {
 
 		//Inicializamos el carrito pasandole el catalogo de productos disponibles. Inicializamos 
 		//tambien la tabla de productos.
-		this.carrito = new Carrito(this.getListaProductos());
+		this.carrito = new Carrito(this.getListaProductos(),this.usuario);
 		
 		//Inicializamos la tabla que representara al pedido 
 		inicializarTablaPedido();
 		
-		view.getLblUsuario().setText(view.getLblUsuario().getText() + this.carrito.getUsuario().getId());
+		view.getLblUsuario().setText(view.getLblUsuario().getText() + this.carrito.getUsuario().getCodigo());
 		
 		//Abre la ventana (sustituye al main generado por WindowBuilder)
 		view.getFrame().setVisible(true);
@@ -210,7 +213,7 @@ public class ProductosController implements Controller {
 			JOptionPane.showMessageDialog(this.view.getFrame(),"El pedido esta vacío ","Tienda online: Advertencia",JOptionPane.WARNING_MESSAGE);
 			return;
 			}
-		pedidoModel.setPedido(carrito.getPedido(),carrito.getUsuario().getId());
+		pedidoModel.setPedido(carrito.getPedido(),carrito.getUsuario().getCodigo());
 		
 	}
 	

@@ -1,25 +1,25 @@
 package ui;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import logica.pedido.AlmacenController;
-import logica.producto.ProductosController;
+import logica.usuario.UsuarioController;
 import persistencia.almacenero.OTModel;
 import persistencia.database.Database;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductosModel;
+import persistencia.usuario.UsuarioModel;
 import ui.almacen.AlmacenView;
-import ui.producto.ProductosView;
-
-import javax.swing.JButton;
-import java.awt.GridLayout;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import ui.usuario.UsuarioView;
 
 public class SwingMain extends JFrame {
 
@@ -113,7 +113,7 @@ public class SwingMain extends JFrame {
 			btnLanzarPaginaWeb = new JButton("Iniciar la pagina web");
 			btnLanzarPaginaWeb.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					ProductosController controller = new ProductosController(new ProductosModel(), new ProductosView(),new PedidosModel());
+					UsuarioController controller = new UsuarioController(new UsuarioModel(), new UsuarioView());
 					controller.initController();
 				}
 			});
