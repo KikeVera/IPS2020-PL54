@@ -27,28 +27,36 @@ public class ProductosController implements Controller {
 	private Carrito carrito; //Carrito que contiene al pedido 
 	private PedidosModel pedidoModel;
 	private int lastSelectedPedidoRow; //Almacena ultima seleccion en la tabla productos
-	private UsuarioEntity usuario; //Usuario actual
-	
+
  
 	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem,UsuarioEntity usuario) {
 		this.pedidoModel=pem;
 		this.model = m; 
 		this.view = v; 
-		this.lastSelectedPedidoRow = 0;  
-		this.usuario = usuario; 
-		this.initView();
+		this.lastSelectedPedidoRow = 0;   
+		this.initView(usuario);
 	}
 	
+	@Override
 	public void initView() {
+		// De momento no utilizado, solo se usa para cumplir con la interfaz	
+	}
+	
+	/**
+	 * Inicia la vista 
+	 * @param usuario El usuario que estara realizando el pedido
+	 */
+	public void initView(UsuarioEntity usuario) {
 
 		//Inicializamos el carrito pasandole el catalogo de productos disponibles. Inicializamos 
 		//tambien la tabla de productos.
-		this.carrito = new Carrito(this.getListaProductos(),this.usuario);
+		this.carrito = new Carrito(this.getListaProductos(),usuario);
 		
 		//Inicializamos la tabla que representara al pedido 
 		inicializarTablaPedido();
 		
-		view.getLblUsuario().setText(view.getLblUsuario().getText() + this.carrito.getUsuario().getCodigo());
+		view.getLblUsuario().setText(view.getLblUsuario().getText() + " " + this.carrito.getUsuario().getCodigo()
+				+ " Tipo de usuario: " + this.carrito.getUsuario().getTipo());
 		
 		//Abre la ventana (sustituye al main generado por WindowBuilder)
 		view.getFrame().setVisible(true);
@@ -216,6 +224,8 @@ public class ProductosController implements Controller {
 		pedidoModel.setPedido(carrito.getPedido(),carrito.getUsuario().getCodigo());
 		
 	}
+
+
 	
 
 }

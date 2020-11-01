@@ -48,6 +48,21 @@ public class UsuarioController implements Controller{
 
 		});
 		
+		this.view.getRdbNoAnonimo().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				enableNoAnonimo(); 
+			}
+		});
+		
+		this.view.getRdbAnonimo().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				disableNoAnonimo(); 
+			}
+
+		});
+		
 	}
 	
 	/**
@@ -60,7 +75,7 @@ public class UsuarioController implements Controller{
 			createTienda(usuario);
 		}
 		else if(this.view.getRdbNoAnonimo().isSelected()) {
-			UsuarioEntity usuario = this.model.getUsuario(this.view.getTextField().getText());
+			UsuarioEntity usuario = this.model.getUsuario(this.view.getTxtCodigo().getText());
 			if(usuario != null) {
 				createTienda(usuario);
 			}
@@ -85,4 +100,21 @@ public class UsuarioController implements Controller{
 		this.view.getFrame().dispose();
 	}
 
+
+	/**
+	 * Activa la region de inicio para usuarios no anonimos
+	 */
+	private void enableNoAnonimo() {
+		this.view.getTxtCodigo().setEnabled(true);
+		this.view.getTxtCodigo().setEditable(true);	
+	}
+	
+	/**
+	 * Desactiva la region de inicio para usuarios no anonimos 
+	 */
+	private void disableNoAnonimo() {
+		this.view.getTxtCodigo().setEnabled(false);
+		this.view.getTxtCodigo().setEditable(false);	
+		this.view.getTxtCodigo().setText("");
+	}
 }

@@ -27,7 +27,7 @@ public class UsuarioView {
 	private JPanel pnAnonimo;
 	private JRadioButton rdbAnonimo;
 	private JLabel lblCodigo;
-	private JTextField textField;
+	private JTextField txtCodigo;
 	private JPanel pnBotones;
 	private JButton btnInicio;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -80,10 +80,12 @@ public class UsuarioView {
 		lblCodigo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCodigo.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		textField = new JTextField();
-		textField.setBackground(Color.WHITE);
-		textField.setFont(new Font("Tahoma", Font.BOLD, 16));
-		textField.setColumns(10);
+		txtCodigo = new JTextField();
+		txtCodigo.setEditable(false);
+		txtCodigo.setEnabled(false);
+		txtCodigo.setBackground(Color.WHITE);
+		txtCodigo.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtCodigo.setColumns(10);
 		
 		frmUsuarios.getContentPane().add(pnAnonimo); 
 		frmUsuarios.getContentPane().add(pnNoAnonimo);
@@ -101,7 +103,7 @@ public class UsuarioView {
 		pnAnonimo.add(rdbAnonimo, "cell 0 0,alignx center,grow"); 
 		pnNoAnonimo.add(rdbNoAnonimo, "cell 0 0,alignx center,grow"); 
 		pnNoAnonimo.add(lblCodigo, "cell 0 1,alignx center,grow");
-		pnNoAnonimo.add(textField, "cell 0 1,alignx center,grow");
+		pnNoAnonimo.add(txtCodigo, "cell 0 1,alignx center,grow");
 		pnBotones.add(btnInicio);
 		
 	}
@@ -115,5 +117,5 @@ public class UsuarioView {
 	public JPanel getPnAnonimo() {return pnAnonimo;}
 	public JRadioButton getRdbAnonimo() {return rdbAnonimo;}
 	public JLabel getLblCodigo() {return lblCodigo;}
-	public JTextField getTextField() {return textField;}
+	public JTextField getTxtCodigo() {return txtCodigo;}
 }
