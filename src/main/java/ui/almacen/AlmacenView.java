@@ -53,7 +53,7 @@ public class AlmacenView {
 		frmTiendaOnline = new JFrame();
 		frmTiendaOnline.setTitle("Tienda online");
 		frmTiendaOnline.setName("Tienda online");
-		frmTiendaOnline.setBounds(0,0,357,569);
+		frmTiendaOnline.setBounds(0,0,317,483);
 		frmTiendaOnline.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmTiendaOnline.setLocationRelativeTo(null);
 		

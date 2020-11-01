@@ -53,7 +53,7 @@ public class OperacionesOTView {
 		frmTiendaOnline = new JFrame();
 		frmTiendaOnline.setTitle("Tienda online");
 		frmTiendaOnline.setName("Tienda online");
-		frmTiendaOnline.setBounds(0,0,491,569);
+		frmTiendaOnline.setBounds(0,0,289,480);
 		frmTiendaOnline.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTiendaOnline.setLocationRelativeTo(null);
 		
@@ -88,7 +88,7 @@ public class OperacionesOTView {
 		pnTabla.add(pnOperacion, BorderLayout.NORTH);
 		pnOperacion.setLayout(new GridLayout(1, 2, 0, 0));
 		
-		lbOperacion = new JLabel("Seleccione operacion:");
+		lbOperacion = new JLabel("Operacion:");
 		lbOperacion.setFont(new Font("Arial", Font.PLAIN, 14));
 		pnOperacion.add(lbOperacion);
 		

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
 import logica.Controller;
+import logica.pedido.AlmacenController;
 import logica.producto.ProductoOT;
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
@@ -20,7 +21,7 @@ import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
 import persistencia.recogida.IncidenciaEntity;
 import persistencia.recogida.IncidenciaModel;
-
+import ui.almacen.AlmacenView;
 import ui.recogida.IncidenciaView;
 import ui.recogida.RevisionView;
 import util.Util;
@@ -105,6 +106,8 @@ public class RecogidaController implements Controller {
 				
 				guardarIncidencias();
 				view.getFrame().dispose();
+				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
+				controller.initController();
 				
 				
 			}
@@ -125,6 +128,8 @@ public class RecogidaController implements Controller {
 				
 				view.getFrame().dispose();
 				otm.updateStatus(ot.getIdOt(), "RECOGIDO");
+				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
+				controller.initController();
 				
 			}
 		});

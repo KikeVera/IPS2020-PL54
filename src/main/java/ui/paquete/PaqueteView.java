@@ -61,9 +61,10 @@ public class PaqueteView  {
 	private JLabel lbPedidos;
 	private JTable tablePedidos;
 	private JPanel pnBotones;
-	private JPanel pnID;
+	private JPanel pnEscaner;
 	private JButton btEscanear;
 	private JSpinner spUnidades;
+	private JPanel pnID;
 
 	
 
@@ -83,7 +84,7 @@ public class PaqueteView  {
 		frame.setBackground(Color.WHITE);
 		frame.setTitle("Revision");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 575, 512);
+		frame.setBounds(100, 100, 309, 520);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -130,17 +131,21 @@ public class PaqueteView  {
 		btTerminar = new JButton("Terminar");
 		btTerminar.setFont(new Font("Arial", Font.PLAIN, 13));
 		
+		pnEscaner = new JPanel();
+		
+		pnEscaner.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		pnEscaner.add(lbIDProducto);
+		
 		pnID = new JPanel();
-		
-		pnID.setLayout(new GridLayout(0, 4, 0, 0));
-		
-		pnID.add(lbIDProducto);
+		pnEscaner.add(pnID);
+		pnID.setLayout(new GridLayout(0, 2, 0, 0));
 		pnID.add(txIDProducto);
 		
 		
 		pnBotones = new JPanel();
 		pnInferior.add(pnBotones);
-		pnInferior.add(pnID);
+		pnInferior.add(pnEscaner);
 		
 		spUnidades = new JSpinner();
 		spUnidades.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
@@ -148,7 +153,7 @@ public class PaqueteView  {
 		
 		btEscanear = new JButton("Escanear");
 		btEscanear.setFont(new Font("Arial", Font.PLAIN, 13));
-		pnID.add(btEscanear);
+		pnEscaner.add(btEscanear);
 		pnBotones.setLayout(new GridLayout(0, 2, 0, 0));
 		pnBotones.add(btCancelar);
 		

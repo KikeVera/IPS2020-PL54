@@ -14,6 +14,7 @@ import persistencia.almacenero.OTModel;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
+import ui.SwingMain;
 import ui.almacen.AlmacenView;
 import ui.almacen.OperacionesOTView;
 import util.Util;
@@ -74,6 +75,9 @@ public class AlmacenController implements Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.getFrame().dispose();
+				SwingMain frame = new SwingMain();
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
 			}
 		});
 		
@@ -82,6 +86,7 @@ public class AlmacenController implements Controller {
 			public void actionPerformed(ActionEvent e) {
 				OperacionesOTController controller=new OperacionesOTController(new OperacionesOTView(), new OTModel());
 				controller.initController();
+				view.getFrame().dispose();
 			}
 		});
 		

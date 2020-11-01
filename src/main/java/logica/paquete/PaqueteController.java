@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
 import logica.Controller;
+import logica.pedido.AlmacenController;
 import logica.pedido.PedidoUse;
 import logica.producto.ProductoOT;
 import persistencia.almacenero.OTEntity;
@@ -29,6 +30,7 @@ import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
 import persistencia.usuario.UsuarioEntity;
 import persistencia.usuario.UsuarioModel;
+import ui.almacen.AlmacenView;
 import ui.paquete.PaqueteView;
 import util.Util;
 import util.swingTables.SwingUtil;
@@ -119,6 +121,8 @@ public class PaqueteController implements Controller {
 			public void actionPerformed(ActionEvent e) {
 				
 				view.getFrame().dispose();
+				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
+				controller.initController();
 				
 				
 				
@@ -139,7 +143,10 @@ public class PaqueteController implements Controller {
 			public void actionPerformed(ActionEvent e) {
 				empaquetarPedidos();
 				otm.updateStatus(ot.getIdOt(), "TERMINADO");
+				
 				view.getFrame().dispose();
+				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
+				controller.initController();
 				
 				
 				
@@ -313,7 +320,7 @@ public class PaqueteController implements Controller {
 		
 		
 		
-		int codeResultado=empaquetado.empaquetarProducto(idPedido, idProducto);
+		int codeResultado=empaquetado.empaquetarProducto(idPedido, idProducto,(int)view.getSpUnidades().getValue());
 			
 			
 		
@@ -341,6 +348,8 @@ public class PaqueteController implements Controller {
 		else {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR desconocido","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 		}
+		
+		view.getSpUnidades().setValue(1);
 		
 	}
 	private void updateDetail() {

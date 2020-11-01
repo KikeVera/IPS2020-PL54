@@ -75,6 +75,7 @@ public class SwingMain extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
 					controller.initController();
+					dispose();
 				}
 			});
 			btnLanzarAplicacionAlmacen.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -115,6 +116,7 @@ public class SwingMain extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					UsuarioController controller = new UsuarioController(new UsuarioModel(), new UsuarioView());
 					controller.initController();
+					dispose();
 				}
 			});
 			btnLanzarPaginaWeb.setFont(new Font("Tahoma", Font.BOLD, 20));

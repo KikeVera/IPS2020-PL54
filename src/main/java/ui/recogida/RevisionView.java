@@ -57,8 +57,9 @@ public class RevisionView  {
 	private JTextField txIDEsacaner;
 	private JButton btTerminar;
 	private JPanel pnInferior;
-	private JPanel pnID;
+	private JPanel pnEscaner;
 	private JSpinner spUnidades;
+	private JPanel pnID;
 
 	
 
@@ -78,7 +79,7 @@ public class RevisionView  {
 		frame.setBackground(Color.WHITE);
 		frame.setTitle("Revision");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 575, 512);
+		frame.setBounds(100, 100, 332, 466);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -161,17 +162,21 @@ public class RevisionView  {
 		pnInferior.setLayout(new GridLayout(2, 1, 0, 0));
 		pnInferior.add(pnBotones);
 		
+		pnEscaner = new JPanel();
+		pnEscaner.setLayout(new GridLayout(0, 3, 0, 0));
+		pnEscaner.add(lbIDEscaner);
+		
 		pnID = new JPanel();
-		pnID.setLayout(new GridLayout(0, 4, 0, 0));
-		pnID.add(lbIDEscaner);
+		pnEscaner.add(pnID);
+		pnID.setLayout(new GridLayout(0, 2, 0, 0));
 		pnID.add(txIDEsacaner);
 		
 		spUnidades = new JSpinner();
 		spUnidades.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		spUnidades.setFont(new Font("Arial", Font.PLAIN, 13));
 		pnID.add(spUnidades);
-		pnID.add(btEscanear);
-		pnInferior.add(pnID);
+		pnEscaner.add(btEscanear);
+		pnInferior.add(pnEscaner);
 		
 	}
 

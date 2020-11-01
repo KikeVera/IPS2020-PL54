@@ -36,7 +36,7 @@ public class Empaquetado {
 	
 	
 	
-	public int empaquetarProducto(int idPedido,int idProducto) {
+	public int empaquetarProducto(int idPedido,int idProducto,int uds) {
 		
 		if(!encontrado(idProducto))
 			return 1;
@@ -51,7 +51,7 @@ public class Empaquetado {
 		ProductoOT producto= selectProducto(idProducto, selected);
 		
 		if(producto!=null) {
-			return compruebaUnidades(producto, selected);
+			return compruebaUnidades(producto, selected, uds);
 		}
 		
 			
@@ -94,10 +94,10 @@ public class Empaquetado {
 		return null;
 	}
 	
-	private int compruebaUnidades(ProductoOT producto, PedidoUse selected) {
-		if(producto.getUnidades()>0) {
+	private int compruebaUnidades(ProductoOT producto, PedidoUse selected,int uds) {
+		if(producto.getUnidades()-uds>=0) {
 			
-			selected.getProductos().put(producto.getId(), producto.getUnidades()-1);
+			selected.getProductos().put(producto.getId(), producto.getUnidades()-uds);
 				return 0;
 			}
 				
