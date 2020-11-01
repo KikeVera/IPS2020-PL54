@@ -25,9 +25,9 @@ public class AlmacenView {
 	private JFrame frmTiendaOnline;
 	private JTable tabPedidos;
 	private JScrollPane scrollProductos;
-	private JPanel pnSuperiorIzquirdo;
+	private JPanel pnSuperior;
 	private JLabel lblTabla;
-	private JPanel pnSuperiorDerecho;
+	private JPanel pnInferior;
 	private JLabel lblPedido;
 	private JTable tabProductos;
 	private JButton btVerPedido;
@@ -53,18 +53,18 @@ public class AlmacenView {
 		frmTiendaOnline = new JFrame();
 		frmTiendaOnline.setTitle("Tienda online");
 		frmTiendaOnline.setName("Tienda online");
-		frmTiendaOnline.setBounds(0,0,491,569);
+		frmTiendaOnline.setBounds(0,0,357,569);
 		frmTiendaOnline.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmTiendaOnline.setLocationRelativeTo(null);
 		
 		//Inicializa el panel superior izquierdo 
-		pnSuperiorIzquirdo = new JPanel();
-		pnSuperiorIzquirdo.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
-		pnSuperiorIzquirdo.setLayout(new BorderLayout(0, 0));
+		pnSuperior = new JPanel();
+		pnSuperior.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
+		pnSuperior.setLayout(new BorderLayout(0, 0));
 		
 		lblTabla = new JLabel("Pedidos realizados:");
 		lblTabla.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnSuperiorIzquirdo.add(lblTabla, BorderLayout.NORTH);
+		pnSuperior.add(lblTabla, BorderLayout.NORTH);
 		
 		tabPedidos = new JTable();
 		tabPedidos.setName("tabProductos");
@@ -72,15 +72,15 @@ public class AlmacenView {
 		tabPedidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabPedidos.setDefaultEditor(Object.class, null);
 		JScrollPane scrollPedidos = new JScrollPane(tabPedidos);
-		pnSuperiorIzquirdo.add(scrollPedidos);
+		pnSuperior.add(scrollPedidos);
 
 		//Inicializa el panel superior derecho 
-		pnSuperiorDerecho = new JPanel();
-		pnSuperiorDerecho.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
-		pnSuperiorDerecho.setLayout(new BorderLayout(0, 0));
+		pnInferior = new JPanel();
+		pnInferior.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
+		pnInferior.setLayout(new BorderLayout(0, 0));
 		
 		scrollProductos = new JScrollPane((Component) null);
-		pnSuperiorDerecho.add(scrollProductos);
+		pnInferior.add(scrollProductos);
 		
 		tabProductos = new JTable();
 		tabProductos.setDefaultEditor(Object.class, null);
@@ -89,7 +89,7 @@ public class AlmacenView {
 		
 		lblPedido = new JLabel("Pedido seleccionado:");
 		lblPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnSuperiorDerecho.add(lblPedido, BorderLayout.NORTH);
+		pnInferior.add(lblPedido, BorderLayout.NORTH);
 		
 		
 		//Añadimos todo al panel principal 
@@ -108,9 +108,9 @@ public class AlmacenView {
 		pnTablas = new JPanel();
 		
 		frmTiendaOnline.getContentPane().add(pnTablas);
-		pnTablas.setLayout(new GridLayout(1, 0, 0, 0));
-		pnTablas.add(pnSuperiorIzquirdo);
-		pnTablas.add(pnSuperiorDerecho);
+		pnTablas.setLayout(new GridLayout(2, 1, 0, 0));
+		pnTablas.add(pnSuperior);
+		pnTablas.add(pnInferior);
 		
 		pnBotones = new JPanel();
 		pnBotones.setLayout(new GridLayout(0, 2, 0, 0));
@@ -140,8 +140,8 @@ public class AlmacenView {
 	public JTable getTabProductos() { return this.tabProductos;}
 	public JScrollPane getScrollProductos() {return this.scrollProductos;}
 
-	public JPanel getPnSuperiorDerecho() { return this.pnSuperiorDerecho;}
-	public JPanel getPnSuperiorIzquierdo() { return this.pnSuperiorIzquirdo;}
+	public JPanel getPnSuperiorDerecho() { return this.pnInferior;}
+	public JPanel getPnSuperiorIzquierdo() { return this.pnSuperior;}
 	
 	
 }
