@@ -4,7 +4,7 @@ package logica.recogida;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -186,7 +186,7 @@ public class RecogidaController implements Controller {
 		
 		for (ProductoEntity producto: recogida.getCatalogo()) {
 			if(producto.getId()==id) {
-				codeResultado=recogida.escanear(id);
+				codeResultado=recogida.escanear(id,(int)view.getSpUnidades().getValue());
 			}
 			
 		}
@@ -204,13 +204,14 @@ public class RecogidaController implements Controller {
 		}
 		
 		else if(codeResultado==3) {
-			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: No se deben recoger mas unidades de este artículo","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: No se deben recoger tantas unidades de este artículo","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 		}
 		
 		else {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR desconocido","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 		}
 		
+		view.getSpUnidades().setValue(1);
 	}
 	private void updateDetail() {
 		

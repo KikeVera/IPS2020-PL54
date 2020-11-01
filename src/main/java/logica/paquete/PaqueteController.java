@@ -287,7 +287,7 @@ public class PaqueteController implements Controller {
 		
 		
 		
-		int codeResultado=empaquetado.empaquetarProducto(idPedido, idProducto);
+		int codeResultado=empaquetado.empaquetarProducto(idPedido, idProducto,(int)view.getSpUnidades().getValue());
 			
 			
 		
@@ -315,6 +315,8 @@ public class PaqueteController implements Controller {
 		else {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR desconocido","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 		}
+		
+		view.getSpUnidades().setValue(1);
 		
 	}
 	private void updateDetail() {

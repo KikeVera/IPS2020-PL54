@@ -29,6 +29,8 @@ import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 
 public class PaqueteView  {
@@ -61,6 +63,7 @@ public class PaqueteView  {
 	private JPanel pnBotones;
 	private JPanel pnID;
 	private JButton btEscanear;
+	private JSpinner spUnidades;
 
 	
 
@@ -129,7 +132,7 @@ public class PaqueteView  {
 		
 		pnID = new JPanel();
 		
-		pnID.setLayout(new GridLayout(0, 3, 0, 0));
+		pnID.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		pnID.add(lbIDProducto);
 		pnID.add(txIDProducto);
@@ -138,6 +141,10 @@ public class PaqueteView  {
 		pnBotones = new JPanel();
 		pnInferior.add(pnBotones);
 		pnInferior.add(pnID);
+		
+		spUnidades = new JSpinner();
+		spUnidades.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		pnID.add(spUnidades);
 		
 		btEscanear = new JButton("Escanear");
 		btEscanear.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -224,6 +231,10 @@ public class PaqueteView  {
 		return btTerminar;
 	}
 
+	public JSpinner getSpUnidades() {
+		return spUnidades;
+		
+	}
 	public JPanel getPnTitulo() {
 		return pnTitulo;
 	}

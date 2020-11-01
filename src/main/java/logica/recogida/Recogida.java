@@ -53,11 +53,11 @@ public class Recogida {
 		
 	}
 	
-	public int escanear(int id) {
+	public int escanear(int id,int uds) {
 		for(ProductoOT producto: OT) {
 			if(producto.getId()==id) {
-				if(producto.getUnidades()>0) {
-					producto.setUnidades(producto.getUnidades()-1);
+				if(producto.getUnidades()-uds>=0) {
+					producto.setUnidades(producto.getUnidades()-uds);
 					return 0;
 				}
 				

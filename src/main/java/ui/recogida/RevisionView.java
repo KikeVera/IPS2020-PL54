@@ -29,6 +29,8 @@ import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class RevisionView  {
 
@@ -54,6 +56,9 @@ public class RevisionView  {
 	private JLabel lbIDEscaner;
 	private JTextField txIDEsacaner;
 	private JButton btTerminar;
+	private JPanel pnInferior;
+	private JPanel pnID;
+	private JSpinner spUnidades;
 
 	
 
@@ -95,7 +100,7 @@ public class RevisionView  {
 		btCancelar.setFont(new Font("Arial", Font.PLAIN, 13));
 		
 		pnBotones = new JPanel();
-		pnBotones.setLayout(new GridLayout(2, 3, 0, 0));
+		pnBotones.setLayout(new GridLayout(1, 3, 0, 0));
 		
 		lbIDEscaner = new JLabel("ID Producto: ");
 		lbIDEscaner.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -126,14 +131,11 @@ public class RevisionView  {
 		scrProductos.setViewportView(tableProductos);
 		
 		
-		contentPane.add(pnBotones, BorderLayout.SOUTH);
 		
 		btTerminar = new JButton("Terminar");
 		btTerminar.setFont(new Font("Arial", Font.PLAIN, 13));
 		pnBotones.add(btTerminar);
-		pnBotones.add(lbIDEscaner);
-		pnBotones.add(txIDEsacaner);
-		pnBotones.add(btEscanear);
+		
 		
 		
 		contentPane.add(pnTitulo, BorderLayout.NORTH);
@@ -153,6 +155,24 @@ public class RevisionView  {
 		lbProductos.setHorizontalAlignment(SwingConstants.CENTER);
 		lbProductos.setFont(new Font("Arial", Font.PLAIN, 18));
 		pnProductos.add(lbProductos, BorderLayout.NORTH);
+		
+		pnInferior = new JPanel();
+		contentPane.add(pnInferior, BorderLayout.SOUTH);
+		pnInferior.setLayout(new GridLayout(2, 1, 0, 0));
+		pnInferior.add(pnBotones);
+		
+		pnID = new JPanel();
+		pnID.setLayout(new GridLayout(0, 4, 0, 0));
+		pnID.add(lbIDEscaner);
+		pnID.add(txIDEsacaner);
+		
+		spUnidades = new JSpinner();
+		spUnidades.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		spUnidades.setFont(new Font("Arial", Font.PLAIN, 13));
+		pnID.add(spUnidades);
+		pnID.add(btEscanear);
+		pnInferior.add(pnID);
+		
 	}
 
 	public JTextField getTxIDEsacaner() {
@@ -194,6 +214,10 @@ public class RevisionView  {
 	
 	public JButton getBtTerminar() {
 		return btTerminar;
+	}
+	
+	public JSpinner getSpUnidades() {
+		return spUnidades;
 	}
 
 	public JPanel getPnTitulo() {
