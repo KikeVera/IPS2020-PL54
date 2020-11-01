@@ -1,0 +1,6 @@
+----Etiqueta----
+Id paquete: f6cf0
+Id pedido: 2
+Usuario: ae823
+Tipo de usuario: Anónimo
+Fecha de envio: 2020-11-01

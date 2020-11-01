@@ -79,7 +79,7 @@ public class RevisionView  {
 		frame.setBackground(Color.WHITE);
 		frame.setTitle("Revision");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 332, 466);
+		frame.setBounds(100, 100, 312, 506);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);

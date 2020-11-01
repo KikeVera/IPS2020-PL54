@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+
 import javax.swing.table.TableModel;
 
 import logica.Controller;
@@ -225,6 +226,7 @@ public class RecogidaController implements Controller {
 		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades","pasillo","estanteria","altura"});
 		
 		this.view.getTableProductos().setModel(tmodel);
+		SwingUtil.autoAdjustColumns(view.getTableProductos());
 		if(recogida.isVacia()) {
 			view.getBtTerminar().setEnabled(true);
 		}
@@ -262,6 +264,7 @@ public class RecogidaController implements Controller {
 		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades","pasillo","estanteria","altura"});
 		
 		this.view.getTableProductos().setModel(tmodel);
+		SwingUtil.autoAdjustColumns(view.getTableProductos());
 		view.getBtTerminar().setEnabled(false);
 		
 		

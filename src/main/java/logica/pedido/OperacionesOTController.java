@@ -150,6 +150,7 @@ public class OperacionesOTController implements Controller {
 			selectedController.initController();
 			
 			
+			
 		}
 		
 		if(selected.equals("Empaquetado")) {
@@ -157,6 +158,7 @@ public class OperacionesOTController implements Controller {
 		ventana.getFrame().setLocationRelativeTo(view.getFrame());
 		 selectedController= new PaqueteController(new ProductosModel(), new PedidosModel(), new OTModel(), new PaqueteModel(), ventana, empaquetar.get(index));
 		 selectedController.initController();
+		
 		}
 		
 		Salir();
@@ -167,6 +169,7 @@ public class OperacionesOTController implements Controller {
 	
 		TableModel tmodel= SwingUtil.getTableModelFromPojos(recoger,new String[] {"idOt","idAlmacenero","idPedido"});
 		view.getTabOrdenes().setModel(tmodel);
+		SwingUtil.autoAdjustColumns(view.getTabOrdenes());
 	
 		
 	}
@@ -178,15 +181,18 @@ public class OperacionesOTController implements Controller {
 		if(selected.equals("Recogida")) {
 			 ots= recoger;
 			 this.view.getbtInformacion().setEnabled(true);
+			 view.getbtComenzar().setText("Recoger");
 		}
 		
 		if(selected.equals("Empaquetado")) {
 		 ots= empaquetar;
 		 this.view.getbtInformacion().setEnabled(false);
+		 view.getbtComenzar().setText("Empaquetar");
 		}
 		
 		TableModel tmodel= SwingUtil.getTableModelFromPojos(ots,new String[] {"idOt","idAlmacenero","idPedido"});
 		view.getTabOrdenes().setModel(tmodel);
+		SwingUtil.autoAdjustColumns(view.getTabOrdenes());
 		
 		
 	}

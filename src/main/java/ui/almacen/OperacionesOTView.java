@@ -73,7 +73,7 @@ public class OperacionesOTView {
 		
 		
 		
-		btComenzar = new JButton("Comenzar");	
+		btComenzar = new JButton("Recoger");	
 		btComenzar.setFont(new Font("Arial", Font.PLAIN, 14));
 		frmTiendaOnline.getContentPane().setLayout(new BorderLayout(0, 0));
 		
