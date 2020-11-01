@@ -99,13 +99,13 @@ public class RevisionView  {
 		
 		lbIDEscaner = new JLabel("ID Producto: ");
 		lbIDEscaner.setFont(new Font("Arial", Font.PLAIN, 13));
-		pnBotones.add(lbIDEscaner);
+		
 		
 		txIDEsacaner = new JTextField();
 		txIDEsacaner.setFont(new Font("Arial", Font.PLAIN, 13));
-		pnBotones.add(txIDEsacaner);
+		
 		txIDEsacaner.setColumns(10);
-		pnBotones.add(btEscanear);
+		
 		pnBotones.add(btIncidencia);
 		pnBotones.add(btCancelar);
 		
@@ -131,6 +131,11 @@ public class RevisionView  {
 		btTerminar = new JButton("Terminar");
 		btTerminar.setFont(new Font("Arial", Font.PLAIN, 13));
 		pnBotones.add(btTerminar);
+		pnBotones.add(lbIDEscaner);
+		pnBotones.add(txIDEsacaner);
+		pnBotones.add(btEscanear);
+		
+		
 		contentPane.add(pnTitulo, BorderLayout.NORTH);
 		
 		
