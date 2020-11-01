@@ -11,7 +11,7 @@ public class UsuarioModel {
 	 * @return Usuario con el id dado o null en caso contraio 
 	 */
 	public UsuarioEntity getUsuario(String codigo) {
-		String sql = "Select codigo,tipo from usuario where codigo=?";
+		String sql = "Select idUsuario,tipo,direccion from usuario where idUsuario=?";
 		UsuarioEntity usuario = db.executePojo(UsuarioEntity.class, sql, codigo); 
 		return usuario; 
 	}

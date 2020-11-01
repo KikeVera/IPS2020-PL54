@@ -15,7 +15,7 @@ insert into Producto(id,nombre,descripcion,precio,pasillo,estanteria,altura) val
 	(105,'Producto F','F',5.22,1,4,1),
     (106,'Producto G','G',14.34,1,2,5),
     (107,'Producto H','H',8.5,1,2,7);
-insert into Usuario(codigo,tipo,direccion) values 
+insert into Usuario(idUsuario,tipo,direccion) values 
 	('usuario','Normal','calle1'),
 	('empresa','Empresa','calle 2');
 

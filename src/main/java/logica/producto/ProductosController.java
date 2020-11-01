@@ -55,8 +55,8 @@ public class ProductosController implements Controller {
 		//Inicializamos la tabla que representara al pedido 
 		inicializarTablaPedido();
 		
-		view.getLblUsuario().setText(view.getLblUsuario().getText() + " " + this.carrito.getUsuario().getCodigo()
-				+ " Tipo de usuario: " + this.carrito.getUsuario().getTipo());
+		view.getLblUsuario().setText(view.getLblUsuario().getText() + " " + this.carrito.getUsuario().getIdUsuario()
+				+ " | Tipo de usuario: " + this.carrito.getUsuario().getTipo());
 		
 		//Abre la ventana (sustituye al main generado por WindowBuilder)
 		view.getFrame().setVisible(true);
@@ -221,7 +221,7 @@ public class ProductosController implements Controller {
 			JOptionPane.showMessageDialog(this.view.getFrame(),"El pedido esta vacío ","Tienda online: Advertencia",JOptionPane.WARNING_MESSAGE);
 			return;
 			}
-		pedidoModel.setPedido(carrito.getPedido(),carrito.getUsuario().getCodigo());
+		pedidoModel.setPedido(carrito.getPedido(),carrito.getUsuario().getIdUsuario());
 		
 	}
 

@@ -27,6 +27,8 @@ import persistencia.pedido.PedidoEntity;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
+import persistencia.usuario.UsuarioEntity;
+import persistencia.usuario.UsuarioModel;
 import ui.paquete.PaqueteView;
 import util.Util;
 import util.swingTables.SwingUtil;
@@ -199,10 +201,22 @@ public class PaqueteController implements Controller {
         	fw = new FileWriter(etiqueta); 
             bw = new BufferedWriter(fw); 
             
+            UsuarioEntity usuario = new UsuarioModel().getUsuario(pedido.getIdUsuario()); 
+            
             bw.write("----Etiqueta----\n");
             bw.write("Id paquete: " + idPaquete + "\n");
             bw.write("Id pedido: " + pedido.getId() + "\n");
-            bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
+            if(usuario != null) {
+            	bw.write("Usuario: " + usuario.getIdUsuario() + "\n");
+                bw.write("Tipo de usuario: " + usuario.getTipo() + "\n");
+                bw.write("Dirección de envío: " + usuario.getDireccion() + "\n");
+            }
+            else {
+            	bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
+                bw.write("Tipo de usuario: Anónimo\n");
+                //bw.write("Dirección de envío: " + usuario.getDireccion() + "\n");
+            }
+    
             bw.write("Fecha de envio: " + fecha + "\n");
 
         } catch (IOException e) {
@@ -235,10 +249,22 @@ public class PaqueteController implements Controller {
         	fw = new FileWriter(albaran); 
             bw = new BufferedWriter(fw);
             
+            UsuarioEntity usuario = new UsuarioModel().getUsuario(pedido.getIdUsuario()); 
+            
             bw.write("----Albaran----\n");
             bw.write("Id paquete: " + idPaquete + "\n");
             bw.write("Id pedido: " + pedido.getId() + "\n");
-            bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
+            if(usuario != null) {
+            	bw.write("Usuario: " + usuario.getIdUsuario() + "\n");
+                bw.write("Tipo de usuario: " + usuario.getTipo() + "\n");
+                bw.write("Dirección de envío: " + usuario.getDireccion() + "\n");
+            }
+            else {
+            	bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
+                bw.write("Tipo de usuario: Anónimo\n");
+                //bw.write("Dirección de envío: " + usuario.getDireccion() + "\n");
+            }
+    
             bw.write("Fecha de envio: " + fecha + "\n");
             bw.write("Tamaño total: " + pedido.getTamaño() + "\n");
             bw.write("Lista productos: " + pedido.getProductos() + "\n");
@@ -287,7 +313,7 @@ public class PaqueteController implements Controller {
 		
 		
 		
-		int codeResultado=empaquetado.empaquetarProducto(idPedido, idProducto,(int)view.getSpUnidades().getValue());
+		int codeResultado=empaquetado.empaquetarProducto(idPedido, idProducto);
 			
 			
 		
@@ -315,8 +341,6 @@ public class PaqueteController implements Controller {
 		else {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR desconocido","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 		}
-		
-		view.getSpUnidades().setValue(1);
 		
 	}
 	private void updateDetail() {

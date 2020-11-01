@@ -94,25 +94,6 @@ public class ProductosView {
 		pnInferiorDerecho.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
 		pnInferiorDerecho.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		pnPrecio = new JPanel();
-		pnPrecio.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnInferiorDerecho.add(pnPrecio);
-		pnPrecio.setLayout(new GridLayout(0, 2, 0, 0));
-		
-		lblPrecio = new JLabel("Precio actual:");
-		lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrecio.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnPrecio.add(lblPrecio);
-		
-		textField = new JTextField();
-		textField.setBackground(Color.LIGHT_GRAY);
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setText("0 \u20AC");
-		textField.setFont(new Font("Tahoma", Font.BOLD, 16));
-		textField.setEditable(false);
-		textField.setColumns(10);
-		pnPrecio.add(textField);
-		
 		pnBotonesInferoriDerecho = new JPanel();
 		pnInferiorDerecho.add(pnBotonesInferoriDerecho);
 		pnBotonesInferoriDerecho.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 50));
@@ -157,6 +138,29 @@ public class ProductosView {
 		pnSuperiorDerecho.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
 		pnSuperiorDerecho.setLayout(new BorderLayout(0, 0));
 		
+		lblPedido = new JLabel("Estado actual del pedido:");
+		lblPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
+		pnSuperiorDerecho.add(lblPedido, BorderLayout.NORTH);
+		
+		pnPrecio = new JPanel();
+		pnPrecio.setBorder(new LineBorder(new Color(0, 0, 0)));
+		pnSuperiorDerecho.add(pnPrecio, BorderLayout.SOUTH);
+		pnPrecio.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		lblPrecio = new JLabel("Precio actual:");
+		lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPrecio.setFont(new Font("Tahoma", Font.BOLD, 16));
+		pnPrecio.add(lblPrecio);
+		
+		textField = new JTextField();
+		textField.setText("0 \u20AC");
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setFont(new Font("Tahoma", Font.BOLD, 16));
+		textField.setEditable(false);
+		textField.setColumns(10);
+		textField.setBackground(Color.LIGHT_GRAY);
+		pnPrecio.add(textField);
+		
 		scrollPedido = new JScrollPane((Component) null);
 		pnSuperiorDerecho.add(scrollPedido);
 		
@@ -164,10 +168,6 @@ public class ProductosView {
 		tabPedido.setDefaultEditor(Object.class, null);
 		tabPedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPedido.setViewportView(tabPedido);
-		
-		lblPedido = new JLabel("Estado actual del pedido:");
-		lblPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnSuperiorDerecho.add(lblPedido, BorderLayout.NORTH);
 		frmTiendaOnline.getContentPane().setLayout(new MigLayout("", "[752px]", "[][231px,grow][130px,grow]"));
 		
 		pnInfo = new JPanel();
