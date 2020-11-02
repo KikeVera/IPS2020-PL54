@@ -1,7 +1,0 @@
-----Albaran----
-Id paquete: 9d3d9
-Id pedido: 1
-Usuario: 47949
-Fecha de envio: 2020-11-01
-Tamaño total: 5
-Lista productos: 103-3/106-2

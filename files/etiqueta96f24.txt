@@ -1,5 +1,0 @@
-----Etiqueta----
-Id paquete: 96f24
-Id pedido: 1
-Usuario: f9220
-Fecha de envio: 2020-11-01

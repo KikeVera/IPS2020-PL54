@@ -1,7 +1,0 @@
-----Albaran----
-Id paquete: 96f24
-Id pedido: 1
-Usuario: f9220
-Fecha de envio: 2020-11-01
-Tamaño total: 15
-Lista productos: 102-6/105-4/106-5
