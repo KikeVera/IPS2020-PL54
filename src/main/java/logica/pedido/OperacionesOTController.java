@@ -19,7 +19,6 @@ import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductosModel;
 import persistencia.recogida.IncidenciaModel;
 import ui.almacen.AlmacenView;
-import ui.almacen.InformacionView;
 import ui.almacen.OperacionesOTView;
 import ui.paquete.PaqueteView;
 import ui.recogida.RevisionView;
@@ -94,39 +93,13 @@ public class OperacionesOTController implements Controller {
 			}
 			
 		});
-		
-		this.view.getbtInformacion().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				informacion();
-			}
-			
-		});
-		
-		
+				
 	}
 
 	private void Salir() {
 		view.getFrame().dispose();
 	}
 	
-	/**
-	 * Muestra la informacion para la recogida de los productos de esa orden de trabajo
-	 * Informacion -> El pasillo, la estanteria y el nombre del producto
-	 */
-	private void informacion() {
-		int index=view.getTabOrdenes().getSelectedRow();
-		if(index==-1) {
-			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Orden no seleccionada","Advertencia operacion", JOptionPane.WARNING_MESSAGE);
-			return;
-		}
-		
-		InformacionView ventana= new InformacionView();
-		ventana.getFrame().setLocationRelativeTo(view.getFrame());
-		
-		selectedController=new InformacionController(recoger.get(index),ventana,new ProductosModel(),new PedidosModel());
-		selectedController.initController();
-	}
 	
 	/**
 	 * La obtencion de la lista de carreras solo necesita obtener la lista de objetos del modelo 
@@ -180,13 +153,11 @@ public class OperacionesOTController implements Controller {
 		
 		if(selected.equals("Recogida")) {
 			 ots= recoger;
-			 this.view.getbtInformacion().setEnabled(true);
 			 view.getbtComenzar().setText("Recoger");
 		}
 		
 		if(selected.equals("Empaquetado")) {
 		 ots= empaquetar;
-		 this.view.getbtInformacion().setEnabled(false);
 		 view.getbtComenzar().setText("Empaquetar");
 		}
 		

@@ -35,7 +35,6 @@ public class OperacionesOTView {
 	private JPanel pnOperacion;
 	private JLabel lbOperacion;
 	private JComboBox <String> cbOperacion;
-	private JButton btInformacion;
 	
 	/**
 	 * Create the application.
@@ -103,10 +102,6 @@ public class OperacionesOTView {
 		
 		frmTiendaOnline.getContentPane().add(pnBotones, BorderLayout.SOUTH);
 		
-		btInformacion = new JButton("Informacion");
-		btInformacion.setFont(new Font("Arial", Font.PLAIN, 14));
-		pnBotones.add(btInformacion);
-		
 		btSalir = new JButton("Salir");
 		btSalir.setFont(new Font("Arial", Font.PLAIN, 14));
 		pnBotones.add(btSalir);
@@ -125,7 +120,6 @@ public class OperacionesOTView {
 	
 	public JButton getbtComenzar() {return this.btComenzar;}
 	public JButton getbtSalir() {return this.btSalir;}
-	public JButton getbtInformacion() {return this.btInformacion;}
 
 	public JComboBox<String> getCbOperacion(){
 		return cbOperacion;
