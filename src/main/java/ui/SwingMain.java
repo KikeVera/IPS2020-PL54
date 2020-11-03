@@ -116,7 +116,6 @@ public class SwingMain extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					UsuarioController controller = new UsuarioController(new UsuarioModel(), new UsuarioView());
 					controller.initController();
-					dispose();
 				}
 			});
 			btnLanzarPaginaWeb.setFont(new Font("Tahoma", Font.BOLD, 20));

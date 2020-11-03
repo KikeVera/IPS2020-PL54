@@ -52,6 +52,9 @@ public class ProductosView {
 	private JPanel pnPrecio;
 	private JLabel lblPrecio;
 	private JTextField textField;
+	private JPanel pnNavegacion;
+	private JButton btnAtras;
+	private JButton btnSiguiente;
 	
 	/**
 	 * Create the application.
@@ -99,6 +102,7 @@ public class ProductosView {
 		pnBotonesInferoriDerecho.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 50));
 		
 		btnEliminar = new JButton("Eliminar del carrito");
+		btnEliminar.setEnabled(false);
 		btnEliminar.setToolTipText("Para eliminar un producto del carrito en especifico, debe seleccionarlo en el carrito, establecer  las unidades que desea eliminar de su pedido y darle a este bot\u00F3n.");
 		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnEliminar.setBackground(Color.RED);
@@ -128,6 +132,7 @@ public class ProductosView {
 		pnUnidades.add(spUnidades);
 		spUnidades.setModel(new SpinnerNumberModel(1, 1, null, 1));
 		btnAnadir = new JButton("A\u00F1adir al carrito");
+		btnAnadir.setEnabled(false);
 		btnAnadir.setToolTipText("Para a\u00F1adir un producto al carrito en especifico, debe seleccionarlo en la tabla de productos disponibles, establecer  las unidades deseadas y darle a este bot\u00F3n.");
 		btnAnadir.setBackground(new Color(50, 205, 50));
 		btnAnadir.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -184,6 +189,21 @@ public class ProductosView {
 		//Añadimos todo al panel principal 
 		pnNorte.add(pnSuperiorDerecho, BorderLayout.CENTER);
 		pnNorte.add(pnSuperiorIzquierdo, BorderLayout.WEST);
+		
+		pnNavegacion = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) pnNavegacion.getLayout();
+		flowLayout.setHgap(50);
+		pnSuperiorIzquierdo.add(pnNavegacion, BorderLayout.SOUTH);
+		
+		btnAtras = new JButton("Atr\u00E1s");
+		btnAtras.setEnabled(false);
+		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 16));
+		pnNavegacion.add(btnAtras);
+		
+		btnSiguiente = new JButton("Siguiente");
+		btnSiguiente.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		pnNavegacion.add(btnSiguiente);
 		pnSur.setLayout(new GridLayout(0, 2, 0, 0));
 		pnSur.add(pnInferiorIzquierdo);
 		pnSur.add(pnInferiorDerecho);
@@ -204,6 +224,8 @@ public class ProductosView {
 	public JButton getBtnAnadir() {return this.btnAnadir; }
 	public JButton getBtnEliminar() {return this.btnEliminar; }
 	public JButton getBtnFinalizarPedido() {return this.btnFinalizarPedido; }
+	public JButton getBtnSiguiente() {return this.btnSiguiente; }
+	public JButton getBtnAtras() {return this.btnAtras; }
 	public JTable getTabPedido() { return this.tabPedido;}
 	public JScrollPane getScrollPedido() {return this.scrollPedido;}
 	public JTextField getTextPrecio() {return this.textField;}

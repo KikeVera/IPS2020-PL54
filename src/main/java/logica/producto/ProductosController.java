@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -12,9 +14,17 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import logica.Controller;
+import persistencia.categoria.CategoriaEntity;
+import persistencia.categoria.CategoriaModel;
+import persistencia.contiene.ContieneEntity;
+import persistencia.contiene.ContieneModel;
 import persistencia.pedido.PedidosModel;
+import persistencia.pertenece.PerteneceEntity;
+import persistencia.pertenece.PerteneceModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
+import persistencia.subcategoria.SubcategoriaEntity;
+import persistencia.subcategoria.SubcategoriaModel;
 import persistencia.usuario.UsuarioEntity;
 import ui.SwingMain;
 import ui.producto.ProductosView;
@@ -27,6 +37,7 @@ public class ProductosController implements Controller {
 	private Carrito carrito; //Carrito que contiene al pedido 
 	private PedidosModel pedidoModel;
 	private int lastSelectedPedidoRow; //Almacena ultima seleccion en la tabla productos
+	private Stack<TableModel> navegacion; //Almacena el registro de la navegacion a traves de los menus de categorias y subcategorias 
 
  
 	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem,UsuarioEntity usuario) {
@@ -34,8 +45,10 @@ public class ProductosController implements Controller {
 		this.model = m; 
 		this.view = v; 
 		this.lastSelectedPedidoRow = 0;   
-		this.initView(usuario);
+		this.navegacion = new Stack<TableModel>();
+		this.initView(usuario); 
 	}
+	
 	
 	@Override
 	public void initView() {
@@ -57,6 +70,11 @@ public class ProductosController implements Controller {
 		
 		view.getLblUsuario().setText(view.getLblUsuario().getText() + " " + this.carrito.getUsuario().getIdUsuario()
 				+ " | Tipo de usuario: " + this.carrito.getUsuario().getTipo());
+		
+		
+		//Inicializar tabla con categorias 
+		CategoriaModel m = new CategoriaModel(); 
+		this.navegacion.push(createNavegacionCategorias(m.getCategorias())); 
 		
 		//Abre la ventana (sustituye al main generado por WindowBuilder)
 		view.getFrame().setVisible(true);
@@ -102,9 +120,21 @@ public class ProductosController implements Controller {
 				SwingMain frame = new SwingMain();
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
-				view.getFrame().dispose();
-				
-				
+				view.getFrame().dispose();	
+			}
+		});
+		
+		this.view.getBtnSiguiente().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				next();
+			}
+		});
+		
+		this.view.getBtnAtras().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				back();
 			}
 		});
 	}
@@ -115,6 +145,16 @@ public class ProductosController implements Controller {
 	 */
 	public List<ProductoEntity> getListaProductos() {
 		List<ProductoEntity> productos = model.getListaProductos();
+		return productos;
+
+	}
+	
+	/**
+	 * Crea un modelo de tabla para una lista de productos 
+	 * @param productos Lista de productos 
+	 * @return modelo de tabla para esa lista de productos 
+	 */
+	private TableModel createNavegacionProductos(List<ProductoEntity> productos) {
 		TableModel tmodel=SwingUtil.getTableModelFromPojos(productos, new String[] {"id","nombre", "descripcion", "precio"});
 		
 		//Se cambia tambien la columna del precio para expresar la moneda usada
@@ -125,8 +165,45 @@ public class ProductosController implements Controller {
 		
 		//Como se guarda la clave del ultimo elemento seleccionado, restaura la seleccion de los detalles
 		this.restoreDetail();
-		return productos;
-
+		return tmodel; 
+	}
+	
+	/**
+	 * Crea un modelo de tabla para una lista de categorias 
+	 * @param productos Lista de categorias 
+	 * @return modelo de tabla para esa lista de categorias 
+	 */
+	private TableModel createNavegacionCategorias(List<CategoriaEntity> list) {
+		TableModel tmodel=SwingUtil.getTableModelFromPojos(list, new String[] {"nombreCategoria"});
+		
+		//Se cambia tambien la columna del precio para expresar la moneda usada
+		view.getTabProductos().setModel(tmodel);
+		TableColumn columna = view.getTabProductos().getColumn("nombreCategoria"); 
+		columna.setHeaderValue("Categoría");
+		SwingUtil.autoAdjustColumns(view.getTabProductos());
+		
+		//Como se guarda la clave del ultimo elemento seleccionado, restaura la seleccion de los detalles
+		this.restoreDetail();
+		return tmodel; 
+	}
+	
+	/**
+	 * Crea un modelo de tabla para una lista de subcategorias 
+	 * @param productos Lista de subcategorias 
+	 * @return modelo de tabla para esa lista de subcategorias 
+	 */
+	private TableModel createNavegacionSubcategorias(List<SubcategoriaEntity> subcategorias) {
+		TableModel tmodel=SwingUtil.getTableModelFromPojos(subcategorias, new String[] {"nombreSubcategoria"});
+		
+		//Se cambia tambien la columna del precio para expresar la moneda usada
+		view.getTabProductos().setModel(tmodel);
+		TableColumn columna = view.getTabProductos().getColumn("nombreSubcategoria"); 
+		columna.setHeaderValue("Subcategoría");
+		SwingUtil.autoAdjustColumns(view.getTabProductos());
+		
+		//Como se guarda la clave del ultimo elemento seleccionado, restaura la seleccion de los detalles
+		this.restoreDetail();
+		return tmodel; 
 	}
 	
 	/**
@@ -224,6 +301,122 @@ public class ProductosController implements Controller {
 		pedidoModel.setPedido(carrito.getPedido(),carrito.getUsuario().getIdUsuario());
 		
 	}
+	
+	/**
+	 * Pasa al siguiente menu de navegacion 
+	 */
+	private void next() {
+		
+		//Iniciamos modelos necesarios 
+		CategoriaModel modelC = new CategoriaModel();
+		SubcategoriaModel modelS = new SubcategoriaModel(); 
+		ContieneModel modelCon = new ContieneModel(); 
+		PerteneceModel modelP = new PerteneceModel(); 
+		
+		//Cogemos categoria/subcatgoria seleccionada y lanzamos mensaje en caso de que no se haya seleccionado
+		//ninguna 
+		int selectedRow = view.getTabProductos().getSelectedRow();
+		
+		if(selectedRow == -1) {
+			JOptionPane.showMessageDialog(this.view.getFrame(),"Debe seleccionar una categoría/subcategoría disponible para "
+					+ "entrar en ella.","Tienda online: Advertencia",JOptionPane.WARNING_MESSAGE);
+			
+		}
+		else {
+			
+			//Cogemos el nombre de la categoria/subcategoria 
+			String nombre = (String) view.getTabProductos().getValueAt(selectedRow, 0);
+			
+			if(this.navegacion.size() == 1) {	//Si es la primera iteracion desde las categorias principales 	
+				
+				//Si la categoria no es pura 
+				if(modelC.getCategoriasNoPurasByNombre(nombre).size() == 1) {
+					//Obtenemos sus subcategorias
+					List<SubcategoriaEntity> subcategorias = modelS.getSubcategoriasByCategoria(nombre);
+					this.navegacion.push(createNavegacionSubcategorias(subcategorias));		
+				}
+				else {  //Si la categoria es pura 
+					//Obtenemos productos directos 
+					List<ProductoEntity> productos = this.model.getListaProductosByCategoria(nombre); 
+					
+					//Control de botones 
+					this.navegacion.push(createNavegacionProductos(productos)); 
+					this.view.getBtnSiguiente().setEnabled(false);
+					this.view.getBtnAnadir().setEnabled(true);
+					this.view.getBtnEliminar().setEnabled(true);
+					
+				}	
+			}
+			else { //En caso de que no sea la primera iteracion 
+				
+				//Si la subcategoria no es pura 
+				if(modelS.getSubcategoriasNoPurasByNombre(nombre).size() == 1) {
+					//Obtenemos sus subcategorias 
+					List<ContieneEntity> relaciones = modelCon.getSubcategoriasContenidasByName(nombre);
+					
+					List<SubcategoriaEntity> subcategorias = new ArrayList<SubcategoriaEntity>(); 
+					for(ContieneEntity c : relaciones) {
+						subcategorias.add(modelS.getSubcategoriasByNombre(c.getNombreSubcategoriaContenida()).get(0)); 
+					}
+					this.navegacion.push(createNavegacionSubcategorias(subcategorias));	
+					
+				}
+				else { //Si la subcategoria es pura 
+					//Obtenemos la relacion que encaja con la subcategoria 
+					List<PerteneceEntity> relaciones = modelP.getPerteneceBySubcategoria(nombre); 
+					
+					//Creamos la lista de productos directos 
+					List<ProductoEntity> productos = new ArrayList<ProductoEntity>();
+					for(PerteneceEntity p : relaciones) {
+						productos.add(this.model.findProductById(p.getIdProducto()).get(0)); 
+					}
+					
+					//Control de botones 
+					this.view.getBtnSiguiente().setEnabled(false);
+					this.view.getBtnAnadir().setEnabled(true);
+					this.view.getBtnEliminar().setEnabled(true);
+					this.navegacion.push(createNavegacionProductos(productos));							
+				}
+			}
+		}
+		
+		//Control de botones 
+		if(this.navegacion.size() > 1) { //Si hay mas de un menu hacia atras 
+			this.view.getBtnAtras().setEnabled(true);
+		}
+		else { //Si no hay mas menus hacia atras 
+			this.view.getBtnAtras().setEnabled(false);
+		}
+		
+	}
+	
+	/**
+	 * Pasa al anteior menu de navegacion 
+	 */
+	private void back() {
+		
+		//Restablcemos el table model anterior
+		this.navegacion.pop(); 
+		TableModel t = this.navegacion.peek(); 
+		this.view.getTabProductos().setModel(t);
+		
+		
+		//Control de botones 
+		if(this.navegacion.size() > 1) { //Si hay mas menus 
+			this.view.getBtnAtras().setEnabled(true);
+		}
+		else { //Si solo hay un menu 
+			this.view.getBtnAtras().setEnabled(false);
+		}
+		
+		//Controlamos el boton de añadir/eliminar productos en el menu de 
+		//catgorias/subcategorias 
+		this.view.getBtnAnadir().setEnabled(false);
+		this.view.getBtnEliminar().setEnabled(false);	
+		this.view.getBtnSiguiente().setEnabled(true);
+	}
+	
+
 
 
 	
