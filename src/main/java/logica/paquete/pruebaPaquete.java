@@ -21,7 +21,11 @@ public class pruebaPaquete {
 			public void run() {
 				try {
 					
-					OTEntity ot=new OTModel().getOTs().get(1);
+					OTEntity ot=new OTEntity();
+					ot.setIdAlmacenero(2);
+					ot.setIdOt(3);
+					ot.setEstado("RECOGIDO");
+					ot.setIdPedido("1-2-3");
 					
 					
 					

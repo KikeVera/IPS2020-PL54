@@ -76,9 +76,10 @@ public class PaqueteController implements Controller {
 		List<PedidoUse> Pedidos=new ArrayList<>();
 		
 		List<ProductoEntity> catalogo=model.getListaProductos();
-		
-		idPedidos.add(Integer.parseInt(ot.getIdPedido()));
-		
+		String [] pedidos=ot.getIdPedido().split("-");
+		for(int i=0;i<pedidos.length;i++) {
+			idPedidos.add(Integer.parseInt(pedidos[i]));
+		}
 		for(Integer id: idPedidos) {
 			Pedidos.add(Util.entityToUse(this.pem.getPedidoID(id)));
 		}
@@ -119,6 +120,7 @@ public class PaqueteController implements Controller {
 		this.view.getBtCancelar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				borrarPaquetes();
 				
 				view.getFrame().dispose();
 				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
@@ -142,7 +144,7 @@ public class PaqueteController implements Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				
+				generarPaquete();
 				
 			}
 		});
@@ -150,7 +152,13 @@ public class PaqueteController implements Controller {
 		this.view.getBtTerminar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				empaquetarPedidos();
+				if(!ot.getIdPedido().endsWith("trozo"))//O lo que sea que vaya a identificar que esta OT cuando lleva un trozo
+					terminarPedidos();
+				
+				else {
+					//Por hacer
+				}
+				
 				otm.updateStatus(ot.getIdOt(), "TERMINADO");
 				
 				view.getFrame().dispose();
@@ -176,30 +184,63 @@ public class PaqueteController implements Controller {
 		
 	}
 	
-	private void empaquetarPedidos() {
+	private void borrarPaquetes() {
+		for(String idPaquete: empaquetado.idPaquetes) {
+			pam.borrarPaquete(idPaquete);
+			File etiqueta = new File ("files","etiqueta" + idPaquete + ".txt");
+			etiqueta.delete();
+		}
+		
+	}
+	
+	private void generarPaquete() {
+		int selected=view.getTablePedidos().getSelectedRow();
+		if(selected==-1) {
+			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Ningún pedido seleccionado","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
+		}
+		
+		PedidoUse pedido= empaquetado.getPedidos().get(selected);
+		
+		int idPedido=pedido.getId();
+		PedidoEntity pedidoEntity = this.pem.getPedido(idPedido); 
+		String idPaquete = UUID.randomUUID().toString().substring(0, 5);
+		String fecha=Util.dateToIsoString(new Date());
+		
+		File etiqueta = new File ("files","etiqueta" + idPaquete + ".txt");
+		generarEtiqueta(etiqueta,pedidoEntity,idPaquete,fecha);
+		pam.createPaquete(idPedido,idPaquete,fecha);
+		if(empaquetado.isVacio(selected)) {
+			empaquetado.terminado[selected]=true;
+		}
+		
+		if(empaquetado.isTerminado()) {
+			view.getBtTerminar().setEnabled(true);
+		}
+		
+		empaquetado.posibleEmpaquetado[selected]=false;
+		view.getBtEmpaquetar().setEnabled(false);
+		
+		empaquetado.idPaquetes.add(idPaquete);
+		
+		
+		
+		
+		
+		
+	}
+	
+	private void terminarPedidos() {
 		for(PedidoUse pedido: empaquetado.getPedidos()) {
-			String idPaquete = UUID.randomUUID().toString().substring(0, 5);
+			
 			String fecha=Util.dateToIsoString(new Date());
-			pam.createPaquete(pedido.getId(),idPaquete,fecha);
-			generarDocumentacion(pedido.getId(),idPaquete,fecha);
+			
+			File albaran = new File ("files","albaran" + pedido.getId() + ".txt");
+			generarAlbaran(albaran,this.pem.getPedido(pedido.getId()),fecha);
 		}
 	}
 	
-	/**
-	 * Genera documentacion de un paquete. Tanto la etiqueta como el albaran
-	 * @param idPedido Pedido del que se genera la documentacion
-	 * @param idPaquete ID del paquete a generar 
-	 * @param fecha Fecha de empaquetado (No confundir con la de pedido)
-	 */
-	public void generarDocumentacion(int idPedido, String idPaquete, String fecha) {
-		PedidoEntity pedido = this.pem.getPedido(idPedido); 
-		File etiqueta = new File ("files","etiqueta" + idPaquete + ".txt");
-		File albaran = new File ("files","albaran" + idPaquete + ".txt");
-		
-		generarEtiqueta(etiqueta,pedido,idPaquete,fecha);
-		generarAlbaran(albaran,pedido,idPaquete,fecha);
-		
-	}
+	
+	
 	
 	/**
 	 * Genera la etiqueta de un pedido 
@@ -250,13 +291,12 @@ public class PaqueteController implements Controller {
 	}
 	
 	/**
-	 * Genera el albaran de un paquete.
+	 * Genera el albaran de un pedido.
 	 * @param albaran Fichero donde se almacenara el albaran 
 	 * @param pedido Pedido que se va a empaquetar 
-	 * @param idPaquete ID del paquete a generar
 	 * @param fecha Fecha de empaquetado (No confundir con la de pedido)  
 	 */
-	private void generarAlbaran(File albaran, PedidoEntity pedido, String idPaquete, String fecha) {
+	private void generarAlbaran(File albaran, PedidoEntity pedido, String fecha) {
 		FileWriter fw = null;
 		BufferedWriter bw = null;  
 				
@@ -268,7 +308,7 @@ public class PaqueteController implements Controller {
             UsuarioEntity usuario = new UsuarioModel().getUsuario(pedido.getIdUsuario()); 
             
             bw.write("----Albaran----\n");
-            bw.write("Id paquete: " + idPaquete + "\n");
+           
             bw.write("Id pedido: " + pedido.getId() + "\n");
             if(usuario != null) {
             	bw.write("Usuario: " + usuario.getIdUsuario() + "\n");
@@ -286,7 +326,7 @@ public class PaqueteController implements Controller {
             bw.write("Lista productos: " + pedido.getProductos() + "\n");
 
         } catch (IOException e) {
-            System.out.println("Error al crear el albaran del paquete: " + idPaquete);
+            System.out.println("Error al crear el albaran del pedido: " + pedido.getId());
         } finally {
            try {
            if (bw != null)
@@ -294,7 +334,7 @@ public class PaqueteController implements Controller {
            if (fw != null)
                fw.close();
            } catch (IOException e) {
-        	   System.out.println("Error al cerrar el albaran del paquete: " + idPaquete);
+        	   System.out.println("Error al cerrar el albaran del pedido: " + pedido.getId());
            }
         }
 	}
@@ -358,6 +398,11 @@ public class PaqueteController implements Controller {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR desconocido","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 		}
 		
+		if(codeResultado==0) {
+			empaquetado.posibleEmpaquetado[view.getTablePedidos().getSelectedRow()]=true;
+			view.getBtEmpaquetar().setEnabled(true);
+		}
+		
 		view.getSpUnidades().setValue(1);
 		
 	}
@@ -372,13 +417,14 @@ public class PaqueteController implements Controller {
 			TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades"});
 			
 			this.view.getTableProductos().setModel(tmodel);
+			
+			if(empaquetado.posibleEmpaquetado[view.getTablePedidos().getSelectedRow()])
+				view.getBtEmpaquetar().setEnabled(true);
+			else
+				view.getBtEmpaquetar().setEnabled(false);
 		
 		}
-		
-		if(empaquetado.isVacio()) {
-			view.getBtTerminar().setEnabled(true);
-		}
-		
+	
 		
 		//Actualizamos el precio
 		
@@ -401,6 +447,7 @@ public class PaqueteController implements Controller {
 		
 		this.view.getTablePedidos().setModel(tmodel);
 		view.getBtTerminar().setEnabled(false);
+		view.getBtEmpaquetar().setEnabled(false);
 		
 		
 		

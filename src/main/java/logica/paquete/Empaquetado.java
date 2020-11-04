@@ -1,6 +1,8 @@
 package logica.paquete;
 
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 import logica.pedido.PedidoUse;
@@ -11,6 +13,9 @@ import util.Util;
 public class Empaquetado {
 	List<PedidoUse> pedidos;
 	List<ProductoEntity> catalogo;
+	boolean [] terminado;
+	boolean [] posibleEmpaquetado;
+	List<String> idPaquetes;
 	
 	
 	
@@ -18,8 +23,9 @@ public class Empaquetado {
 	public Empaquetado(List<PedidoUse> pedidos, List<ProductoEntity> catalogo) {
 		this.pedidos=pedidos;
 		this.catalogo=catalogo;
-		
-		
+		terminado= new boolean[pedidos.size()];
+		posibleEmpaquetado= new boolean[pedidos.size()];
+		idPaquetes=new ArrayList<>();
 	}
 	
 	public List<ProductoEntity> getCatalogo(){
@@ -106,16 +112,25 @@ public class Empaquetado {
 			}		
 	}
 	
-	public boolean isVacio() {
+	public boolean isVacio(int index) {
 		List<ProductoOT> lista;
-		for(PedidoUse pedido: pedidos) {
-			lista= Util.hashMapToProductsList(pedido.getProductos(), catalogo);
-			for(ProductoOT p: lista) {
-				if(p.getUnidades()!=0) {
+		PedidoUse pedido=pedidos.get(index);
+		lista= Util.hashMapToProductsList(pedido.getProductos(), catalogo);
+		for(ProductoOT p: lista) {
+			if(p.getUnidades()!=0) {
 					return false;
-				}
 			}
 		}
+		
+		return true;
+	}
+	
+	public boolean isTerminado() {
+		for(int i=0;i<terminado.length;i++) {
+			if(!terminado[i])
+				return false;
+		}
+		
 		return true;
 	}
 

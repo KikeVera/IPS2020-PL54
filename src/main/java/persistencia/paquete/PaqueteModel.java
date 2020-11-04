@@ -7,6 +7,7 @@ import persistencia.database.Database;
 public class PaqueteModel {
 	
 	public static final String SQL_CREATE_PAQUETE = "insert into Paquete values (?,?,?)";
+	public static final String SQL_DELETE_PAQUETE = "delete from Paquete where idPedido = ?";
 	
 	private Database db=new Database();
 
@@ -20,6 +21,11 @@ public class PaqueteModel {
 	 */
 	public void createPaquete(int idPedido, String idPaquete, String fecha) {
 		db.executeUpdate(SQL_CREATE_PAQUETE,idPaquete,idPedido,fecha);
+	}
+	
+	
+	public void borrarPaquete(String idPaquete) {
+		db.executeUpdate(SQL_DELETE_PAQUETE,idPaquete);
 	}
 	
 	public List<PaqueteEntity> getPaquetes() {

@@ -19,7 +19,11 @@ public class pruebaRecogida {
 			public void run() {
 				try {
 					
-					OTEntity ot=new OTModel().getOTs().get(0);
+					OTEntity ot=new OTEntity();
+					ot.setIdAlmacenero(2);
+					ot.setIdOt(6);
+					ot.setEstado("ASIGNADO");
+					ot.setIdPedido("1-2-3-4");
 					
 					
 					

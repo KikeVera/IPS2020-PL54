@@ -53,14 +53,40 @@ public class RecogidaController implements Controller {
 		this.otm=otm;
 		List<ProductoEntity> catalogo=model.getListaProductos();
 		
-		HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(Integer.parseInt(ot.getIdPedido()))).getProductos();
+		String [] pedidos=ot.getIdPedido().split("-");
 		
-		List<ProductoOT> lista=Util.hashMapToProductsList(mapa,catalogo);
+		
+		HashMap <Integer,Integer> mapaTotal= new HashMap<>();
+		for(String pedido: pedidos) {
+			
+			HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(Integer.parseInt(pedido))).getProductos();
+			mapaTotal=fusionaMapas(mapa, mapaTotal);
+			
+		}
+		
+		
+		
+		List<ProductoOT> lista=Util.hashMapToProductsList(mapaTotal,catalogo);
 
 		lista=ordenaProductos(lista);
 		//Aquí se deberá ordenar la lista
 		recogida= new Recogida(lista,catalogo);
 		this.initView();
+	}
+	
+	private HashMap<Integer,Integer> fusionaMapas(HashMap<Integer,Integer> mapa1,HashMap<Integer,Integer> mapa2){
+		
+		for(Integer key: mapa1.keySet()) {
+			if(mapa2.containsKey(key)) {
+				mapa2.put(key, mapa2.get(key)+mapa1.get(key));
+			}
+			
+			else {
+				mapa2.put(key, mapa1.get(key));
+			}
+		}
+		
+		return mapa2;
 	}
 	
 	public void initView() {
