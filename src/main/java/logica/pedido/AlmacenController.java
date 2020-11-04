@@ -3,6 +3,7 @@ package logica.pedido;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -27,6 +28,7 @@ public class AlmacenController implements Controller {
 	
 	private PedidosModel pedidoModel;
 	private OTModel otmodel;
+	private List<PedidoUse> pedidos;
 	
 	
 	public AlmacenController(ProductosModel m, AlmacenView v, PedidosModel pem,OTModel otm) {
@@ -100,7 +102,14 @@ public class AlmacenController implements Controller {
 	
 	
 	private void inicializarTablaPedido() {
-		List<PedidoUse> pedidos=Util.entityToUseList(pedidoModel.getPedidos());
+		pedidos=new ArrayList<>();
+		
+		for(PedidoUse pedido:Util.entityToUseList(pedidoModel.getPedidos())) {
+			if(otmodel.getOTByIdPedido(Integer.toString(pedido.getId())).isEmpty()) {
+				pedidos.add(pedido);
+			}
+		}
+			
 		TableModel tmodel= SwingUtil.getTableModelFromPojos(pedidos,new String[] {"id","fecha","tamaño"});
 		view.getTabPedidos().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTabPedidos());
@@ -131,14 +140,14 @@ public class AlmacenController implements Controller {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Orden no seleccionada","Advertencia operacion", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
-		PedidoUse pedido=Util.entityToUseList(pedidoModel.getPedidos()).get(view.getTabPedidos().getSelectedRow());
+		PedidoUse pedido=pedidos.get(index);
 		
 		if(!otmodel.getOTByIdPedido(Integer.toString(pedido.getId())).isEmpty()) {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Pedido ya asignado","Advertencia operacion", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		otmodel.setOT(Integer.toString(pedido.getId()), 1);		//De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
-
+		inicializarTablaPedido();
 			
 	}
 	
