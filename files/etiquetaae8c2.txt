@@ -1,0 +1,6 @@
+----Etiqueta----
+Id paquete: ae8c2
+Id pedido: 1
+Usuario: 4b810
+Tipo de usuario: Anónimo
+Fecha de envio: 2020-11-04

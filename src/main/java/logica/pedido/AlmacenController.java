@@ -133,11 +133,11 @@ public class AlmacenController implements Controller {
 		}
 		PedidoUse pedido=Util.entityToUseList(pedidoModel.getPedidos()).get(view.getTabPedidos().getSelectedRow());
 		
-		if(!otmodel.getOTByIdPedido(pedido.getId()).isEmpty()) {
+		if(!otmodel.getOTByIdPedido(Integer.toString(pedido.getId())).isEmpty()) {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Pedido ya asignado","Advertencia operacion", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
-		otmodel.setOT(pedido.getId(), 1);		//De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
+		otmodel.setOT(Integer.toString(pedido.getId()), 1);		//De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
 
 			
 	}

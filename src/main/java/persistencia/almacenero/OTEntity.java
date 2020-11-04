@@ -3,12 +3,12 @@ package persistencia.almacenero;
 public class OTEntity {
 	private int idOt;
 	private int idAlmacenero;
-	private int idPedido;
+	private String  idPedido;
 	private String estado;
 	
 	public OTEntity() {		}
 	
-	public OTEntity(int idot,String status, int idal,int idped) {	
+	public OTEntity(int idot,String status, int idal,String idped) {	
 		this.idOt=idot;
 		this.idAlmacenero=idal;
 		this.idPedido=idped;
@@ -31,11 +31,11 @@ public class OTEntity {
 		this.idAlmacenero = idAlmacenero;
 	}
 
-	public int getIdPedido() {
+	public String  getIdPedido() {
 		return idPedido;
 	}
 
-	public void setIdPedido(int idPedido) {
+	public void setIdPedido(String  idPedido) {
 		this.idPedido = idPedido;
 	}
 

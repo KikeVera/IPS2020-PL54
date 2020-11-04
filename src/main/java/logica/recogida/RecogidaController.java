@@ -53,7 +53,7 @@ public class RecogidaController implements Controller {
 		this.otm=otm;
 		List<ProductoEntity> catalogo=model.getListaProductos();
 		
-		HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(ot.getIdPedido())).getProductos();
+		HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(Integer.parseInt(ot.getIdPedido()))).getProductos();
 		
 		List<ProductoOT> lista=Util.hashMapToProductsList(mapa,catalogo);
 

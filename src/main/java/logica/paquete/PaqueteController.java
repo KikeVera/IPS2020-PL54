@@ -77,7 +77,7 @@ public class PaqueteController implements Controller {
 		
 		List<ProductoEntity> catalogo=model.getListaProductos();
 		
-		idPedidos.add(ot.getIdPedido());
+		idPedidos.add(Integer.parseInt(ot.getIdPedido()));
 		
 		for(Integer id: idPedidos) {
 			Pedidos.add(Util.entityToUse(this.pem.getPedidoID(id)));
@@ -133,6 +133,15 @@ public class PaqueteController implements Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				escanearProducto();
+				
+				
+			}
+		});
+		
+		this.view.getBtEmpaquetar().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
 				
 				
 			}

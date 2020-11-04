@@ -17,7 +17,7 @@ create table Producto (id int primary key not null, nombre varchar(32) not null,
 create table Pedido (id int primary key not null, fecha varchar(32) not null, tamaño int,idUsuario varchar(5) not null, productos varchar(8000), FOREIGN KEY (idUsuario) REFERENCES Usuario(codigoUsauario));
 create table Incidencia (idPedido int  not null, descripcion varchar(1000),FOREIGN KEY (idPedido) REFERENCES Pedido(id));
 create table Almacenero(idalmacenero int primary key not null);
-create table OrdenTrabajo (idot int primary key not null, estado varchar(20), idalmacenero int not null, idpedido int not null, FOREIGN KEY (idalmacenero) REFERENCES Almacenero(idalmacenero), FOREIGN KEY (idpedido) REFERENCES Pedido(id));
+create table OrdenTrabajo (idot int primary key not null, estado varchar(20), idalmacenero int not null, idpedido varchar(1000) not null, FOREIGN KEY (idalmacenero) REFERENCES Almacenero(idalmacenero), FOREIGN KEY (idpedido) REFERENCES Pedido(id));
 create table Paquete (idPaquete varchar(5) primary key not null, idPedido int not null, fecha varchar(32) not null,FOREIGN KEY (idPedido) REFERENCES Pedido(id));
 create table Usuario (idUsuario varchar(10) primary key not null, tipo varchar(10) not null, direccion varchar(20) not null);
 create table Categoria (nombreCategoria varchar(20) primary key not null); 

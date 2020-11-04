@@ -65,6 +65,7 @@ public class PaqueteView  {
 	private JButton btEscanear;
 	private JSpinner spUnidades;
 	private JPanel pnID;
+	private JButton btEmpaquetar;
 
 	
 
@@ -84,7 +85,7 @@ public class PaqueteView  {
 		frame.setBackground(Color.WHITE);
 		frame.setTitle("Revision");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 309, 520);
+		frame.setBounds(100, 100, 334, 528);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -154,8 +155,13 @@ public class PaqueteView  {
 		btEscanear = new JButton("Escanear");
 		btEscanear.setFont(new Font("Arial", Font.PLAIN, 13));
 		pnEscaner.add(btEscanear);
-		pnBotones.setLayout(new GridLayout(0, 2, 0, 0));
+		pnBotones.setLayout(new GridLayout(0, 3, 0, 0));
+		btEmpaquetar = new JButton("Empaquetar");
+		btEmpaquetar.setFont(new Font("Arial", Font.PLAIN, 13));
+		pnBotones.add(btEmpaquetar);
 		pnBotones.add(btCancelar);
+		
+		
 		
 		pnBotones.add(btTerminar);
 		
@@ -234,6 +240,10 @@ public class PaqueteView  {
 	
 	public JButton getBtTerminar() {
 		return btTerminar;
+	}
+	
+	public JButton getBtEmpaquetar() {
+		return btEmpaquetar;
 	}
 
 	public JSpinner getSpUnidades() {
