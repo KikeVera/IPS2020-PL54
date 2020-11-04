@@ -53,8 +53,9 @@ public class Util {
 		for(Integer ID: mapa.keySet()) {
 			if(mapa.get(ID)<=hueco) {
 				trozo.put(ID, mapa.get(ID));
-				mapa.put(ID, 0);
 				hueco=hueco-mapa.get(ID);
+				mapa.put(ID, 0);
+				
 			}
 			
 			else {
@@ -68,6 +69,12 @@ public class Util {
 					
 				}
 				
+				if(mapa.get(ID)!=0) {
+					trozo.put(ID, mapa.get(ID));
+					hueco=hueco-mapa.get(ID);
+					mapa.put(ID, 0);
+				}
+				
 			}
 			
 			if(hueco==0) {
@@ -77,6 +84,9 @@ public class Util {
 			}
 			
 			
+		}
+		if (!trozo.isEmpty()){
+			lista.add(trozo);
 		}
 		return lista;
 	}
