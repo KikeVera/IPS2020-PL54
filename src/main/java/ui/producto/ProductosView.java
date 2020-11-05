@@ -20,6 +20,8 @@ import javax.swing.border.LineBorder;
 import net.miginfocom.swing.MigLayout;
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 /**
  * Clase encargada de la interfaz de usuario de la tienda online.
@@ -31,30 +33,29 @@ public class ProductosView {
 	private JFrame frmTiendaOnline;
 	private JTable tabProductos;
 	private JScrollPane scrollPedido;
-	private JSpinner spUnidades;
-	private JButton btnAnadir;
 	private JPanel pnSuperiorIzquierdo;
 	private JLabel lblTabla;
 	private JPanel pnSuperiorDerecho;
 	private JLabel lblPedido;
-	private JPanel pnInferiorIzquierdo;
-	private JPanel pnUnidades;
-	private JLabel lblUnidades;
-	private JPanel pnInferiorDerecho;
 	private JTable tabPedido;
 	private JPanel pnInfo;
 	private JPanel pnNorte;
-	private JPanel pnSur;
 	private JLabel lblUsuario;
-	private JPanel pnBotonesInferoriDerecho;
-	private JButton btnEliminar;
-	private JButton btnFinalizarPedido;
 	private JPanel pnPrecio;
 	private JLabel lblPrecio;
 	private JTextField textField;
 	private JPanel pnNavegacion;
 	private JButton btnAtras;
 	private JButton btnSiguiente;
+	private JPanel pnUnidades;
+	private JLabel lblUnidades;
+	private JSpinner spUnidades;
+	private JButton btnAnadir;
+	private JButton btnEliminar;
+	private JPanel pnBotonesPedido;
+	private JPanel pnAuxiliar;
+	private JButton btnPagarPedido;
+	private JButton btnFinalizarPedido;
 	
 	/**
 	 * Create the application.
@@ -72,7 +73,7 @@ public class ProductosView {
 		frmTiendaOnline = new JFrame();
 		frmTiendaOnline.setTitle("Tienda online");
 		frmTiendaOnline.setName("Tienda online");
-		frmTiendaOnline.setBounds(0, 0, 809, 732);
+		frmTiendaOnline.setBounds(0, 0, 833, 561);
 		frmTiendaOnline.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmTiendaOnline.setLocationRelativeTo(null);
 		
@@ -91,52 +92,6 @@ public class ProductosView {
 		tabProductos.setDefaultEditor(Object.class, null);
 		JScrollPane tablePanel = new JScrollPane(tabProductos);
 		pnSuperiorIzquierdo.add(tablePanel);
-		
-		//Inicializa el panel inferior derecho
-		pnInferiorDerecho = new JPanel();
-		pnInferiorDerecho.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
-		pnInferiorDerecho.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		pnBotonesInferoriDerecho = new JPanel();
-		pnInferiorDerecho.add(pnBotonesInferoriDerecho);
-		pnBotonesInferoriDerecho.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 50));
-		
-		btnEliminar = new JButton("Eliminar del carrito");
-		btnEliminar.setEnabled(false);
-		btnEliminar.setToolTipText("Para eliminar un producto del carrito en especifico, debe seleccionarlo en el carrito, establecer  las unidades que desea eliminar de su pedido y darle a este bot\u00F3n.");
-		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnEliminar.setBackground(Color.RED);
-		pnBotonesInferoriDerecho.add(btnEliminar);
-		
-		btnFinalizarPedido = new JButton("Finalizar Pedido");
-		btnFinalizarPedido.setToolTipText("Una vez tenga claro su pedido, para finalizar pulse este bot\u00F3n.");
-		btnFinalizarPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnFinalizarPedido.setBackground(new Color(50, 205, 50));
-		pnBotonesInferoriDerecho.add(btnFinalizarPedido);
-		
-		//Inicializa el panel inferior izquierdo 
-		pnInferiorIzquierdo = new JPanel();
-		pnInferiorIzquierdo.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
-		pnInferiorIzquierdo.setLayout(new MigLayout("", "[374px]", "[46px][29px]"));
-		
-		pnUnidades = new JPanel();
-		pnInferiorIzquierdo.add(pnUnidades, "cell 0 0,growx,aligny top");
-		pnUnidades.setLayout(new BorderLayout(0, 0));
-		
-		lblUnidades = new JLabel("Unidades:");
-		lblUnidades.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnUnidades.add(lblUnidades, BorderLayout.NORTH);
-		
-		spUnidades = new JSpinner();
-		spUnidades.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnUnidades.add(spUnidades);
-		spUnidades.setModel(new SpinnerNumberModel(1, 1, null, 1));
-		btnAnadir = new JButton("A\u00F1adir al carrito");
-		btnAnadir.setEnabled(false);
-		btnAnadir.setToolTipText("Para a\u00F1adir un producto al carrito en especifico, debe seleccionarlo en la tabla de productos disponibles, establecer  las unidades deseadas y darle a este bot\u00F3n.");
-		btnAnadir.setBackground(new Color(50, 205, 50));
-		btnAnadir.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnInferiorIzquierdo.add(btnAnadir, "cell 0 1,growx,aligny top");
 
 		//Inicializa el panel superior derecho 
 		pnSuperiorDerecho = new JPanel();
@@ -173,7 +128,7 @@ public class ProductosView {
 		tabPedido.setDefaultEditor(Object.class, null);
 		tabPedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPedido.setViewportView(tabPedido);
-		frmTiendaOnline.getContentPane().setLayout(new MigLayout("", "[752px]", "[][231px,grow][130px,grow]"));
+		frmTiendaOnline.getContentPane().setLayout(new MigLayout("", "[759px,grow]", "[][300px,grow][][bottom]"));
 		
 		pnInfo = new JPanel();
 		frmTiendaOnline.getContentPane().add(pnInfo);
@@ -181,8 +136,38 @@ public class ProductosView {
 		pnNorte = new JPanel();
 		frmTiendaOnline.getContentPane().add(pnNorte);
 		
-		pnSur = new JPanel();
-		frmTiendaOnline.getContentPane().add(pnSur);
+		pnUnidades = new JPanel();
+		pnUnidades.setBorder(new LineBorder(new Color(0, 0, 0), 4));
+		frmTiendaOnline.getContentPane().add(pnUnidades, "cell 0 2,growx,aligny top");
+		pnUnidades.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[55px,grow,center]"));
+		
+		lblUnidades = new JLabel("Unidades:");
+		lblUnidades.setFont(new Font("Tahoma", Font.BOLD, 16));
+		pnUnidades.add(lblUnidades, "cell 0 0,alignx right,aligny center");
+		
+		spUnidades = new JSpinner();
+		spUnidades.setFont(new Font("Tahoma", Font.BOLD, 16));
+		pnUnidades.add(spUnidades, "cell 1 0,growx,alignx center,aligny center");
+		
+		btnAnadir = new JButton("A\u00F1adir al carrito");
+		btnAnadir.setToolTipText("Para a\u00F1adir un producto al carrito en especifico, debe seleccionarlo en la tabla de productos disponibles, establecer  las unidades deseadas y darle a este bot\u00F3n.");
+		btnAnadir.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAnadir.setEnabled(false);
+		btnAnadir.setBackground(new Color(50, 205, 50));
+		pnUnidades.add(btnAnadir, "cell 2 0,alignx center,aligny center");
+		
+		btnEliminar = new JButton("Eliminar del carrito");
+		btnEliminar.setToolTipText("Para eliminar un producto del carrito en especifico, debe seleccionarlo en el carrito, establecer  las unidades que desea eliminar de su pedido y darle a este bot\u00F3n.");
+		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnEliminar.setEnabled(false);
+		btnEliminar.setBackground(Color.RED);
+		pnUnidades.add(btnEliminar, "cell 3 0,alignx center,aligny center");
+		
+		pnBotonesPedido = new JPanel();
+		pnBotonesPedido.setBorder(new LineBorder(new Color(0, 0, 0), 4));
+		frmTiendaOnline.getContentPane().add(pnBotonesPedido, "cell 0 3,grow");
+		pnBotonesPedido.setLayout(new MigLayout("", "[10px,grow]", "[55px,grow]"));
+		pnBotonesPedido.add(getPnAuxiliar(), "cell 0 0,alignx center,aligny center");
 		pnNorte.setLayout(new BorderLayout(0, 0));
 		
 		
@@ -204,16 +189,12 @@ public class ProductosView {
 		btnSiguiente.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		pnNavegacion.add(btnSiguiente);
-		pnSur.setLayout(new GridLayout(0, 2, 0, 0));
-		pnSur.add(pnInferiorIzquierdo);
-		pnSur.add(pnInferiorDerecho);
 		frmTiendaOnline.getContentPane().add(pnInfo,"cell 0 0,grow");
 		
 		lblUsuario = new JLabel("Usuario:");
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnInfo.add(lblUsuario);
 		frmTiendaOnline.getContentPane().add(pnNorte,"cell 0 1,grow");
-		frmTiendaOnline.getContentPane().add(pnSur,"cell 0 2,grow");
 		
 	}
 	
@@ -231,9 +212,24 @@ public class ProductosView {
 	public JTextField getTextPrecio() {return this.textField;}
 	public JPanel getPnSuperiorDerecho() { return this.pnSuperiorDerecho;}
 	public JPanel getPnSuperiorIzquierdo() { return this.pnSuperiorIzquierdo;}
-	public JPanel getPnInferiorDerecho() { return this.pnInferiorDerecho;}
-	public JPanel getPnInferiorIzquierdo() { return this.pnInferiorIzquierdo;}
 	public JLabel getLblPedido() {return this.lblPedido;}
 	public JLabel getLblUsuario() {return this.lblUsuario;}
-	
+	private JPanel getPnAuxiliar() {
+		if (pnAuxiliar == null) {
+			pnAuxiliar = new JPanel();
+			FlowLayout flowLayout = (FlowLayout) pnAuxiliar.getLayout();
+			flowLayout.setHgap(40);
+			
+			btnPagarPedido = new JButton("Pagar pedido");
+			btnPagarPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
+			pnAuxiliar.add(btnPagarPedido);
+			
+			btnFinalizarPedido = new JButton("Finalizar Pedido");
+			btnFinalizarPedido.setToolTipText("Una vez tenga claro su pedido, para finalizar pulse este bot\u00F3n.");
+			btnFinalizarPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
+			btnFinalizarPedido.setBackground(new Color(50, 205, 50));
+			pnAuxiliar.add(btnFinalizarPedido);
+		}
+		return pnAuxiliar;
+	}
 }
