@@ -33,6 +33,31 @@ public class PagoPedidoController implements Controller{
 		this.view.getBtnAtrasInicio().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				cerrar();
+			}
+		});
+		this.view.getBtnSiguienteTarjeta().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Comprobar 
+				cerrar();
+			}
+		});
+		this.view.getBtnAtrasTarjeta().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				back(); 		
+			}
+		});
+		this.view.getBtnSiguienteTransaccion().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cerrar();
+			}
+		});
+		this.view.getBtnAtrasTransaccion().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 				back();
 			}
 		});
@@ -65,6 +90,12 @@ public class PagoPedidoController implements Controller{
 	}
 	
 	private void back() {
+		CardLayout c = (CardLayout) this.view.getFrame().getContentPane().getLayout(); 
+		c.show(this.view.getFrame().getContentPane(), "Inicio");
+	}
+	
+	private void cerrar() {
 		this.view.getFrame().dispose();
 	}
+	
 }
