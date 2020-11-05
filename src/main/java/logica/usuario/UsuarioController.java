@@ -35,11 +35,6 @@ public class UsuarioController implements Controller{
 	
 	@Override
 	public void initController() {
-		view.getFrame().setVisible(true);
-	}
-
-	@Override
-	public void initView() {
 		this.view.getBtnInicio().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -62,7 +57,12 @@ public class UsuarioController implements Controller{
 			}
 
 		});
-		
+	}
+
+	@Override
+	public void initView() {
+		view.getFrame().setVisible(true);
+			
 	}
 	
 	/**

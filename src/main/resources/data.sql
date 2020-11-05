@@ -37,7 +37,7 @@ insert into Producto(id,nombre,descripcion,precio,pasillo,estanteria,altura,nomb
     (106,'Producto G','G',14.34,1,2,5,'Pruebas'),
     (107,'Producto H','H',8.5,1,2,7,'Pruebas');
 insert into Usuario(idUsuario,tipo,direccion) values 
-	('usuario','Normal','calle1'),
+	('usuario','Particular','calle1'),
 	('empresa','Empresa','calle 2');
 
 	

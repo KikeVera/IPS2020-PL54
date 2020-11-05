@@ -214,6 +214,7 @@ public class ProductosView {
 	public JPanel getPnSuperiorIzquierdo() { return this.pnSuperiorIzquierdo;}
 	public JLabel getLblPedido() {return this.lblPedido;}
 	public JLabel getLblUsuario() {return this.lblUsuario;}
+	public JButton getBtnPagarPedido() {return this.btnPagarPedido;}
 	private JPanel getPnAuxiliar() {
 		if (pnAuxiliar == null) {
 			pnAuxiliar = new JPanel();

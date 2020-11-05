@@ -1,34 +1,32 @@
 package ui.pagoPedido;
 
-import java.awt.GridLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import java.awt.Font;
-import java.awt.Component;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
-import javax.swing.JButton;
-import javax.swing.ButtonGroup;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.SwingConstants;
 
-public class PagoPedidoView {
+import net.miginfocom.swing.MigLayout;
+
+public class PagoPedidoView extends JDialog{
 	
-	private JFrame frmPago;
-	private JPanel pnGlobal;
+
+	private static final long serialVersionUID = 1L;
+	
+	private JDialog frmPago;
+	private JPanel pnInicio;
 	private JPanel pnMetodosPago;
 	private JRadioButton rdbTarjeta;
 	private JRadioButton rdbContrareembolso;
@@ -36,11 +34,18 @@ public class PagoPedidoView {
 	private JPanel pnDireccion;
 	private JTextField txtDireccion;
 	private JPanel pnBotones;
-	private JButton btnAtras;
-	private JButton btnSiguiente;
+	private JButton btnAtrasInicio;
+	private JButton btnSiguienteInicio;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JLabel lblDireccion;
+	private JPanel pnTarjeta;
+	private JPanel pnTransaccion;
 
+	
+	public PagoPedidoView() {
+		initialize();		
+	}
+	
 	
 	/**
 	 * Initialize the contents of the frame.
@@ -49,22 +54,14 @@ public class PagoPedidoView {
 	private void initialize() {
 
 		//Inicializa la ventana principal 
-		frmPago = new JFrame();
-		frmPago.setTitle("Tienda online: pago de pedido");
-		frmPago.setName("Tienda online: pago de pedido");
-		frmPago.setBounds(0, 0, 619, 362);
-		frmPago.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmPago.setLocationRelativeTo(null);
-		frmPago.getContentPane().setLayout(new CardLayout(0, 0));
-		frmPago.getContentPane().add(getPnMetodosPago(), "Inicio");
 		
-		pnGlobal = new JPanel();
-		frmPago.getContentPane().add(pnGlobal, "name_1154358573826900");
-		pnGlobal.setLayout(new GridLayout(3, 1, 0, 10));
+		
+		pnInicio = new JPanel();
+		pnInicio.setLayout(new MigLayout("", "[591px]", "[115px][89px][99px]"));
 		
 		pnMetodosPago = new JPanel();
 		pnMetodosPago.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Seleccion un método de pago", TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font("Tahoma", java.awt.Font.BOLD,16), new Color(0, 0, 0)));
-		pnGlobal.add(pnMetodosPago);
+		pnInicio.add(pnMetodosPago, "cell 0 0,grow");
 		pnMetodosPago.setLayout(new GridLayout(3, 1, 0, 0));
 		
 		rdbTarjeta = new JRadioButton("Tarjeta");
@@ -83,7 +80,7 @@ public class PagoPedidoView {
 		pnMetodosPago.add(rdbTransferencia);
 		
 		pnDireccion = new JPanel();
-		pnGlobal.add(pnDireccion);
+		pnInicio.add(pnDireccion, "cell 0 1,grow");
 		pnDireccion.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		lblDireccion = new JLabel("Direcci\u00F3n de env\u00EDo:");
@@ -101,18 +98,33 @@ public class PagoPedidoView {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		flowLayout.setHgap(10);
 		flowLayout.setVgap(35);
-		pnGlobal.add(pnBotones);
+		pnInicio.add(pnBotones, "cell 0 2,grow");
 		
-		btnAtras = new JButton("Atr\u00E1s");
-		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnAtras.setBackground(Color.RED);
-		pnBotones.add(btnAtras);
+		btnAtrasInicio = new JButton("Atr\u00E1s");
+		btnAtrasInicio.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAtrasInicio.setBackground(Color.RED);
+		pnBotones.add(btnAtrasInicio);
 		
-		btnSiguiente = new JButton("Siguiente");
-		btnSiguiente.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnSiguiente.setBackground(new Color(50, 205, 50));
-		pnBotones.add(btnSiguiente);
-				
+		btnSiguienteInicio = new JButton("Siguiente");
+		btnSiguienteInicio.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnSiguienteInicio.setBackground(new Color(50, 205, 50));
+		pnBotones.add(btnSiguienteInicio);
+		
+		frmPago = new JDialog();
+		frmPago.setTitle("Tienda online: pago de pedido");
+		frmPago.setName("Tienda online: pago de pedido");
+		frmPago.setBounds(0, 0, 590, 361);
+		frmPago.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		frmPago.setLocationRelativeTo(null);
+		frmPago.getContentPane().setLayout(new CardLayout(0, 0));
+		frmPago.setModal(true);	
+		frmPago.getContentPane().add(pnInicio,"Inicio"); 
+		
+		pnTarjeta = new JPanel();
+		frmPago.getContentPane().add(pnTarjeta, "Tarjeta");
+		
+		pnTransaccion = new JPanel();
+		frmPago.getContentPane().add(pnTransaccion, "Transaccion");
 	
 	}
 	
@@ -121,4 +133,8 @@ public class PagoPedidoView {
 	public JRadioButton getRdbTransferencia() {return this.rdbTransferencia;}
 	public JRadioButton getRdbContrareembolso() {return this.rdbContrareembolso;}
 	public JRadioButton getRdbTarjeta() { return this.rdbTarjeta;}
+	public JDialog getFrame() { return this.frmPago;}
+	public JTextField getTxtDireccion() { return this.txtDireccion;}
+	public JButton getBtnAtrasInicio() { return this.btnAtrasInicio;}
+	public JButton getBtnSiguienteInicio() { return this.btnSiguienteInicio;}
 }

@@ -14,6 +14,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import logica.Controller;
+import logica.pagoPedido.PagoPedidoController;
 import persistencia.categoria.CategoriaEntity;
 import persistencia.categoria.CategoriaModel;
 import persistencia.contiene.ContieneEntity;
@@ -27,6 +28,7 @@ import persistencia.subcategoria.SubcategoriaEntity;
 import persistencia.subcategoria.SubcategoriaModel;
 import persistencia.usuario.UsuarioEntity;
 import ui.SwingMain;
+import ui.pagoPedido.PagoPedidoView;
 import ui.producto.ProductosView;
 import util.swingTables.SwingUtil;
 
@@ -135,6 +137,13 @@ public class ProductosController implements Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				back();
+			}
+		});
+		
+		this.view.getBtnPagarPedido().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				iniciarPago(); 
 			}
 		});
 	}
@@ -416,6 +425,9 @@ public class ProductosController implements Controller {
 		this.view.getBtnSiguiente().setEnabled(true);
 	}
 	
+	private void iniciarPago() {
+		new PagoPedidoController(new PagoPedidoView(),this.carrito.getUsuario()); 
+	}
 
 
 
