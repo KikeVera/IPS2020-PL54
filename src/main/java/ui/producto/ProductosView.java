@@ -3,6 +3,7 @@ package ui.producto;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -15,13 +16,10 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.border.LineBorder;
-import net.miginfocom.swing.MigLayout;
-import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.LineBorder;
+
+import net.miginfocom.swing.MigLayout;
 
 /**
  * Clase encargada de la interfaz de usuario de la tienda online.
@@ -56,6 +54,9 @@ public class ProductosView {
 	private JPanel pnAuxiliar;
 	private JButton btnPagarPedido;
 	private JButton btnFinalizarPedido;
+	private JPanel pnDireccion;
+	private JLabel lblDireccion;
+	private JTextField txtDireccionEnvio;
 	
 	/**
 	 * Create the application.
@@ -163,11 +164,27 @@ public class ProductosView {
 		btnEliminar.setBackground(Color.RED);
 		pnUnidades.add(btnEliminar, "cell 3 0,alignx center,aligny center");
 		
+		
+		txtDireccionEnvio = new JTextField();
+		txtDireccionEnvio.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtDireccionEnvio.setColumns(10);
+		
+		lblDireccion = new JLabel("Direcci\u00F3n de env\u00EDo:");
+		lblDireccion.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		pnDireccion = new JPanel();
+		pnDireccion.setLayout(new BorderLayout(0, 0));
+		pnDireccion.add(getLblDireccion(), BorderLayout.NORTH);
+		pnDireccion.add(txtDireccionEnvio, BorderLayout.CENTER);	
+		
 		pnBotonesPedido = new JPanel();
 		pnBotonesPedido.setBorder(new LineBorder(new Color(0, 0, 0), 4));
 		frmTiendaOnline.getContentPane().add(pnBotonesPedido, "cell 0 3,grow");
-		pnBotonesPedido.setLayout(new MigLayout("", "[10px,grow]", "[55px,grow]"));
-		pnBotonesPedido.add(getPnAuxiliar(), "cell 0 0,alignx center,aligny center");
+		pnBotonesPedido.setLayout(new MigLayout("", "[100px,grow][right]", "[55px,grow]"));
+		pnBotonesPedido.add(pnDireccion); 
+		
+		
+		pnBotonesPedido.add(getPnDireccion(), "cell 0 0,grow");
 		pnNorte.setLayout(new BorderLayout(0, 0));
 		
 		
@@ -196,6 +213,23 @@ public class ProductosView {
 		pnInfo.add(lblUsuario);
 		frmTiendaOnline.getContentPane().add(pnNorte,"cell 0 1,grow");
 		
+		pnAuxiliar = new JPanel();
+		FlowLayout flowLayout1 = (FlowLayout) pnAuxiliar.getLayout();
+		flowLayout1.setHgap(40);
+		
+		btnPagarPedido = new JButton("Pagar pedido");
+		btnPagarPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
+		pnAuxiliar.add(btnPagarPedido);
+		
+		btnFinalizarPedido = new JButton("Finalizar Pedido");
+		btnFinalizarPedido.setToolTipText("Una vez tenga claro su pedido, para finalizar pulse este bot\u00F3n.");
+		btnFinalizarPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnFinalizarPedido.setBackground(new Color(50, 205, 50));
+		pnAuxiliar.add(btnFinalizarPedido);
+		pnBotonesPedido.add(pnAuxiliar, "cell 1 0,alignx center,aligny center");
+		
+
+		
 	}
 	
 	//Getters y Setters anyadidos para acceso desde el controlador 
@@ -215,22 +249,10 @@ public class ProductosView {
 	public JLabel getLblPedido() {return this.lblPedido;}
 	public JLabel getLblUsuario() {return this.lblUsuario;}
 	public JButton getBtnPagarPedido() {return this.btnPagarPedido;}
-	private JPanel getPnAuxiliar() {
-		if (pnAuxiliar == null) {
-			pnAuxiliar = new JPanel();
-			FlowLayout flowLayout = (FlowLayout) pnAuxiliar.getLayout();
-			flowLayout.setHgap(40);
-			
-			btnPagarPedido = new JButton("Pagar pedido");
-			btnPagarPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
-			pnAuxiliar.add(btnPagarPedido);
-			
-			btnFinalizarPedido = new JButton("Finalizar Pedido");
-			btnFinalizarPedido.setToolTipText("Una vez tenga claro su pedido, para finalizar pulse este bot\u00F3n.");
-			btnFinalizarPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
-			btnFinalizarPedido.setBackground(new Color(50, 205, 50));
-			pnAuxiliar.add(btnFinalizarPedido);
-		}
-		return pnAuxiliar;
-	}
+	public JTextField getTextDireccionEnvio() {return this.txtDireccionEnvio;}
+	public JPanel getPnDireccion() {return pnDireccion;}
+	public JLabel getLblDireccion() { return lblDireccion;}	
+	public JPanel getPnAuxiliar() {return pnAuxiliar;}
+
+
 }

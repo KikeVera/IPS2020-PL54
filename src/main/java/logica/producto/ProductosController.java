@@ -78,6 +78,11 @@ public class ProductosController implements Controller {
 		CategoriaModel m = new CategoriaModel(); 
 		this.navegacion.push(createNavegacionCategorias(m.getCategorias())); 
 		
+		//Establcemos direccion
+		if(!this.carrito.getUsuario().getTipo().equals("Anónimo")) {
+			this.view.getTextDireccionEnvio().setText(this.carrito.getUsuario().getDireccion());
+		}
+		
 		//Abre la ventana (sustituye al main generado por WindowBuilder)
 		view.getFrame().setVisible(true);
 		
@@ -119,10 +124,6 @@ public class ProductosController implements Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				guardarPedido();
-				SwingMain frame = new SwingMain();
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
-				view.getFrame().dispose();	
 			}
 		});
 		
@@ -305,9 +306,17 @@ public class ProductosController implements Controller {
 	private void guardarPedido() {
 		if(carrito.getPedido().isEmpty()) {
 			JOptionPane.showMessageDialog(this.view.getFrame(),"El pedido esta vacío ","Tienda online: Advertencia",JOptionPane.WARNING_MESSAGE);
-			return;
-			}
-		pedidoModel.setPedido(carrito.getPedido(),carrito.getUsuario().getIdUsuario());
+		}
+		if(this.view.getTextDireccionEnvio().getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this.view.getFrame(),"Debe establecer una dirección de envío ","Tienda online: Advertencia",JOptionPane.WARNING_MESSAGE);
+		}
+		else {
+			pedidoModel.setPedido(carrito.getPedido(),carrito.getUsuario().getIdUsuario());
+			view.getFrame().dispose();
+			SwingMain frame = new SwingMain();
+			frame.setLocationRelativeTo(null);
+			frame.setVisible(true);	
+		}
 		
 	}
 	
@@ -426,7 +435,7 @@ public class ProductosController implements Controller {
 	}
 	
 	private void iniciarPago() {
-		new PagoPedidoController(new PagoPedidoView(),this.carrito.getUsuario()); 
+		new PagoPedidoController(new PagoPedidoView()); 
 	}
 
 

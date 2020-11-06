@@ -5,18 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import logica.Controller;
-import persistencia.usuario.UsuarioEntity;
 import ui.pagoPedido.PagoPedidoView;
 
 public class PagoPedidoController implements Controller{
 
-	private PagoPedidoView view; 
-	private UsuarioEntity usuario; 
-	
+	private PagoPedidoView view; 	
  
-	public PagoPedidoController(PagoPedidoView v,UsuarioEntity usuario) {
+	public PagoPedidoController(PagoPedidoView v) {
 		this.view = v; 
-		this.usuario = usuario; 
 		this.initController();
 		this.initView();	
 	}
@@ -67,11 +63,7 @@ public class PagoPedidoController implements Controller{
 
 	@Override
 	public void initView() {
-		if(!usuario.getTipo().equals("Anónimo")) {
-			this.view.getTxtDireccion().setText(usuario.getDireccion());
-		}
-		this.view.getFrame().setVisible(true);
-		
+		this.view.getFrame().setVisible(true);		
 	}
 	
 	private void next() {
@@ -85,7 +77,7 @@ public class PagoPedidoController implements Controller{
 			c.show(this.view.getFrame().getContentPane(), "Transaccion");
 		}
 		else if (this.view.getRdbContrareembolso().isSelected()) {
-			this.view.dispose();
+			cerrar();
 		}
 	}
 	

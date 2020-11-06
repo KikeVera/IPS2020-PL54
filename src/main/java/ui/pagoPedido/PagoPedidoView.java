@@ -2,7 +2,6 @@ package ui.pagoPedido;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -31,13 +30,10 @@ public class PagoPedidoView extends JDialog{
 	private JRadioButton rdbTarjeta;
 	private JRadioButton rdbContrareembolso;
 	private JRadioButton rdbTransferencia;
-	private JPanel pnDireccion;
-	private JTextField txtDireccion;
 	private JPanel pnBotonesInicio;
 	private JButton btnAtrasInicio;
 	private JButton btnSiguienteInicio;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JLabel lblDireccion;
 	private JPanel pnTarjeta;
 	private JPanel pnTransaccion;
 	private JPanel pnInfoTarjeta;
@@ -71,7 +67,7 @@ public class PagoPedidoView extends JDialog{
 		
 		
 		pnInicio = new JPanel();
-		pnInicio.setLayout(new MigLayout("", "[591px]", "[115px][89px][99px]"));
+		pnInicio.setLayout(new MigLayout("", "[591px]", "[115px][99px]"));
 		
 		pnMetodosPago = new JPanel();
 		pnMetodosPago.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Seleccion un método de pago", TitledBorder.LEADING, TitledBorder.TOP, new java.awt.Font("Tahoma", java.awt.Font.BOLD,16), new Color(0, 0, 0)));
@@ -93,22 +89,8 @@ public class PagoPedidoView extends JDialog{
 		rdbTransferencia.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnMetodosPago.add(rdbTransferencia);
 		
-		pnDireccion = new JPanel();
-		pnInicio.add(pnDireccion, "cell 0 1,grow");
-		pnDireccion.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		lblDireccion = new JLabel("Direcci\u00F3n de env\u00EDo:");
-		lblDireccion.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblDireccion.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblDireccion.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnDireccion.add(lblDireccion);
-		
-		txtDireccion = new JTextField();
-		pnDireccion.add(txtDireccion);
-		txtDireccion.setColumns(10);
-		
 		pnBotonesInicio = new JPanel();
-		pnInicio.add(pnBotonesInicio, "cell 0 2,grow");
+		pnInicio.add(pnBotonesInicio, "cell 0 1,grow");
 		pnBotonesInicio.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 35));
 		
 		btnAtrasInicio = new JButton("Atr\u00E1s");
@@ -124,7 +106,7 @@ public class PagoPedidoView extends JDialog{
 		frmPago = new JDialog();
 		frmPago.setTitle("Tienda online: pago de pedido");
 		frmPago.setName("Tienda online: pago de pedido");
-		frmPago.setBounds(0, 0, 590, 335);
+		frmPago.setBounds(0, 0, 590, 264);
 		frmPago.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		frmPago.setLocationRelativeTo(null);
 		frmPago.getContentPane().setLayout(new CardLayout(0, 0));
@@ -165,10 +147,12 @@ public class PagoPedidoView extends JDialog{
 		
 		btnAtrasTarjeta = new JButton("Atr\u00E1s");
 		btnAtrasTarjeta.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAtrasTarjeta.setBackground(Color.RED);
 		pnBotonesTarjeta.add(btnAtrasTarjeta);
 		
 		btnSiguienteTarjeta = new JButton("Siguiente");
 		btnSiguienteTarjeta.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnSiguienteTarjeta.setBackground(new Color(50, 205, 50));
 		pnBotonesTarjeta.add(btnSiguienteTarjeta);
 		
 		pnTransaccion = new JPanel();
@@ -197,10 +181,12 @@ public class PagoPedidoView extends JDialog{
 		
 		btnAtrasTransaccion = new JButton("Atr\u00E1s");
 		btnAtrasTransaccion.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAtrasTransaccion.setBackground(Color.RED);
 		pnBotonesTransaccion.add(btnAtrasTransaccion);
 		
 		btnSiguienteTransaccion = new JButton("Siguiente");
 		btnSiguienteTransaccion.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnSiguienteTransaccion.setBackground(new Color(50, 205, 50));
 		pnBotonesTransaccion.add(btnSiguienteTransaccion);
 	
 	}
@@ -211,7 +197,6 @@ public class PagoPedidoView extends JDialog{
 	public JRadioButton getRdbContrareembolso() {return this.rdbContrareembolso;}
 	public JRadioButton getRdbTarjeta() { return this.rdbTarjeta;}
 	public JDialog getFrame() { return this.frmPago;}
-	public JTextField getTxtDireccion() { return this.txtDireccion;}
 	public JButton getBtnAtrasInicio() { return this.btnAtrasInicio;}
 	public JButton getBtnSiguienteInicio() { return this.btnSiguienteInicio;}
 	public JButton getBtnAtrasTarjeta() { return this.btnAtrasTarjeta;}
