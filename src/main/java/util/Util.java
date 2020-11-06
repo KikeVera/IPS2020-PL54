@@ -179,5 +179,39 @@ public class Util {
 		return lista;
 		
 	}
+	
+	public static String booleanArraytoPersistString(boolean[] array) {
+		
+		StringBuffer buffer = new StringBuffer();
+		for(int i=0;i<array.length;i++) {
+			if(array[i]) {
+				buffer.append("1");
+			}
+			
+			else {
+				buffer.append("0");
+			}
+		}
+		
+		return buffer.toString();
+		
+	}
+	
+	public static boolean[] persistStringToBooleanArray(String cadena) {
+		boolean[] array=new boolean[cadena.length()];
+		
+		for(int i=0;i<cadena.length();i++) {
+			if(cadena.charAt(i)=='1') {
+				array[i]=true;
+			}
+			
+			else {
+				array[i]=false;
+			}
+		}
+		
+		return array;
+		
+	}
 		
 }

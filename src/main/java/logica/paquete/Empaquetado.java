@@ -2,7 +2,7 @@ package logica.paquete;
 
 
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import logica.pedido.PedidoUse;
@@ -15,7 +15,7 @@ public class Empaquetado {
 	List<ProductoEntity> catalogo;
 	boolean [] terminado;
 	boolean [] posibleEmpaquetado;
-	List<String> idPaquetes;
+	
 	
 	
 	
@@ -25,7 +25,7 @@ public class Empaquetado {
 		this.catalogo=catalogo;
 		terminado= new boolean[pedidos.size()];
 		posibleEmpaquetado= new boolean[pedidos.size()];
-		idPaquetes=new ArrayList<>();
+		
 	}
 	
 	public List<ProductoEntity> getCatalogo(){

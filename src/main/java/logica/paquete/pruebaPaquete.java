@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
+import persistencia.paquete.EstadoModel;
 import persistencia.paquete.PaqueteEntity;
 import persistencia.paquete.PaqueteModel;
 import persistencia.pedido.PedidosModel;
@@ -29,7 +30,7 @@ public class pruebaPaquete {
 					
 					
 					
-					PaqueteController controller= new PaqueteController(new ProductosModel(),new PedidosModel(),new OTModel(),new PaqueteModel(), new PaqueteView(), ot);
+					PaqueteController controller= new PaqueteController(new ProductosModel(),new PedidosModel(),new OTModel(),new PaqueteModel(),new EstadoModel(), new PaqueteView(), ot);
 					controller.initController();
 					for(PaqueteEntity paquete: new PaqueteModel().getPaquetes()) {
 						System.out.println(paquete.getIdPaquete()+" "+paquete.getIdPedido()+" "+paquete.getFecha());

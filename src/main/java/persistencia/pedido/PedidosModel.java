@@ -70,6 +70,14 @@ public class PedidosModel {
 		
 	}
 	
+	public void updatePedido(HashMap<Integer,Integer> update,int idPedido) {
+		
+		String productos=Util.productosToString(update);
+		String sql="UPDATE Pedido SET productos = ? WHERE id= ? ";
+		db.executeUpdate(sql,productos,idPedido);
+	}
+	
+	
 	
 	
 	

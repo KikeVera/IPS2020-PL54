@@ -85,7 +85,7 @@ public class PaqueteView  {
 		frame.setBackground(Color.WHITE);
 		frame.setTitle("Revision");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 334, 528);
+		frame.setBounds(100, 100, 369, 528);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);

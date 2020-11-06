@@ -14,6 +14,7 @@ import logica.paquete.PaqueteController;
 import logica.recogida.RecogidaController;
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
+import persistencia.paquete.EstadoModel;
 import persistencia.paquete.PaqueteModel;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductosModel;
@@ -129,7 +130,7 @@ public class OperacionesOTController implements Controller {
 		if(selected.equals("Empaquetado")) {
 		PaqueteView ventana= new PaqueteView();
 		ventana.getFrame().setLocationRelativeTo(view.getFrame());
-		 selectedController= new PaqueteController(new ProductosModel(), new PedidosModel(), new OTModel(), new PaqueteModel(), ventana, empaquetar.get(index));
+		 selectedController= new PaqueteController(new ProductosModel(), new PedidosModel(), new OTModel(), new PaqueteModel(),new EstadoModel(), ventana, empaquetar.get(index));
 		 selectedController.initController();
 		
 		}

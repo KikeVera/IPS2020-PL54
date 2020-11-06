@@ -23,7 +23,7 @@ public class pruebaRecogida {
 					ot.setIdAlmacenero(2);
 					ot.setIdOt(6);
 					ot.setEstado("ASIGNADO");
-					ot.setIdPedido("1-2-3-4");
+					ot.setIdPedido("1-2-3");
 					
 					
 					

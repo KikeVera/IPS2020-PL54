@@ -23,6 +23,8 @@ import logica.pedido.PedidoUse;
 import logica.producto.ProductoOT;
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
+import persistencia.paquete.EstadoEntity;
+import persistencia.paquete.EstadoModel;
 import persistencia.paquete.PaqueteModel;
 import persistencia.pedido.PedidoEntity;
 import persistencia.pedido.PedidosModel;
@@ -50,7 +52,7 @@ public class PaqueteController implements Controller {
 	private PedidosModel pem;
 	
 	private OTModel otm;
-	
+	private EstadoModel em;
 	private PaqueteModel pam;
 
 	
@@ -63,11 +65,11 @@ public class PaqueteController implements Controller {
 	 * @param v
 	 * @param ot
 	 */
-	public PaqueteController(ProductosModel m,PedidosModel pem,OTModel otm,PaqueteModel pam, PaqueteView v, OTEntity ot) {
+	public PaqueteController(ProductosModel m,PedidosModel pem,OTModel otm,PaqueteModel pam,EstadoModel em, PaqueteView v, OTEntity ot) {
 		this.ot=ot;
 		this.model = m; 
 		this.view = v;  
-		
+		this.em=em;
 		this.pem=pem;
 		this.otm=otm;
 		this.pam=pam;
@@ -86,6 +88,10 @@ public class PaqueteController implements Controller {
 		
 	
 		empaquetado= new Empaquetado(Pedidos,catalogo);
+		
+		if(!em.getEstadoFromOT(ot.getIdOt()).isEmpty()) {
+			cargarEstado();
+		}
 		this.initView();
 	}
 	
@@ -120,8 +126,8 @@ public class PaqueteController implements Controller {
 		this.view.getBtCancelar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				borrarPaquetes();
-				
+				//borrarPaquetes();
+				actualizarEstado();
 				view.getFrame().dispose();
 				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
 				controller.initController();
@@ -160,7 +166,7 @@ public class PaqueteController implements Controller {
 				}
 				
 				otm.updateStatus(ot.getIdOt(), "TERMINADO");
-				
+				actualizarEstado();
 				view.getFrame().dispose();
 				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
 				controller.initController();
@@ -184,13 +190,41 @@ public class PaqueteController implements Controller {
 		
 	}
 	
-	private void borrarPaquetes() {
-		for(String idPaquete: empaquetado.idPaquetes) {
-			pam.borrarPaquete(idPaquete);
-			File etiqueta = new File ("files","etiqueta" + idPaquete + ".txt");
-			etiqueta.delete();
+	//private void borrarPaquetes() {
+		//for(String idPaquete: empaquetado.idPaquetes) {
+			//pam.borrarPaquete(idPaquete);
+			//File etiqueta = new File ("files","etiqueta" + idPaquete + ".txt");
+			//etiqueta.delete();
+		//}
+		
+	//}
+	
+	private void actualizarEstado() {
+		for(PedidoUse pedido :empaquetado.getPedidos()) {
+			pem.updatePedido(pedido.getProductos(), pedido.getId());
 		}
 		
+		String terminado=Util.booleanArraytoPersistString(empaquetado.terminado);
+		String posibleEmpaquetado=Util.booleanArraytoPersistString(empaquetado.posibleEmpaquetado);
+		
+		if(em.getEstadoFromOT(ot.getIdOt()).isEmpty()) {
+			
+			em.createEstado(ot.getIdOt(),terminado , posibleEmpaquetado);
+		}
+		
+		else {
+			em.updateEstado(ot.getIdOt(), terminado, posibleEmpaquetado);
+		}
+		
+		
+	}
+	
+	private void cargarEstado() {
+		EstadoEntity estado=em.getEstadoFromOT(ot.getIdOt()).get(0);
+		boolean [] terminadoEst=Util.persistStringToBooleanArray(estado.getTerminado());
+		boolean [] posibleEmpaquetadoEst=Util.persistStringToBooleanArray(estado.getPosibleEmpaquetado());
+		empaquetado.terminado=terminadoEst;
+		empaquetado.posibleEmpaquetado=posibleEmpaquetadoEst;
 	}
 	
 	private void generarPaquete() {
@@ -220,7 +254,7 @@ public class PaqueteController implements Controller {
 		empaquetado.posibleEmpaquetado[selected]=false;
 		view.getBtEmpaquetar().setEnabled(false);
 		
-		empaquetado.idPaquetes.add(idPaquete);
+		
 		
 		
 		
