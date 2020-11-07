@@ -68,6 +68,8 @@ public class PagoPedidoController implements Controller {
 			public void actionPerformed(ActionEvent e) {
 				tienda.getBtnFinalizarPedido().setEnabled(true);
 				tienda.getBtnPagarPedido().setEnabled(false);
+				tienda.getBtnAnadir().setEnabled(false);
+				tienda.getBtnEliminar().setEnabled(false);
 				cerrar();
 			}
 		});
@@ -102,6 +104,8 @@ public class PagoPedidoController implements Controller {
 		} else if (this.view.getRdbContrareembolso().isSelected()) {
 			this.tienda.getBtnFinalizarPedido().setEnabled(true);
 			tienda.getBtnPagarPedido().setEnabled(false);
+			tienda.getBtnAnadir().setEnabled(false);
+			tienda.getBtnEliminar().setEnabled(false);
 			cerrar();
 		} else {
 			JOptionPane.showMessageDialog(this.view.getFrame(), "Debe seleccionar un metodo de pago",
@@ -184,6 +188,8 @@ public class PagoPedidoController implements Controller {
 		// Si todo se valido correctamente
 		tienda.getBtnFinalizarPedido().setEnabled(true);
 		tienda.getBtnPagarPedido().setEnabled(false);
+		tienda.getBtnAnadir().setEnabled(false);
+		tienda.getBtnEliminar().setEnabled(false);
 		cerrar();
 	}
 
