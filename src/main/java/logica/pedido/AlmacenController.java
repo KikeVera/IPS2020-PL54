@@ -108,8 +108,20 @@ public class AlmacenController implements Controller {
 	private void inicializarTablaPedido() {
 		pedidos=new ArrayList<>();
 		
+		
+		
 		for(PedidoUse pedido:Util.entityToUseList(pedidoModel.getPedidos())) {
-			if(otmodel.getOTByIdPedido(Integer.toString(pedido.getId())).isEmpty()) {
+			boolean mostrar=true;
+			for(OTEntity ot: otmodel.getOTs()) {
+				String idPedido=Integer.toString(pedido.getId());
+				String idPedOT=ot.getIdPedido();
+				if(idPedOT.equals(idPedido)||idPedOT.contains("-"+idPedido+"-")||idPedOT.startsWith(idPedido+"-")||idPedOT.endsWith("-"+idPedido)){
+					mostrar=false;
+					
+				}
+			}
+			
+			if(mostrar) {
 				pedidos.add(pedido);
 			}
 		}
@@ -157,7 +169,7 @@ public class AlmacenController implements Controller {
 			otmodel.updateOT(id_ot, sumaTamPedidos(idpedidos), idpedidos);	
 		}
 		else if(sumaTamPedidos(idpedidos)>this.size) {
-			String aux=idpedidos.get(idpedidos.size());
+			String aux=idpedidos.get(idpedidos.size()-1);//idpedidos.size() -> idpedidos.size()-1 por kike
 			idpedidos.clear();
 			idpedidos.add(aux);
 			otmodel.setOT(idpedidos, sumaTamPedidos(idpedidos)); 
