@@ -12,6 +12,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -19,6 +21,12 @@ import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * Representa la ventana de pago del pedido, accesible desde la tienda online 
+ * Tener en cuenta que esta es un JDialog
+ * @author Moises
+ *
+ */
 public class PagoPedidoView extends JDialog{
 	
 
@@ -38,20 +46,24 @@ public class PagoPedidoView extends JDialog{
 	private JPanel pnTransaccion;
 	private JPanel pnInfoTarjeta;
 	private JLabel lblNumero;
-	private JTextField textField;
+	private JTextField textNumeroTarjeta;
 	private JLabel lblCVV;
-	private JTextField textField_1;
+	private JTextField textCVV;
 	private JPanel pnBotonesTarjeta;
 	private JButton btnAtrasTarjeta;
 	private JButton btnSiguienteTarjeta;
 	private JPanel pnInfoTransaccion;
-	private JLabel lblInformacinParaRealizar;
-	private JTextField textField_2;
 	private JPanel pnBotonesTransaccion;
 	private JButton btnAtrasTransaccion;
 	private JButton btnSiguienteTransaccion;
+	private JScrollPane scpTransaccion;
+	private JLabel lblInformacinParaRealizar;
+	private JTextArea textAreaTransaccion;
 
 	
+	/**
+	 * Constructor 
+	 */
 	public PagoPedidoView() {
 		initialize();		
 	}
@@ -64,8 +76,6 @@ public class PagoPedidoView extends JDialog{
 	private void initialize() {
 
 		//Inicializa la ventana principal 
-		
-		
 		pnInicio = new JPanel();
 		pnInicio.setLayout(new MigLayout("", "[591px]", "[115px][99px]"));
 		
@@ -126,20 +136,20 @@ public class PagoPedidoView extends JDialog{
 		lblNumero.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnInfoTarjeta.add(lblNumero, "cell 0 0,grow");
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.BOLD, 16));
-		textField.setColumns(10);
-		pnInfoTarjeta.add(textField, "cell 0 1,grow");
+		textNumeroTarjeta = new JTextField();
+		textNumeroTarjeta.setFont(new Font("Tahoma", Font.BOLD, 16));
+		textNumeroTarjeta.setColumns(10);
+		pnInfoTarjeta.add(textNumeroTarjeta, "cell 0 1,grow");
 		
 		lblCVV = new JLabel("CVV:");
 		lblCVV.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCVV.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnInfoTarjeta.add(lblCVV, "cell 0 2,grow");
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		textField_1.setColumns(10);
-		pnInfoTarjeta.add(textField_1, "cell 0 3,grow");
+		textCVV = new JTextField();
+		textCVV.setFont(new Font("Tahoma", Font.BOLD, 16));
+		textCVV.setColumns(10);
+		pnInfoTarjeta.add(textCVV, "cell 0 3,grow");
 		
 		pnBotonesTarjeta = new JPanel();
 		pnTarjeta.add(pnBotonesTarjeta, "cell 0 1,grow");
@@ -161,16 +171,9 @@ public class PagoPedidoView extends JDialog{
 		
 		pnInfoTransaccion = new JPanel();
 		pnTransaccion.add(pnInfoTransaccion, "cell 0 0,alignx center,aligny center");
-		pnInfoTransaccion.setLayout(new MigLayout("", "[576px]", "[81px][81px]"));
-		
-		lblInformacinParaRealizar = new JLabel("Informaci\u00F3n para realizar la transacci\u00F3n:");
-		lblInformacinParaRealizar.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblInformacinParaRealizar.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnInfoTransaccion.add(lblInformacinParaRealizar, "cell 0 0,alignx left,aligny bottom");
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		pnInfoTransaccion.add(textField_2, "cell 0 1,grow");
+		pnInfoTransaccion.setLayout(new MigLayout("", "[562px]", "[][]"));
+		pnInfoTransaccion.add(getLblInformacinParaRealizar(), "cell 0 0,grow");
+		pnInfoTransaccion.add(getScpTransaccion(), "cell 0 1,grow");
 		
 		pnBotonesTransaccion = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) pnBotonesTransaccion.getLayout();
@@ -203,4 +206,25 @@ public class PagoPedidoView extends JDialog{
 	public JButton getBtnSiguienteTarjeta() { return this.btnSiguienteTarjeta;}
 	public JButton getBtnAtrasTransaccion() { return this.btnAtrasTransaccion;}
 	public JButton getBtnSiguienteTransaccion() { return this.btnSiguienteTransaccion;}
+	public JTextField getTextNumeroTarjeta() { return this.textNumeroTarjeta;}
+	public JTextField getTextCVV() { return this.textCVV;}
+	private JScrollPane getScpTransaccion() {
+		if (scpTransaccion == null) {
+			scpTransaccion = new JScrollPane();
+			
+			textAreaTransaccion = new JTextArea();
+			textAreaTransaccion.setEditable(false);
+			textAreaTransaccion.setText("Debe realizar un ingreso con el correspondiente importe del pedido al siguiente n\u00FAmero de cuenta: \r\n\r\nXXXX-XXXX-XX-XXXXXXXXXX ");
+			scpTransaccion.setViewportView(textAreaTransaccion);
+		}
+		return scpTransaccion;
+	}
+	private JLabel getLblInformacinParaRealizar() {
+		if (lblInformacinParaRealizar == null) {
+			lblInformacinParaRealizar = new JLabel("Informaci\u00F3n para realizar la transacci\u00F3n:");
+			lblInformacinParaRealizar.setVerticalAlignment(SwingConstants.BOTTOM);
+			lblInformacinParaRealizar.setFont(new Font("Tahoma", Font.BOLD, 16));
+		}
+		return lblInformacinParaRealizar;
+	}
 }

@@ -218,6 +218,7 @@ public class ProductosView {
 		flowLayout1.setHgap(40);
 		
 		btnPagarPedido = new JButton("Pagar pedido");
+		btnPagarPedido.setEnabled(false);
 		btnPagarPedido.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnAuxiliar.add(btnPagarPedido);
 		
