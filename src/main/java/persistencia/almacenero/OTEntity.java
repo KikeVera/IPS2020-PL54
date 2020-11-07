@@ -5,14 +5,16 @@ public class OTEntity {
 	private int idAlmacenero;
 	private String  idPedido;
 	private String estado;
+	private int capacidad;
 	
 	public OTEntity() {		}
 	
-	public OTEntity(int idot,String status, int idal,String idped) {	
+	public OTEntity(int idot,String status, int idal,String idped,int cap) {	
 		this.idOt=idot;
 		this.idAlmacenero=idal;
 		this.idPedido=idped;
 		this.estado=status;
+		this.capacidad=cap;
 	}
 
 	public int getIdOt() {
@@ -45,6 +47,14 @@ public class OTEntity {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public int getCapacidad() {
+		return capacidad;
+	}
+
+	public void setCapacidad(int capacidad) {
+		this.capacidad = capacidad;
 	}
 
 }

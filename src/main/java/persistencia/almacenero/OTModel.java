@@ -3,6 +3,7 @@ package persistencia.almacenero;
 import java.util.List;
 
 import persistencia.database.Database;
+import util.Util;
 
 public class OTModel {
 	
@@ -10,40 +11,46 @@ public class OTModel {
 					
 	public List<Object[]> getOTsArray() {
 		
-		String sql= "Select idot,estado,idalmacenero,idpedido from ordentrabajo";
+		String sql= "Select idot,estado,idalmacenero,idpedido,capacidad from ordentrabajo";
 		return db.executeQueryArray(sql);
 	}
 	
 	public List<OTEntity> getOTs() {
-		String sql= "Select idot,estado,idalmacenero,idpedido from ordentrabajo";		
+		String sql= "Select idot,estado,idalmacenero,idpedido,capacidad from ordentrabajo";		
 		
 		return db.executeQueryPojo(OTEntity.class, sql);
 	}
 	
 	public List<OTEntity> getOTByIdPedido(String idpedido) {
-		String sql= "Select idot,estado,idalmacenero,idpedido from ordentrabajo where idpedido = ?";		
-		
+		String sql= "Select idot,estado,idalmacenero,idpedido,capacidad from ordentrabajo where idpedido = ?";			
 		return db.executeQueryPojo(OTEntity.class, sql,idpedido);
 	}
+	
 	public List<OTEntity> getOTsByStatus(String status) {
-		String sql= "Select idot,estado,idalmacenero,idpedido from ordentrabajo where estado = ?";		
+		String sql= "Select idot,estado,idalmacenero,idpedido,capacidad from ordentrabajo where estado = ?";		
 		
 		return db.executeQueryPojo(OTEntity.class, sql,status);
 	}
 	
-	public void setOT(String idpedido,int idalmacenero) {
+	public void setOT(List<String> idpedidos_arg,int capacidad) {
 		int idot=getOTs().size()+1;		
-		String estado="ASIGNADO";
-		String sql="insert into ordentrabajo values (?,?,?,?)";
-		db.executeUpdate(sql,idot,estado,idalmacenero,idpedido);		
+		int idalmacenero=1; //De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
+		String estado="ASIGNADO"; 
+		String idpedidos=Util.pedidosToString(idpedidos_arg);
+		String sql="insert into ordentrabajo values (?,?,?,?,?)";
+		db.executeUpdate(sql,idot,estado,idalmacenero,idpedidos,capacidad);		
 	}
 	
 	
-	public void updateStatus(int id,String status) {
-			
-		
+	public void updateStatus(int id,String status) {		
 		String sql="update ordentrabajo set estado = ? where idot = ?";
 		db.executeUpdate(sql,status,id);		
+	}
+	
+	public void updateOT(int id,int capacidad,List<String> idpedidos_arg) {	
+		String sql="update ordentrabajo set capacidad = ?, idpedido = ? where idot = ?";
+		String idpedidos=Util.pedidosToString(idpedidos_arg);
+		db.executeUpdate(sql,capacidad,idpedidos,id);		
 	}
 	
 	

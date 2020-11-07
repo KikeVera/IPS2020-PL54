@@ -113,6 +113,18 @@ public class Util {
 		return cadena.substring(1, cadena.length());
 		
 	}
+	
+	public static String pedidosToString(List<String> lista) {
+		StringBuffer buffer= new StringBuffer();
+		
+		for(int i=0;i<lista.size();i++) {
+			buffer.append(lista.get(i));
+			buffer.append("-");
+		}	
+		String cadena=buffer.toString();
+		return cadena;
+		
+	}
 
 	
 	public static List<PedidoUse> entityToUseList(List<PedidoEntity> entity) {

@@ -11,6 +11,7 @@ import javax.swing.table.TableModel;
 
 import logica.Controller;
 import logica.producto.ProductoOT;
+import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductoEntity;
@@ -30,6 +31,9 @@ public class AlmacenController implements Controller {
 	private OTModel otmodel;
 	private List<PedidoUse> pedidos;
 	
+	private List<String> idpedidos = new ArrayList<String>();	
+	private final int size=15;
+	private int actual=0;
 	
 	public AlmacenController(ProductosModel m, AlmacenView v, PedidosModel pem,OTModel otm) {
 		this.pedidoModel=pem;
@@ -141,15 +145,41 @@ public class AlmacenController implements Controller {
 			return;
 		}
 		PedidoUse pedido=pedidos.get(index);
-		
-		if(!otmodel.getOTByIdPedido(Integer.toString(pedido.getId())).isEmpty()) {
-			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Pedido ya asignado","Advertencia operacion", JOptionPane.WARNING_MESSAGE);
-			return;
+
+		//otmodel.updateStatus(otmodel.getOTByIdPedido(Integer.toString(pedido.getId())).get(0).getIdOt(), "CAPWELL");
+
+		idpedidos.add(Integer.toString(pedido.getId()));
+		if(idpedidos.size()==1 && sumaTamPedidos(idpedidos)<=this.size) {
+			otmodel.setOT(idpedidos, sumaTamPedidos(idpedidos)); 	
 		}
-		otmodel.setOT(Integer.toString(pedido.getId()), 1);		//De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
+		else if(sumaTamPedidos(idpedidos)<=this.size) {
+			int id_ot=this.otmodel.getOTByIdPedido(idpedidos.get(0)).get(0).getIdOt();
+			otmodel.updateOT(id_ot, sumaTamPedidos(idpedidos), idpedidos);	
+		}
+		else if(sumaTamPedidos(idpedidos)>this.size) {
+			String aux=idpedidos.get(idpedidos.size());
+			idpedidos.clear();
+			idpedidos.add(aux);
+			otmodel.setOT(idpedidos, sumaTamPedidos(idpedidos)); 
+		}
+		else if(idpedidos.size()==1 && sumaTamPedidos(idpedidos)>this.size) //Falta implementar
+			Util.dividePedido(pedido.getProductos(),size);	
+		
+		List<OTEntity> lo=otmodel.getOTs();
 		inicializarTablaPedido();
 			
 	}
-	
+	/**
+	 *  Suma el tamaño de los pedidos de una lista pasada como parametro
+	 * @param lista
+	 * @return total
+	 */
+	private int sumaTamPedidos(List<String> lista) {
+		int total=0;
+		for(String s:lista) {
+			total+=this.pedidoModel.getPedido(Integer.parseInt(s)).getTamaño();
+		}
+		return total;
+	}
 }
 
