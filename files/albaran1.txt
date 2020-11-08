@@ -1,9 +1,10 @@
 ----Albaran----
 Id pedido: 1
-Usuario: 98bbb
+Usuario: 8b202
 Tipo de usuario: Anónimo
-Dirección de envío: dasdad
+Dirección de envío: k
 Fecha de envio: 2020-11-08
-Tamaño total: 1
-Lista productos: [id = 106 ,nombre = Producto G ,número unidades = 1 uds]
+Tamaño total: 8
+Lista productos: [id = 101 ,nombre = Pack de 6 bolígrafos BIC tinta azul ,número unidades = 3 uds]
+[id = 104 ,nombre = Bolígrafo borrable rojo ,número unidades = 5 uds]
 

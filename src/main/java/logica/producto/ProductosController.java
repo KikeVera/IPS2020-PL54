@@ -336,8 +336,10 @@ public class ProductosController implements Controller {
 		}
 
 		pedidoModel.setPedido(carrito.getPedido(), carrito.getUsuario().getIdUsuario());
-		UsuarioModel um = new UsuarioModel(); 
-		um.setUsuario(carrito.getUsuario().getIdUsuario(), "Anónimo", this.view.getTextDireccionEnvio().getText());
+		if(this.carrito.getUsuario().getTipo().equals("Anónimo")) {
+			UsuarioModel um = new UsuarioModel(); 
+			um.setUsuario(carrito.getUsuario().getIdUsuario(), "Anónimo", this.view.getTextDireccionEnvio().getText());
+		}
 		view.getFrame().dispose();
 		SwingMain frame = new SwingMain();
 		frame.setLocationRelativeTo(null);

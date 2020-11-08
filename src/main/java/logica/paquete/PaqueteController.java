@@ -29,7 +29,7 @@ import persistencia.paquete.EstadoModel;
 import persistencia.paquete.PaqueteModel;
 import persistencia.pedido.PedidoEntity;
 import persistencia.pedido.PedidosModel;
-import persistencia.pedido.TrozoEntity;
+
 import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
@@ -299,9 +299,13 @@ public class PaqueteController implements Controller {
 	}
 	
 	private boolean pedidoTroceadoTerminado() {
-		for(TrozoEntity trozo:tm.getTrozos()) {
-			if(trozo.getId().startsWith(ot.getIdPedido().substring(0, 2))) {
-				for(Integer value:Util.stringToProductos(trozo.getProductos()).values()){
+		for(OTEntity order:otm.getOTs()) {
+			if(order.getIdPedido().startsWith(ot.getIdPedido().substring(0,2))) {
+				if(em.getEstadoFromOT(order.getIdOt()).isEmpty()) {
+					return false;
+				}
+				EstadoEntity estado=em.getEstadoFromOT(order.getIdOt()).get(0);
+				for(Integer value:Util.stringToProductos(estado.getMaps()).values()) {
 					if(value!=0) {
 						return false;
 					}
