@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
 import persistencia.pedido.PedidosModel;
+import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductosModel;
 import persistencia.recogida.IncidenciaEntity;
 import persistencia.recogida.IncidenciaModel;
@@ -27,7 +28,7 @@ public class pruebaRecogida {
 					
 					
 					
-					RecogidaController controller= new RecogidaController(new ProductosModel(),new IncidenciaModel(),new PedidosModel(),new OTModel(), new RevisionView(), ot);
+					RecogidaController controller= new RecogidaController(new ProductosModel(),new IncidenciaModel(),new PedidosModel(),new TrozosModel(),new OTModel(), new RevisionView(), ot);
 					controller.initController();
 					for(IncidenciaEntity incidencia: new IncidenciaModel().getIncidencias()) {
 						System.out.println(incidencia.getDescripcion()+incidencia.getIdPedido());

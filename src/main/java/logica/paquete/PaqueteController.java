@@ -28,6 +28,7 @@ import persistencia.paquete.EstadoModel;
 import persistencia.paquete.PaqueteModel;
 import persistencia.pedido.PedidoEntity;
 import persistencia.pedido.PedidosModel;
+import persistencia.pedido.TrozoEntity;
 import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
@@ -55,6 +56,7 @@ public class PaqueteController implements Controller {
 	private OTModel otm;
 	private EstadoModel em;
 	private PaqueteModel pam;
+	private TrozosModel tm;
 
 	
 	/**
@@ -66,7 +68,7 @@ public class PaqueteController implements Controller {
 	 * @param v
 	 * @param ot
 	 */
-	public PaqueteController(ProductosModel m,PedidosModel pem,OTModel otm,PaqueteModel pam,EstadoModel em, PaqueteView v, OTEntity ot) {
+	public PaqueteController(ProductosModel m,PedidosModel pem,TrozosModel tm,OTModel otm,PaqueteModel pam,EstadoModel em, PaqueteView v, OTEntity ot) {
 		this.ot=ot;
 		this.model = m; 
 		this.view = v;  
@@ -74,19 +76,29 @@ public class PaqueteController implements Controller {
 		this.pem=pem;
 		this.otm=otm;
 		this.pam=pam;
+		this.tm=tm;
 		List<Integer> idPedidos=new ArrayList<>();
 		
 		List<PedidoUse> Pedidos=new ArrayList<>();
 		
+		
+		
 		List<ProductoEntity> catalogo=model.getListaProductos();
-		String [] pedidos=ot.getIdPedido().split("-");
-		for(int i=0;i<pedidos.length;i++) {
-			idPedidos.add(Integer.parseInt(pedidos[i]));
-		}
-		for(Integer id: idPedidos) {
-			Pedidos.add(Util.entityToUse(this.pem.getPedidoID(id)));
+		
+		if(ot.getIdPedido().endsWith("F")) {
+			Pedidos.add(Util.trozoToPedidoUse(this.tm.getTrozo(ot.getIdPedido())));
 		}
 		
+		else {
+		
+			String [] pedidos=ot.getIdPedido().split("-");
+			for(int i=0;i<pedidos.length;i++) {
+				idPedidos.add(Integer.parseInt(pedidos[i]));
+			}
+			for(Integer id: idPedidos) {
+				Pedidos.add(Util.entityToUse(this.pem.getPedidoID(id)));
+			}
+		}
 	
 		empaquetado= new Empaquetado(Pedidos,catalogo);
 		
@@ -159,15 +171,21 @@ public class PaqueteController implements Controller {
 		this.view.getBtTerminar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!ot.getIdPedido().endsWith("trozo"))//O lo que sea que vaya a identificar que esta OT cuando lleva un trozo
-					terminarPedidos();
+				if(ot.getIdPedido().endsWith("F")) {
+					actualizarEstado();
+					if(pedidoTroceadoTerminado()) {
+						terminarPedidos();
+					}
+				}
+					
 				
 				else {
-					//Por hacer
+					actualizarEstado();
+					terminarPedidos();
 				}
 				
 				otm.updateStatus(ot.getIdOt(), "TERMINADO");
-				actualizarEstado();
+				
 				view.getFrame().dispose();
 				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel(),new TrozosModel());
 				controller.initController();
@@ -201,8 +219,16 @@ public class PaqueteController implements Controller {
 	//}
 	
 	private void actualizarEstado() {
-		for(PedidoUse pedido :empaquetado.getPedidos()) {
-			pem.updatePedido(pedido.getProductos(), pedido.getId());
+		if(ot.getIdPedido().endsWith("F")) {
+			tm.updateTrozo(empaquetado.getPedidos().get(0).getProductos(), ot.getIdPedido());
+		}
+		
+		else {
+		
+			for(PedidoUse pedido :empaquetado.getPedidos()) {
+				pem.updatePedido(pedido.getProductos(), pedido.getId());
+			}
+		
 		}
 		
 		String terminado=Util.booleanArraytoPersistString(empaquetado.terminado);
@@ -264,6 +290,8 @@ public class PaqueteController implements Controller {
 		
 	}
 	
+	
+	
 	private void terminarPedidos() {
 		for(PedidoUse pedido: empaquetado.getPedidos()) {
 			
@@ -272,6 +300,22 @@ public class PaqueteController implements Controller {
 			File albaran = new File ("files","albaran" + pedido.getId() + ".txt");
 			generarAlbaran(albaran,this.pem.getPedido(pedido.getId()),fecha);
 		}
+	}
+	
+	private boolean pedidoTroceadoTerminado() {
+		for(TrozoEntity trozo:tm.getTrozos()) {
+			if(trozo.getId().startsWith(ot.getIdPedido().substring(0, 2))) {
+				for(Integer value:Util.stringToProductos(trozo.getProductos()).values()){
+					if(value!=0) {
+						return false;
+					}
+				}
+				
+			}
+		}
+		
+		return true;
+		
 	}
 	
 	

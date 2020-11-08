@@ -38,17 +38,16 @@ public class RecogidaController implements Controller {
 	private Recogida recogida;
 	private IncidenciaView incidencia;
 	private PedidosModel pem;
-
 	private OTModel otm;
+	private TrozosModel tm;
 	
 	
 	
-	
-	public RecogidaController(ProductosModel m,IncidenciaModel im,PedidosModel pem,OTModel otm, RevisionView v, OTEntity ot) {
+	public RecogidaController(ProductosModel m,IncidenciaModel im,PedidosModel pem,TrozosModel tm,OTModel otm, RevisionView v, OTEntity ot) {
 		this.ot=ot;
 		this.model = m; 
 		this.view = v;  
-		
+		this.tm=tm;
 		this.incidenciaModel=im;
 		this.pem=pem;
 		this.otm=otm;
@@ -58,14 +57,22 @@ public class RecogidaController implements Controller {
 		
 		
 		HashMap <Integer,Integer> mapaTotal= new HashMap<>();
-		for(String pedido: pedidos) {
-			
-			HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(Integer.parseInt(pedido))).getProductos();
-			mapaTotal=fusionaMapas(mapa, mapaTotal);
+		
+		if(this.ot.getIdPedido().endsWith("F")) {
+			mapaTotal=Util.stringToProductos(this.tm.getTrozo(ot.getIdPedido()).getProductos());
 			
 		}
 		
+		else {
 		
+			for(String pedido: pedidos) {
+			
+				HashMap <Integer,Integer> mapa= Util.entityToUse(this.pem.getPedidoID(Integer.parseInt(pedido))).getProductos();
+				mapaTotal=fusionaMapas(mapa, mapaTotal);
+			
+			}
+		
+		}
 		
 		List<ProductoOT> lista=Util.hashMapToProductsList(mapaTotal,catalogo);
 

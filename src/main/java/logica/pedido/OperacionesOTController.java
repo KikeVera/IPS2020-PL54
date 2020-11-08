@@ -121,7 +121,7 @@ public class OperacionesOTController implements Controller {
 			RevisionView ventana= new RevisionView();
 			ventana.getFrame().setLocationRelativeTo(view.getFrame());
 					
-			selectedController=new RecogidaController(new ProductosModel(), new IncidenciaModel(), new PedidosModel(), new OTModel(),ventana,recoger.get(index));
+			selectedController=new RecogidaController(new ProductosModel(), new IncidenciaModel(), new PedidosModel(),new TrozosModel(), new OTModel(),ventana,recoger.get(index));
 			selectedController.initController();
 			
 			
@@ -131,7 +131,7 @@ public class OperacionesOTController implements Controller {
 		if(selected.equals("Empaquetado")) {
 		PaqueteView ventana= new PaqueteView();
 		ventana.getFrame().setLocationRelativeTo(view.getFrame());
-		 selectedController= new PaqueteController(new ProductosModel(), new PedidosModel(), new OTModel(), new PaqueteModel(),new EstadoModel(), ventana, empaquetar.get(index));
+		 selectedController= new PaqueteController(new ProductosModel(), new PedidosModel(),new TrozosModel(), new OTModel(), new PaqueteModel(),new EstadoModel(), ventana, empaquetar.get(index));
 		 selectedController.initController();
 		
 		}

@@ -33,4 +33,17 @@ public class TrozosModel {
 		
 		
 	}
+	
+	public TrozoEntity getTrozo(String id) {
+		String sql = "Select * from Trozo where id=?";
+		TrozoEntity trozo = db.executePojo(TrozoEntity.class, sql, id); 
+		return trozo; 
+	}
+	
+	public void updateTrozo(HashMap<Integer,Integer> update,String id) {
+		
+		String productos=Util.productosToString(update);
+		String sql="UPDATE Trozo SET productos = ? WHERE id= ? ";
+		db.executeUpdate(sql,productos,id);
+	}
 }

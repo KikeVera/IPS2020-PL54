@@ -11,6 +11,8 @@ import java.util.List;
 import logica.pedido.PedidoUse;
 import logica.producto.ProductoOT;
 import persistencia.pedido.PedidoEntity;
+import persistencia.pedido.PedidosModel;
+import persistencia.pedido.TrozoEntity;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductoInfo;
 import util.exception.ApplicationException;
@@ -122,7 +124,7 @@ public class Util {
 			buffer.append("-");
 		}	
 		String cadena=buffer.toString();
-		return cadena;
+		return cadena.substring(0, cadena.length()-1);
 		
 	}
 
@@ -138,14 +140,13 @@ public class Util {
 		return lista;
 	}
 	
-	public static PedidoUse entityToUse(PedidoEntity e) {
-		
-		
+	public static PedidoUse entityToUse(PedidoEntity e) {	
 		
 	return new PedidoUse(e.getId(), e.getFecha(), e.getTamaño(),e.getIdUsuario(), stringToProductos(e.getProductos()));
 		
-		
 	}
+	
+	
 	
 	public static List<PedidoEntity> useToEntityList(List<PedidoUse> use) {
 		
@@ -156,6 +157,19 @@ public class Util {
 		}
 		
 		return lista;
+	}
+	
+	public static PedidoUse trozoToPedidoUse(TrozoEntity trozo){
+		PedidosModel pm= new PedidosModel();
+		int id=Integer.parseInt(trozo.getId().substring(0, 1));
+		int tamaño=trozo.getTamaño();
+		HashMap<Integer,Integer> productos=Util.stringToProductos(trozo.getProductos());
+		String idUsuario=pm.getPedido(id).getIdUsuario();
+		String fecha=pm.getPedido(id).getFecha();
+		return new PedidoUse(id, fecha, tamaño, idUsuario, productos);
+		
+		
+		
 	}
 	
 	public static List<ProductoOT> hashMapToProductsList(HashMap<Integer,Integer> mapa, List<ProductoEntity> catalogo){

@@ -9,6 +9,7 @@ import persistencia.paquete.EstadoModel;
 import persistencia.paquete.PaqueteEntity;
 import persistencia.paquete.PaqueteModel;
 import persistencia.pedido.PedidosModel;
+import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductosModel;
 
 import ui.paquete.PaqueteView;
@@ -30,7 +31,7 @@ public class pruebaPaquete {
 					
 					
 					
-					PaqueteController controller= new PaqueteController(new ProductosModel(),new PedidosModel(),new OTModel(),new PaqueteModel(),new EstadoModel(), new PaqueteView(), ot);
+					PaqueteController controller= new PaqueteController(new ProductosModel(),new PedidosModel(),new TrozosModel(),new OTModel(),new PaqueteModel(),new EstadoModel(), new PaqueteView(), ot);
 					controller.initController();
 					for(PaqueteEntity paquete: new PaqueteModel().getPaquetes()) {
 						System.out.println(paquete.getIdPaquete()+" "+paquete.getIdPedido()+" "+paquete.getFecha());

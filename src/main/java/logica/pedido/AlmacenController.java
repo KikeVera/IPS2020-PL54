@@ -186,7 +186,7 @@ public class AlmacenController implements Controller {
 			if(sumaTamPedidos(idpedidos)>this.size) {
 				List<HashMap<Integer, Integer>> procesaTrozos=Util.dividePedido(pedido.getProductos(),size);	
 				for(int i=0;i<procesaTrozos.size();i++) {		
-					this.trozmodel.setFragmentoPedido(procesaTrozos.get(i), pedido.getId()+"-"+(i+1));
+					this.trozmodel.setFragmentoPedido(procesaTrozos.get(i), pedido.getId()+"-"+(i+1)+"-F");
 				}
 				List<TrozoEntity> trozos=trozmodel.getTrozos();
 				
