@@ -17,6 +17,7 @@ import persistencia.almacenero.OTModel;
 import persistencia.paquete.EstadoModel;
 import persistencia.paquete.PaqueteModel;
 import persistencia.pedido.PedidosModel;
+import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductosModel;
 import persistencia.recogida.IncidenciaModel;
 import ui.almacen.AlmacenView;
@@ -71,7 +72,7 @@ public class OperacionesOTController implements Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Salir();
-				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
+				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel(),new TrozosModel());
 				controller.initController();
 			}
 			

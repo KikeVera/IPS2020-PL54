@@ -28,6 +28,7 @@ import persistencia.paquete.EstadoModel;
 import persistencia.paquete.PaqueteModel;
 import persistencia.pedido.PedidoEntity;
 import persistencia.pedido.PedidosModel;
+import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
 import persistencia.usuario.UsuarioEntity;
@@ -129,7 +130,7 @@ public class PaqueteController implements Controller {
 				//borrarPaquetes();
 				actualizarEstado();
 				view.getFrame().dispose();
-				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
+				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel(),new TrozosModel());
 				controller.initController();
 				
 				
@@ -168,7 +169,7 @@ public class PaqueteController implements Controller {
 				otm.updateStatus(ot.getIdOt(), "TERMINADO");
 				actualizarEstado();
 				view.getFrame().dispose();
-				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
+				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel(),new TrozosModel());
 				controller.initController();
 				
 				

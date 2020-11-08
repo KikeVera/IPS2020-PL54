@@ -16,6 +16,7 @@ import logica.usuario.UsuarioController;
 import persistencia.almacenero.OTModel;
 import persistencia.database.Database;
 import persistencia.pedido.PedidosModel;
+import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductosModel;
 import persistencia.usuario.UsuarioModel;
 import ui.almacen.AlmacenView;
@@ -73,7 +74,7 @@ public class SwingMain extends JFrame {
 			btnLanzarAplicacionAlmacen = new JButton("Iniciar la aplicacion del almacen");
 			btnLanzarAplicacionAlmacen.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
+					AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel(),new TrozosModel());
 					controller.initController();
 					dispose();
 				}

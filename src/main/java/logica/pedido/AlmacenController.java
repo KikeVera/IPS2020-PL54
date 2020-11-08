@@ -4,6 +4,7 @@ package logica.pedido;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -14,6 +15,7 @@ import logica.producto.ProductoOT;
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
 import persistencia.pedido.PedidosModel;
+import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
 import ui.SwingMain;
@@ -29,17 +31,18 @@ public class AlmacenController implements Controller {
 	
 	private PedidosModel pedidoModel;
 	private OTModel otmodel;
+	private TrozosModel trozmodel;
 	private List<PedidoUse> pedidos;
 	
 	private List<String> idpedidos = new ArrayList<String>();	
 	private final int size=15;
-	private int actual=0;
 	
-	public AlmacenController(ProductosModel m, AlmacenView v, PedidosModel pem,OTModel otm) {
+	public AlmacenController(ProductosModel m, AlmacenView v, PedidosModel pem,OTModel otm,TrozosModel troz) {
 		this.pedidoModel=pem;
 		this.model = m; 
 		this.view = v;  
 		this.otmodel=otm;
+		this.trozmodel=troz;
 		this.initView();
 	}
 	
@@ -173,8 +176,12 @@ public class AlmacenController implements Controller {
 				}
 			}	
 		}
-		else if(idpedidos.size()==1 && sumaTamPedidos(idpedidos)>this.size) //Falta implementar
-			Util.dividePedido(pedido.getProductos(),size);	
+		else if(idpedidos.size()==1 && sumaTamPedidos(idpedidos)>this.size) {
+			List<HashMap<Integer, Integer>> aux=Util.dividePedido(pedido.getProductos(),size);	
+			for(int i=0;i<aux.size();i++) {		
+				this.trozmodel.setFragmentoPedido(aux.get(i), "");
+			}
+		}
 		
 		else if(sumaTamPedidos(idpedidos)>this.size) {
 			String aux=idpedidos.get(idpedidos.size()-1);//idpedidos.size() -> idpedidos.size()-1 por kike

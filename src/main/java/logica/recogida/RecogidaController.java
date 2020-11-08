@@ -18,6 +18,7 @@ import logica.producto.ProductoOT;
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
 import persistencia.pedido.PedidosModel;
+import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
 import persistencia.recogida.IncidenciaEntity;
@@ -133,7 +134,7 @@ public class RecogidaController implements Controller {
 				
 				guardarIncidencias();
 				view.getFrame().dispose();
-				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
+				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel(),new TrozosModel());
 				controller.initController();
 				
 				
@@ -155,7 +156,7 @@ public class RecogidaController implements Controller {
 				
 				view.getFrame().dispose();
 				otm.updateStatus(ot.getIdOt(), "RECOGIDO");
-				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel());
+				AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel(),new TrozosModel());
 				controller.initController();
 				
 			}
