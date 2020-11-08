@@ -4,6 +4,7 @@
 --Para giis.demo.tkrun:
 drop table Producto;
 drop table Pedido;
+drop table Trozo;
 drop table Incidencia;
 drop table OrdenTrabajo;
 drop table Estado;

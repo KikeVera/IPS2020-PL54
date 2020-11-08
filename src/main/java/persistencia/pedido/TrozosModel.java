@@ -11,7 +11,7 @@ public class TrozosModel {
 	private Database db=new Database();
 	
 	public List<TrozoEntity> getTrozos() {
-		String sql= "Select id,tamaño,productos from trozo";
+		String sql= "Select * from Trozo";
 		return db.executeQueryPojo(TrozoEntity.class, sql);
 	}
 	
@@ -28,7 +28,7 @@ public class TrozosModel {
 		}
 		
 		String productos=Util.productosToString(pedido);
-		String sql="insert into trozo values (?,?,?,?,?)";
+		String sql="insert into Trozo values (?,?,?)";
 		db.executeUpdate(sql,id,tamaño,productos);
 		
 		

@@ -40,6 +40,18 @@ public class OTModel {
 		String sql="insert into ordentrabajo values (?,?,?,?,?)";
 		db.executeUpdate(sql,idot,estado,idalmacenero,idpedidos,capacidad);		
 	}
+	/**
+	 * Metodo para asignar un trozo a una orden de trabajo
+	 * @param idpedidos_arg
+	 * @param capacidad
+	 */
+	public void setTrozoOT(String idpedido_arg,int capacidad) {
+		int idot=getOTs().size()+1;		
+		int idalmacenero=1; //De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
+		String estado="ASIGNADO"; 
+		String sql="insert into ordentrabajo values (?,?,?,?,?)";
+		db.executeUpdate(sql,idot,estado,idalmacenero,idpedido_arg,capacidad);		
+	}
 	
 	
 	public void updateStatus(int id,String status) {		

@@ -15,6 +15,7 @@ import logica.producto.ProductoOT;
 import persistencia.almacenero.OTEntity;
 import persistencia.almacenero.OTModel;
 import persistencia.pedido.PedidosModel;
+import persistencia.pedido.TrozoEntity;
 import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
@@ -152,7 +153,9 @@ public class AlmacenController implements Controller {
 		SwingUtil.autoAdjustColumns(view.getTabProductos());
 	}
 	
-	//Guardamos la orden de trabajo en la base de datos
+	/**
+	 * Guardamos la orden de trabajo en la base de datos
+	 */
 	private void asignarOT() {
 		int index=view.getTabPedidos().getSelectedRow();
 		if(index==-1) {
@@ -176,22 +179,26 @@ public class AlmacenController implements Controller {
 				}
 			}	
 		}
-		else if(idpedidos.size()==1 && sumaTamPedidos(idpedidos)>this.size) {
-			List<HashMap<Integer, Integer>> aux=Util.dividePedido(pedido.getProductos(),size);	
-			for(int i=0;i<aux.size();i++) {		
-				this.trozmodel.setFragmentoPedido(aux.get(i), "");
-			}
-		}
-		
 		else if(sumaTamPedidos(idpedidos)>this.size) {
-			String aux=idpedidos.get(idpedidos.size()-1);//idpedidos.size() -> idpedidos.size()-1 por kike
+			String aux=idpedidos.get(idpedidos.size()-1);
 			idpedidos.clear();
 			idpedidos.add(aux);
-			otmodel.setOT(idpedidos, sumaTamPedidos(idpedidos)); 
+			if(sumaTamPedidos(idpedidos)>this.size) {
+				List<HashMap<Integer, Integer>> procesaTrozos=Util.dividePedido(pedido.getProductos(),size);	
+				for(int i=0;i<procesaTrozos.size();i++) {		
+					this.trozmodel.setFragmentoPedido(procesaTrozos.get(i), pedido.getId()+"-"+(i+1));
+				}
+				List<TrozoEntity> trozos=trozmodel.getTrozos();
+				
+				for(TrozoEntity tr:trozos) {
+					otmodel.setTrozoOT(tr.getId(),tr.getTamaño());
+				}
+				idpedidos.clear(); //Hacemos esto porque no se puede meter un fragmento de un pedido y otro pedido distinto
+			}else {
+				otmodel.setOT(idpedidos, sumaTamPedidos(idpedidos)); 
+			}		
 		}
-
-		
-		List<OTEntity> lo=otmodel.getOTs();
+		//List<OTEntity> lo=otmodel.getOTs();
 		inicializarTablaPedido();
 			
 	}

@@ -1,6 +1,7 @@
 --Datos para carga inicial de la base de datos
 delete from Producto;
 delete from Pedido;
+delete from Trozo;
 delete from Incidencia;
 delete from OrdenTrabajo;
 delete from Almacenero;
