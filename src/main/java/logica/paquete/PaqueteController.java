@@ -414,17 +414,14 @@ public class PaqueteController implements Controller {
 	private String generarCadenaPedido(PedidoEntity pedido) {
 		StringBuilder sb = new StringBuilder();
 		ProductosModel pm = new ProductosModel();
-		String[] conjunto = pedido.getProductos().split("-");
+		
+		String[] aux = pedido.getProductos().split("/");
 		List<ProductoEntity> productos = new ArrayList<ProductoEntity>();
 		List<Integer> uds = new ArrayList<Integer>(); 
-		for(int i = 0 ; i < conjunto.length ;i++) {
-			if(i % 2 == 0) {
-				ProductoEntity producto = pm.findProductById(Integer.parseInt(conjunto[i])).get(0); 
-				productos.add(producto); 
-			}
-			else {
-				uds.add(Integer.parseInt(conjunto[i])); 
-			}
+		for(int i = 0 ; i < aux.length ;i++) {
+			String[] par = aux[i].split("-"); 
+			productos.add(pm.findProductById(Integer.parseInt(par[0])).get(0));
+			uds.add(Integer.parseInt(par[1])); 
 		}
 		for(int i = 0;i<productos.size();i++) {
 			ProductoEntity p = productos.get(i); 
