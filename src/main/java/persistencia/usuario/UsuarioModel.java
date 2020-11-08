@@ -15,5 +15,18 @@ public class UsuarioModel {
 		UsuarioEntity usuario = db.executePojo(UsuarioEntity.class, sql, codigo); 
 		return usuario; 
 	}
+	
+	/**
+	 * Inserta un usuario en la base de datos 
+	 * @param id Su id 
+	 * @param tipo El tipo de usuario
+	 * @param direccion La direccion del usuario 
+	 */
+	public void setUsuario(String id, String tipo, String direccion) {
+		String sql="insert into Usuario values (?,?,?)";
+		db.executeUpdate(sql,id,tipo,direccion);	
+	}
+	
+	
 
 }

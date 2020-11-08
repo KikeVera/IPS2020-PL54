@@ -1,8 +1,0 @@
-----Albaran----
-Id paquete: ae8c2
-Id pedido: 1
-Usuario: 4b810
-Tipo de usuario: Anónimo
-Fecha de envio: 2020-11-04
-Tamaño total: 9
-Lista productos: 102-5/103-4

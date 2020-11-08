@@ -347,16 +347,11 @@ public class PaqueteController implements Controller {
                 bw.write("Tipo de usuario: " + usuario.getTipo() + "\n");
                 bw.write("Dirección de envío: " + usuario.getDireccion() + "\n");
             }
-            else {
-            	bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
-                bw.write("Tipo de usuario: Anónimo\n");
-                //bw.write("Dirección de envío: " + usuario.getDireccion() + "\n");
-            }
-    
+
             bw.write("Fecha de envio: " + fecha + "\n");
 
         } catch (IOException e) {
-            System.out.println("Error al crear la etiqueta del paquete: " + idPaquete);
+            System.out.println("Error al crear la etiqueta del pedido: " + pedido.getId());
         } finally {
            try {
            if (bw != null)
@@ -364,7 +359,7 @@ public class PaqueteController implements Controller {
            if (fw != null)
                fw.close();
            } catch (IOException e) {
-        	   System.out.println("Error al cerrar la etiqueta del paquete: " + idPaquete);
+        	   System.out.println("Error al cerrar la etiqueta del pedido: " + pedido.getId());
            }
         }
 	}
@@ -377,32 +372,29 @@ public class PaqueteController implements Controller {
 	 */
 	private void generarAlbaran(File albaran, PedidoEntity pedido, String fecha) {
 		FileWriter fw = null;
-		BufferedWriter bw = null;  
+		BufferedWriter bw = null; 
 				
         try
         {
         	fw = new FileWriter(albaran); 
             bw = new BufferedWriter(fw);
+            PedidosModel pm = new PedidosModel(); 
             
-            UsuarioEntity usuario = new UsuarioModel().getUsuario(pedido.getIdUsuario()); 
+            PedidoEntity pedidoOrig = pm.getPedido(pedido.getId()); 
+            UsuarioEntity usuario = new UsuarioModel().getUsuario(pedidoOrig.getIdUsuario());
             
             bw.write("----Albaran----\n");
            
-            bw.write("Id pedido: " + pedido.getId() + "\n");
+            bw.write("Id pedido: " + pedidoOrig.getId() + "\n");
             if(usuario != null) {
             	bw.write("Usuario: " + usuario.getIdUsuario() + "\n");
                 bw.write("Tipo de usuario: " + usuario.getTipo() + "\n");
                 bw.write("Dirección de envío: " + usuario.getDireccion() + "\n");
             }
-            else {
-            	bw.write("Usuario: " + pedido.getIdUsuario() + "\n");
-                bw.write("Tipo de usuario: Anónimo\n");
-                //bw.write("Dirección de envío: " + usuario.getDireccion() + "\n");
-            }
     
             bw.write("Fecha de envio: " + fecha + "\n");
-            bw.write("Tamaño total: " + pedido.getTamaño() + "\n");
-            bw.write("Lista productos: " + pedido.getProductos() + "\n");
+            bw.write("Tamaño total: " + pedidoOrig.getTamaño() + "\n");
+            bw.write("Lista productos: " + generarCadenaPedido(pedidoOrig) + "\n");
 
         } catch (IOException e) {
             System.out.println("Error al crear el albaran del pedido: " + pedido.getId());
@@ -416,6 +408,35 @@ public class PaqueteController implements Controller {
         	   System.out.println("Error al cerrar el albaran del pedido: " + pedido.getId());
            }
         }
+	}
+	
+	/**
+	 * Crea una lista de los productos de un pedido a partir de este 
+	 * @param pedido Pedido origen 
+	 * @return Cadena que lo representa 
+	 */
+	private String generarCadenaPedido(PedidoEntity pedido) {
+		StringBuilder sb = new StringBuilder();
+		ProductosModel pm = new ProductosModel();
+		System.out.println(pedido.getProductos());
+		String[] conjunto = pedido.getProductos().split("-");
+		List<ProductoEntity> productos = new ArrayList<ProductoEntity>();
+		List<Integer> uds = new ArrayList<Integer>(); 
+		for(int i = 0 ; i < conjunto.length ;i++) {
+			if(i % 2 == 0) {
+				ProductoEntity producto = pm.findProductById(Integer.parseInt(conjunto[i])).get(0); 
+				productos.add(producto); 
+			}
+			else {
+				uds.add(Integer.parseInt(conjunto[i])); 
+			}
+		}
+		for(int i = 0;i<productos.size();i++) {
+			ProductoEntity p = productos.get(i); 
+			int n = uds.get(i); 
+			sb.append("[id = " + p.getId() +" ,nombre = " + p.getNombre() + " ,número unidades = " + n + " uds]\n");
+		}
+		return sb.toString(); 
 	}
 	
 	

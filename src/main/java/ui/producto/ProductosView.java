@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import net.miginfocom.swing.MigLayout;
+import javax.swing.SpinnerNumberModel;
 
 /**
  * Clase encargada de la interfaz de usuario de la tienda online.
@@ -147,6 +148,7 @@ public class ProductosView {
 		pnUnidades.add(lblUnidades, "cell 0 0,alignx right,aligny center");
 		
 		spUnidades = new JSpinner();
+		spUnidades.setModel(new SpinnerNumberModel(1, 1, null,1));
 		spUnidades.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnUnidades.add(spUnidades, "cell 1 0,growx,alignx center,aligny center");
 		

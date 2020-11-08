@@ -27,6 +27,7 @@ import persistencia.producto.ProductosModel;
 import persistencia.subcategoria.SubcategoriaEntity;
 import persistencia.subcategoria.SubcategoriaModel;
 import persistencia.usuario.UsuarioEntity;
+import persistencia.usuario.UsuarioModel;
 import ui.SwingMain;
 import ui.pagoPedido.PagoPedidoView;
 import ui.producto.ProductosView;
@@ -334,6 +335,8 @@ public class ProductosController implements Controller {
 			return; 
 		}
 		pedidoModel.setPedido(carrito.getPedido(), carrito.getUsuario().getIdUsuario());
+		UsuarioModel um = new UsuarioModel(); 
+		um.setUsuario(carrito.getUsuario().getIdUsuario(), "Anónimo", this.view.getTextDireccionEnvio().getText());
 		view.getFrame().dispose();
 		SwingMain frame = new SwingMain();
 		frame.setLocationRelativeTo(null);
