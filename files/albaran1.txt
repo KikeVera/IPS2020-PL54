@@ -1,0 +1,9 @@
+----Albaran----
+Id pedido: 1
+Usuario: 98bbb
+Tipo de usuario: Anónimo
+Dirección de envío: dasdad
+Fecha de envio: 2020-11-08
+Tamaño total: 1
+Lista productos: [id = 106 ,nombre = Producto G ,número unidades = 1 uds]
+

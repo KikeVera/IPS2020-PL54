@@ -282,13 +282,7 @@ public class PaqueteController implements Controller {
 		
 		empaquetado.posibleEmpaquetado[selected]=false;
 		view.getBtEmpaquetar().setEnabled(false);
-		
-		
-		
-		
-		
-		
-		
+	
 		
 	}
 	
@@ -300,7 +294,7 @@ public class PaqueteController implements Controller {
 			String fecha=Util.dateToIsoString(new Date());
 			
 			File albaran = new File ("files","albaran" + pedido.getId() + ".txt");
-			//generarAlbaran(albaran,this.pem.getPedido(pedido.getId()),fecha);
+			generarAlbaran(albaran,this.pem.getPedido(pedido.getId()),fecha);
 		}
 	}
 	
@@ -420,7 +414,6 @@ public class PaqueteController implements Controller {
 	private String generarCadenaPedido(PedidoEntity pedido) {
 		StringBuilder sb = new StringBuilder();
 		ProductosModel pm = new ProductosModel();
-		System.out.println(pedido.getProductos());
 		String[] conjunto = pedido.getProductos().split("-");
 		List<ProductoEntity> productos = new ArrayList<ProductoEntity>();
 		List<Integer> uds = new ArrayList<Integer>(); 

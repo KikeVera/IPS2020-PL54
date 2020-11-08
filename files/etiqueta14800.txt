@@ -1,0 +1,7 @@
+----Etiqueta----
+Id paquete: 14800
+Id pedido: 1
+Usuario: 98bbb
+Tipo de usuario: Anónimo
+Dirección de envío: dasdad
+Fecha de envio: 2020-11-08
