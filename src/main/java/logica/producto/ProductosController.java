@@ -330,10 +330,11 @@ public class ProductosController implements Controller {
 			return; 
 		}
 		if (this.view.getTextDireccionEnvio().getText().isEmpty() || this.view.getTextDireccionEnvio().getText().isBlank()) {
-			JOptionPane.showMessageDialog(this.view.getFrame(), "Debe establecer una dirección de envío ",
+			JOptionPane.showMessageDialog(this.view.getFrame(), "Debe establecer una dirección de envío",
 					"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
 			return; 
 		}
+
 		pedidoModel.setPedido(carrito.getPedido(), carrito.getUsuario().getIdUsuario());
 		UsuarioModel um = new UsuarioModel(); 
 		um.setUsuario(carrito.getUsuario().getIdUsuario(), "Anónimo", this.view.getTextDireccionEnvio().getText());
@@ -454,6 +455,11 @@ public class ProductosController implements Controller {
 	}
 
 	private void iniciarPago() {
+		if (this.carrito.getPedido().isEmpty()) {
+			JOptionPane.showMessageDialog(this.view.getFrame(), "No puede realizar un pedido vacío",
+					"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
+			return; 
+		}
 		this.pagoPedido.initView();
 	}
 
