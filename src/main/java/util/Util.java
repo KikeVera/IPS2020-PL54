@@ -47,6 +47,29 @@ public class Util {
 		return lista;
 	} 
 	
+	public static String ListProductostoString(List<HashMap<Integer,Integer>> lista) {
+		StringBuffer buffer= new StringBuffer();
+		for(HashMap<Integer, Integer> mapa:lista) {
+			buffer.append(Util.productosToString(mapa));
+			buffer.append(",");
+		}
+		String cadena=buffer.toString();
+		return  cadena.substring(0,cadena.length()-1 );
+		
+		
+	}
+	
+	public static List<HashMap<Integer,Integer>> StringToProductosList(String cadena){
+		List<HashMap<Integer,Integer>> lista=new ArrayList<>();
+		String [] subcadenas=cadena.split(",");
+		for(String c: subcadenas) {
+			lista.add(stringToProductos(c));
+		}
+		
+		return lista;
+		
+	}
+	
 	public static List<HashMap<Integer,Integer>> dividePedido(HashMap<Integer,Integer> mapa, int maxCarrito){
 		List<HashMap<Integer,Integer>> lista= new ArrayList<>();
 		HashMap<Integer,Integer> trozo=new HashMap<>();

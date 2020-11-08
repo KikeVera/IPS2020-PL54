@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -219,28 +220,23 @@ public class PaqueteController implements Controller {
 	//}
 	
 	private void actualizarEstado() {
-		if(ot.getIdPedido().endsWith("F")) {
-			tm.updateTrozo(empaquetado.getPedidos().get(0).getProductos(), ot.getIdPedido());
-		}
 		
-		else {
-		
-			for(PedidoUse pedido :empaquetado.getPedidos()) {
-				pem.updatePedido(pedido.getProductos(), pedido.getId());
-			}
-		
-		}
 		
 		String terminado=Util.booleanArraytoPersistString(empaquetado.terminado);
 		String posibleEmpaquetado=Util.booleanArraytoPersistString(empaquetado.posibleEmpaquetado);
+		List<HashMap<Integer, Integer>> maps=new ArrayList<>();
+		for(PedidoUse p:empaquetado.getPedidos()) {
+			maps.add(p.getProductos());
+		}
 		
 		if(em.getEstadoFromOT(ot.getIdOt()).isEmpty()) {
 			
-			em.createEstado(ot.getIdOt(),terminado , posibleEmpaquetado);
+			
+			em.createEstado(ot.getIdOt(),terminado , posibleEmpaquetado,Util.ListProductostoString(maps));
 		}
 		
 		else {
-			em.updateEstado(ot.getIdOt(), terminado, posibleEmpaquetado);
+			em.updateEstado(ot.getIdOt(), terminado, posibleEmpaquetado,Util.ListProductostoString(maps));
 		}
 		
 		
@@ -252,6 +248,12 @@ public class PaqueteController implements Controller {
 		boolean [] posibleEmpaquetadoEst=Util.persistStringToBooleanArray(estado.getPosibleEmpaquetado());
 		empaquetado.terminado=terminadoEst;
 		empaquetado.posibleEmpaquetado=posibleEmpaquetadoEst;
+		List<HashMap<Integer, Integer>> maps=Util.StringToProductosList(estado.getMaps());
+		int i=0;
+		for(PedidoUse p: empaquetado.getPedidos()) {
+			p.setProductos(maps.get(i));
+			i++;
+		}
 	}
 	
 	private void generarPaquete() {
@@ -298,7 +300,7 @@ public class PaqueteController implements Controller {
 			String fecha=Util.dateToIsoString(new Date());
 			
 			File albaran = new File ("files","albaran" + pedido.getId() + ".txt");
-			generarAlbaran(albaran,this.pem.getPedido(pedido.getId()),fecha);
+			//generarAlbaran(albaran,this.pem.getPedido(pedido.getId()),fecha);
 		}
 	}
 	

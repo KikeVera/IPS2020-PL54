@@ -8,13 +8,17 @@ public class EstadoEntity {
 	private String terminado; 
 
 	private String posibleEmpaquetado; 
+	private String maps;
 	
+	
+
 	public EstadoEntity() {}
 	
-	public EstadoEntity(int idot,  String terminado, String posibleEmpaquetado ) {
+	public EstadoEntity(int idot,  String terminado, String posibleEmpaquetado,String maps ) {
 		this.idot=idot;
 		this.terminado=terminado;
 		this.posibleEmpaquetado=posibleEmpaquetado;
+		this.maps=maps;
 	}
 	
 	public int getIdOT() {
@@ -39,6 +43,14 @@ public class EstadoEntity {
 
 	public void setPosibleEmpaquetado(String posibleEmpaquetado) {
 		this.posibleEmpaquetado = posibleEmpaquetado;
+	}
+	
+	public String getMaps() {
+		return maps;
+	}
+
+	public void setMaps(String maps) {
+		this.maps = maps;
 	}
 	
 
