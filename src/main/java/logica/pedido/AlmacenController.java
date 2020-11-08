@@ -165,17 +165,24 @@ public class AlmacenController implements Controller {
 			otmodel.setOT(idpedidos, sumaTamPedidos(idpedidos)); 	
 		}
 		else if(sumaTamPedidos(idpedidos)<=this.size) {
-			int id_ot=this.otmodel.getOTByIdPedido(idpedidos.get(0)).get(0).getIdOt();
-			otmodel.updateOT(id_ot, sumaTamPedidos(idpedidos), idpedidos);	
+			String idPedido=idpedidos.get(idpedidos.size()-2);	//Para que sea en la misma ot que el anterior
+			for(OTEntity ot:otmodel.getOTs()) {
+				String idPedOT=ot.getIdPedido();
+				if(idPedOT.equals(idPedido)||idPedOT.contains("-"+idPedido+"-")||idPedOT.startsWith(idPedido+"-")||idPedOT.endsWith("-"+idPedido)){
+					otmodel.updateOT(ot.getIdOt(), sumaTamPedidos(idpedidos), idpedidos);
+				}
+			}	
 		}
+		else if(idpedidos.size()==1 && sumaTamPedidos(idpedidos)>this.size) //Falta implementar
+			Util.dividePedido(pedido.getProductos(),size);	
+		
 		else if(sumaTamPedidos(idpedidos)>this.size) {
 			String aux=idpedidos.get(idpedidos.size()-1);//idpedidos.size() -> idpedidos.size()-1 por kike
 			idpedidos.clear();
 			idpedidos.add(aux);
 			otmodel.setOT(idpedidos, sumaTamPedidos(idpedidos)); 
 		}
-		else if(idpedidos.size()==1 && sumaTamPedidos(idpedidos)>this.size) //Falta implementar
-			Util.dividePedido(pedido.getProductos(),size);	
+
 		
 		List<OTEntity> lo=otmodel.getOTs();
 		inicializarTablaPedido();
