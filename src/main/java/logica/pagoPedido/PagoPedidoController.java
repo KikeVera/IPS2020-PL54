@@ -87,6 +87,14 @@ public class PagoPedidoController implements Controller {
 	 */
 	@Override
 	public void initView() {
+		
+		//Para visualizar el precio del pedido 
+		String precio = this.tienda.getTextPrecio().getText(); 
+		this.view.getTextImporteInicio().setText(precio);
+		this.view.getTextImporteTarjeta().setText(precio);
+		this.view.getTextImporteTransaccion().setText(precio);
+		
+		//Iniciamos vista 
 		this.view.getFrame().setVisible(true);
 	}
 

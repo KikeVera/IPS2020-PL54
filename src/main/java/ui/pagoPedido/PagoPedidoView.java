@@ -61,10 +61,10 @@ public class PagoPedidoView extends JDialog {
 	private JTextArea textAreaTransaccion;
 	private JPanel pnImporteInicio;
 	private JLabel lblImporte;
-	private JTextField textImporte;
+	private JTextField textImporteInicio;
 	private JPanel pnImporteTarjeta;
 	private JLabel lblImporteTarjeta;
-	private JTextField textField_1;
+	private JTextField textImporteTarjeta;
 	private JPanel pnImporteTransaccion;
 	private JLabel lblImporteTransaccion;
 	private JTextField textImporteTransaccion;
@@ -136,12 +136,12 @@ public class PagoPedidoView extends JDialog {
 		lblImporte.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnImporteInicio.add(lblImporte);
 
-		textImporte = new JTextField();
-		textImporte.setBackground(Color.LIGHT_GRAY);
-		textImporte.setEditable(false);
-		textImporte.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnImporteInicio.add(textImporte);
-		textImporte.setColumns(10);
+		textImporteInicio = new JTextField();
+		textImporteInicio.setBackground(Color.LIGHT_GRAY);
+		textImporteInicio.setEditable(false);
+		textImporteInicio.setFont(new Font("Tahoma", Font.BOLD, 16));
+		pnImporteInicio.add(textImporteInicio);
+		textImporteInicio.setColumns(10);
 
 		btnAtrasInicio = new JButton("Atr\u00E1s");
 		btnAtrasInicio.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -206,12 +206,12 @@ public class PagoPedidoView extends JDialog {
 		lblImporteTarjeta.setFont(new Font("Tahoma", Font.BOLD, 16));
 		pnImporteTarjeta.add(lblImporteTarjeta);
 
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		textField_1.setEditable(false);
-		textField_1.setColumns(10);
-		textField_1.setBackground(Color.LIGHT_GRAY);
-		pnImporteTarjeta.add(textField_1);
+		textImporteTarjeta = new JTextField();
+		textImporteTarjeta.setFont(new Font("Tahoma", Font.BOLD, 16));
+		textImporteTarjeta.setEditable(false);
+		textImporteTarjeta.setColumns(10);
+		textImporteTarjeta.setBackground(Color.LIGHT_GRAY);
+		pnImporteTarjeta.add(textImporteTarjeta);
 
 		btnAtrasTarjeta = new JButton("Atr\u00E1s");
 		btnAtrasTarjeta.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -325,5 +325,17 @@ public class PagoPedidoView extends JDialog {
 
 	public JLabel getLblInformacinParaRealizar() {
 		return lblInformacinParaRealizar;
+	}
+	
+	public JTextField getTextImporteInicio() {
+		return textImporteInicio; 
+	}
+	
+	public JTextField getTextImporteTarjeta() {
+		return textImporteTarjeta; 
+	}
+	
+	public JTextField getTextImporteTransaccion() {
+		return textImporteTransaccion; 
 	}
 }
