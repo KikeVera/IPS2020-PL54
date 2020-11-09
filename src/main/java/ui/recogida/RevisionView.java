@@ -97,7 +97,7 @@ public class RevisionView  {
 		btIncidencia = new JButton(" Incidencia");
 		btIncidencia.setFont(new Font("Arial", Font.PLAIN, 13));
 		
-		btCancelar = new JButton("Cancelar");
+		btCancelar = new JButton("Salir");
 		btCancelar.setFont(new Font("Arial", Font.PLAIN, 13));
 		
 		pnBotones = new JPanel();
@@ -172,7 +172,7 @@ public class RevisionView  {
 		pnID.add(txIDEsacaner);
 		
 		spUnidades = new JSpinner();
-		spUnidades.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		spUnidades.setModel(new SpinnerNumberModel(1, 1, null, 1));
 		spUnidades.setFont(new Font("Arial", Font.PLAIN, 13));
 		pnID.add(spUnidades);
 		pnEscaner.add(btEscanear);

@@ -50,8 +50,8 @@ public class OperacionesOTView {
 
 		//Inicializa la ventana principal 
 		frmTiendaOnline = new JFrame();
-		frmTiendaOnline.setTitle("Tienda online");
-		frmTiendaOnline.setName("Tienda online");
+		frmTiendaOnline.setTitle("Almac\u00E9n");
+		frmTiendaOnline.setName("Almac\u00E9n");
 		frmTiendaOnline.setBounds(0,0,289,480);
 		frmTiendaOnline.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTiendaOnline.setLocationRelativeTo(null);

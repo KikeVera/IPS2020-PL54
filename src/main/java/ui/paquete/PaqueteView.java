@@ -39,7 +39,7 @@ public class PaqueteView  {
 	 * 
 	 */
 
-	private JFrame frame;
+	private JFrame frmEmpaquetado;
 	private JPanel contentPane;
 	
 	private Recogida recogida;
@@ -81,20 +81,20 @@ public class PaqueteView  {
 	}
 	
 	private void initialize() {
-		frame= new JFrame();
-		frame.setBackground(Color.WHITE);
-		frame.setTitle("Revision");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 369, 528);
+		frmEmpaquetado= new JFrame();
+		frmEmpaquetado.setBackground(Color.WHITE);
+		frmEmpaquetado.setTitle("Empaquetado");
+		frmEmpaquetado.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmEmpaquetado.setBounds(100, 100, 369, 528);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		contentPane.setLayout(new BorderLayout(0, 0));
-		frame.setContentPane(contentPane);
+		frmEmpaquetado.setContentPane(contentPane);
 		
-		btCancelar = new JButton("Cancelar");
+		btCancelar = new JButton("Salir");
 		btCancelar.setFont(new Font("Arial", Font.PLAIN, 13));
 		
 		pnInferior = new JPanel();
@@ -149,7 +149,7 @@ public class PaqueteView  {
 		pnInferior.add(pnEscaner);
 		
 		spUnidades = new JSpinner();
-		spUnidades.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		spUnidades.setModel(new SpinnerNumberModel(1, 1, null, 1));
 		pnID.add(spUnidades);
 		
 		btEscanear = new JButton("Escanear");
@@ -208,7 +208,7 @@ public class PaqueteView  {
 	
 
 	public JFrame getFrame() {
-		return frame;
+		return frmEmpaquetado;
 	}
 
 	public JPanel getContentPane() {

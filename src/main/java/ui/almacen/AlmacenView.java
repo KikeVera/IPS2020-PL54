@@ -51,8 +51,8 @@ public class AlmacenView {
 
 		//Inicializa la ventana principal 
 		frmTiendaOnline = new JFrame();
-		frmTiendaOnline.setTitle("Tienda online");
-		frmTiendaOnline.setName("Tienda online");
+		frmTiendaOnline.setTitle("Almac\u00E9n");
+		frmTiendaOnline.setName("Almac\u00E9n");
 		frmTiendaOnline.setBounds(0,0,317,483);
 		frmTiendaOnline.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmTiendaOnline.setLocationRelativeTo(null);
@@ -100,7 +100,7 @@ public class AlmacenView {
 		
 		
 		
-		btAsignar = new JButton("Generar OT");	
+		btAsignar = new JButton("Asignar a OT");	
 		btAsignar.setFont(new Font("Arial", Font.PLAIN, 14));
 		frmTiendaOnline.getContentPane().setLayout(new BorderLayout(0, 0));
 		
