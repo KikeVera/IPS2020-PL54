@@ -36,6 +36,8 @@ public class AlmacenController implements Controller {
 	private List<PedidoUse> pedidos;
 	
 	private List<String> idpedidos = new ArrayList<String>();	
+	private List<String> idpedconOT = new ArrayList<String>();	
+
 	private final int size=15;
 	
 	public AlmacenController(ProductosModel m, AlmacenView v, PedidosModel pem,OTModel otm,TrozosModel troz) {
@@ -164,26 +166,27 @@ public class AlmacenController implements Controller {
 		}
 		PedidoUse pedido=pedidos.get(index);
 
-		//otmodel.updateStatus(otmodel.getOTByIdPedido(Integer.toString(pedido.getId())).get(0).getIdOt(), "CAPWELL");
-
 		idpedidos.add(Integer.toString(pedido.getId()));
-		if(idpedidos.size()==1 && sumaTamPedidos(idpedidos)<=this.size) {
-			otmodel.setOT(idpedidos, sumaTamPedidos(idpedidos)); 	
-		}
-		else if(sumaTamPedidos(idpedidos)<=this.size) {
-			String idPedido=idpedidos.get(idpedidos.size()-2);	//Para que sea en la misma ot que el anterior
+		if(sumaTamPedidos()<=this.size) {
+			if(idpedidos.size()==1)
+				otmodel.setOT(idpedidos, sumaTamPedidos());
+			for(PedidoUse ped:pedidos) {
+				if(!idpedidos.contains(Integer.toString(ped.getId())))
+					if(ped.getTamaño()+sumaTamPedidos()<=this.size && !this.idpedconOT.contains(Integer.toString(ped.getId())))
+						idpedidos.add(Integer.toString(ped.getId()));
+			}
+			String idPedido=idpedidos.get(0);	//Para que sea en la misma ot que el anterior
 			for(OTEntity ot:otmodel.getOTs()) {
 				String idPedOT=ot.getIdPedido();
 				if(idPedOT.equals(idPedido)||idPedOT.contains("-"+idPedido+"-")||idPedOT.startsWith(idPedido+"-")||idPedOT.endsWith("-"+idPedido)){
-					otmodel.updateOT(ot.getIdOt(), sumaTamPedidos(idpedidos), idpedidos);
+					otmodel.updateOT(ot.getIdOt(), sumaTamPedidos(), idpedidos);
+					for(String idped:idpedidos)
+						this.idpedconOT.add(idped);
+					this.idpedidos.clear();
 				}
 			}	
-		}
-		else if(sumaTamPedidos(idpedidos)>this.size) {
-			String aux=idpedidos.get(idpedidos.size()-1);
-			idpedidos.clear();
-			idpedidos.add(aux);
-			if(sumaTamPedidos(idpedidos)>this.size) {
+			
+		}else if(sumaTamPedidos()>this.size) {
 				List<HashMap<Integer, Integer>> procesaTrozos=Util.dividePedido(pedido.getProductos(),size);	
 				for(int i=0;i<procesaTrozos.size();i++) {		
 					this.trozmodel.setFragmentoPedido(procesaTrozos.get(i), pedido.getId()+"-"+(i+1)+"-F");
@@ -194,11 +197,7 @@ public class AlmacenController implements Controller {
 					otmodel.setTrozoOT(tr.getId(),tr.getTamaño());
 				}
 				idpedidos.clear(); //Hacemos esto porque no se puede meter un fragmento de un pedido y otro pedido distinto
-			}else {
-				otmodel.setOT(idpedidos, sumaTamPedidos(idpedidos)); 
-			}		
 		}
-		//List<OTEntity> lo=otmodel.getOTs();
 		inicializarTablaPedido();
 			
 	}
@@ -207,9 +206,9 @@ public class AlmacenController implements Controller {
 	 * @param lista
 	 * @return total
 	 */
-	private int sumaTamPedidos(List<String> lista) {
+	private int sumaTamPedidos() {
 		int total=0;
-		for(String s:lista) {
+		for(String s:idpedidos) {
 			total+=this.pedidoModel.getPedido(Integer.parseInt(s)).getTamaño();
 		}
 		return total;
