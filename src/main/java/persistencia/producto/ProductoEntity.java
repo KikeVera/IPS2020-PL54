@@ -10,7 +10,8 @@ public class ProductoEntity{
 	private int id;
 	private String nombre; 
 	private String descripcion;
-	private double precio;
+	private double precioNormal;
+	private double precioEmpresa;
 	private int pasillo; 
 	private int estanteria; 
 	private int altura;
@@ -18,12 +19,13 @@ public class ProductoEntity{
 
 	public ProductoEntity() {}
 	
-	public ProductoEntity(int rowId, String rowNombre, String rowDescripcion, double rowPrecio,
-			int rowPasillo,int rowEstanteria, int rowAltura, String rowNombreCategoria) {
+	public ProductoEntity(int rowId, String rowNombre, String rowDescripcion, double rowPrecioNormal,
+			double rowPrecioEmpresa,int rowPasillo,int rowEstanteria, int rowAltura, String rowNombreCategoria) {
 		this.id = rowId;
 		this.nombre = rowNombre;
 		this.descripcion = rowDescripcion;
-		this.precio = rowPrecio; 
+		this.precioNormal = rowPrecioNormal; 
+		this.precioEmpresa = rowPrecioEmpresa; 
 		this.pasillo = rowPasillo;
 		this.estanteria = rowEstanteria; 
 		this.altura=rowAltura;
@@ -32,14 +34,15 @@ public class ProductoEntity{
 	
 	@Override
 	public String toString() {
-		String cadena = id + " - " + nombre + " - " + precio; 
+		String cadena = id + " - " + nombre + " - " + precioNormal + "-" + precioEmpresa; 
 		return cadena; 
 	}
 
 	public int getId() { return this.id; }
 	public String getNombre() { return this.nombre; }
 	public String getDescripcion() { return this.descripcion; }
-	public double getPrecio() { return this.precio; }
+	public double getPrecioNormal() { return this.precioNormal; }
+	public double getPrecioEmpresa() { return this.precioEmpresa; }
 	public int getPasillo() {return this.pasillo;}
 	public int getEstanteria() {return this.estanteria;}
 	public int getAltura() { return altura;}
@@ -48,7 +51,8 @@ public class ProductoEntity{
 	public void setId(int value) { this.id=value; }
 	public void setNombre(String value) { this.nombre=value; }
 	public void setDescripcion(String value) { this.descripcion=value; }
-	public void setPrecio(double value) { this.precio=value; }
+	public void setPrecioNormal(double value) { this.precioNormal=value; }
+	public void setPrecioEmpresa(double value) { this.precioEmpresa=value; }
 	public void setPasillo(int pasillo) {this.pasillo=pasillo;}
 	public void setEstanteria(int estanteria) {this.estanteria=estanteria;}
 	public void setAltura(int altura) { this.altura = altura; }

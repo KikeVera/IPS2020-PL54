@@ -15,7 +15,7 @@ drop table Categoria;
 drop table Subcategoria;
 drop table Pertenece; 
 drop table Contiene; 
-create table Producto (id int primary key not null, nombre varchar(32) not null, descripcion varchar(32), precio decimal(5,2), pasillo int, estanteria int, altura int, nombreCategoria varchar(20) not null, FOREIGN KEY (nombreCategoria) REFERENCES Categoria(nombreCategoria));
+create table Producto (id int primary key not null, nombre varchar(32) not null, descripcion varchar(32), precioNormal decimal(5,2), precioEmpresa decimal(5,2), pasillo int, estanteria int, altura int, nombreCategoria varchar(20) not null, FOREIGN KEY (nombreCategoria) REFERENCES Categoria(nombreCategoria));
 create table Pedido (id int primary key not null, fecha varchar(32) not null, tamaño int,idUsuario varchar(5) not null, productos varchar(8000), FOREIGN KEY (idUsuario) REFERENCES Usuario(codigoUsauario));
 create table Trozo (id varchar(32) primary key not null, tamaño int, productos varchar(8000));
 create table Incidencia (idPedido int  not null, descripcion varchar(1000),FOREIGN KEY (idPedido) REFERENCES Pedido(id));

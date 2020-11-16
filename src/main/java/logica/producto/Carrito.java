@@ -94,11 +94,20 @@ public class Carrito {
 	 * Calcula el precio actual de nuestro pedido.
 	 * @return Precio actual 
 	 */
-	public double calcPrecio() {
+	public double calcPrecio(String tipo) {
 		double precio = 0;
-		for (int id : this.pedido.keySet()) {
-			ProductoEntity producto = searchProductById(id); 
-			precio += producto.getPrecio()*this.pedido.get(id);  
+		
+		if(tipo.equals("Empresa")) {
+			for (int id : this.pedido.keySet()) {
+				ProductoEntity producto = searchProductById(id); 
+				precio += producto.getPrecioEmpresa()*this.pedido.get(id);  
+			}
+		}
+		else {
+			for (int id : this.pedido.keySet()) {
+				ProductoEntity producto = searchProductById(id); 
+				precio += producto.getPrecioNormal()*this.pedido.get(id);  
+			}
 		}
 		return precio; 
 	}

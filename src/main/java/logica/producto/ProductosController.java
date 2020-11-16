@@ -174,13 +174,30 @@ public class ProductosController implements Controller {
 	 * @return modelo de tabla para esa lista de productos
 	 */
 	private TableModel createNavegacionProductos(List<ProductoEntity> productos) {
-		TableModel tmodel = SwingUtil.getTableModelFromPojos(productos,
-				new String[] { "id", "nombre", "descripcion", "precio" });
-
-		// Se cambia tambien la columna del precio para expresar la moneda usada
-		view.getTabProductos().setModel(tmodel);
-		TableColumn columna = view.getTabProductos().getColumn("precio");
-		columna.setHeaderValue("precio(€)");
+		TableModel tmodel = null; 
+		
+		if(carrito.getUsuario().getTipo().equals("Empresa")) {
+			
+			tmodel = SwingUtil.getTableModelFromPojos(productos,
+					new String[] { "id", "nombre", "descripcion","precioEmpresa" });
+			
+			// Se cambia tambien la columna del precio para expresar la moneda usada
+			view.getTabProductos().setModel(tmodel);
+			TableColumn columna = view.getTabProductos().getColumn("precioEmpresa");
+			columna.setHeaderValue("precio(€)");
+			SwingUtil.autoAdjustColumns(view.getTabProductos());
+		}
+		else {
+			tmodel = SwingUtil.getTableModelFromPojos(productos,
+					new String[] { "id", "nombre", "descripcion","precioNormal" });
+			
+			// Se cambia tambien la columna del precio para expresar la moneda usada
+			view.getTabProductos().setModel(tmodel);
+			TableColumn columna = view.getTabProductos().getColumn("precioNormal");
+			columna.setHeaderValue("precio(€)");
+			
+		}
+		
 		SwingUtil.autoAdjustColumns(view.getTabProductos());
 
 		// Como se guarda la clave del ultimo elemento seleccionado, restaura la
@@ -263,7 +280,7 @@ public class ProductosController implements Controller {
 		this.view.getTabPedido().getSelectionModel().setSelectionInterval(lastSelectedPedidoRow, lastSelectedPedidoRow);
 
 		// Actualizamos el precio
-		this.view.getTextPrecio().setText(String.format("%.2f", this.carrito.calcPrecio()) + "€");
+		this.view.getTextPrecio().setText(String.format("%.2f", this.carrito.calcPrecio(carrito.getUsuario().getTipo())) + "€");
 		this.view.getSpUnidades().setValue(1);
 	}
 
@@ -370,7 +387,7 @@ public class ProductosController implements Controller {
 
 		} else {
 
-			// Cogemos el nombre de la categoria/subcategoria
+			// Cogemos el nombre de la categoria/subcategoria/producto
 			String nombre = (String) view.getTabProductos().getValueAt(selectedRow, 0);
 
 			if (this.navegacion.size() == 1) { // Si es la primera iteracion desde las categorias principales
