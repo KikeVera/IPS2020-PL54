@@ -75,7 +75,7 @@ public class ProductosView {
 		frmTiendaOnline = new JFrame();
 		frmTiendaOnline.setTitle("Tienda online");
 		frmTiendaOnline.setName("Tienda online");
-		frmTiendaOnline.setBounds(0, 0, 833, 561);
+		frmTiendaOnline.setBounds(0, 0, 1042, 637);
 		frmTiendaOnline.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmTiendaOnline.setLocationRelativeTo(null);
 		
@@ -187,12 +187,12 @@ public class ProductosView {
 		
 		
 		pnBotonesPedido.add(getPnDireccion(), "cell 0 0,grow");
-		pnNorte.setLayout(new BorderLayout(0, 0));
+		pnNorte.setLayout(new MigLayout("", "[600px,grow][460px,grow]", "[390px,grow]"));
 		
 		
 		//Añadimos todo al panel principal 
-		pnNorte.add(pnSuperiorDerecho, BorderLayout.CENTER);
-		pnNorte.add(pnSuperiorIzquierdo, BorderLayout.WEST);
+		pnNorte.add(pnSuperiorDerecho, "cell 1 0,alignx center,grow");
+		pnNorte.add(pnSuperiorIzquierdo, "cell 0 0,alignx center,grow");
 		
 		pnNavegacion = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) pnNavegacion.getLayout();

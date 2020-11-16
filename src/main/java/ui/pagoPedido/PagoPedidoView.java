@@ -156,7 +156,7 @@ public class PagoPedidoView extends JDialog {
 		frmPago = new JDialog();
 		frmPago.setTitle("Tienda online: pago de pedido");
 		frmPago.setName("Tienda online: pago de pedido");
-		frmPago.setBounds(0, 0, 590, 264);
+		frmPago.setBounds(0, 0, 607, 303);
 		frmPago.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		frmPago.setLocationRelativeTo(null);
 		frmPago.getContentPane().setLayout(new CardLayout(0, 0));
@@ -165,7 +165,7 @@ public class PagoPedidoView extends JDialog {
 
 		pnTarjeta = new JPanel();
 		frmPago.getContentPane().add(pnTarjeta, "Tarjeta");
-		pnTarjeta.setLayout(new MigLayout("", "[576px]", "[204px][99px]"));
+		pnTarjeta.setLayout(new MigLayout("", "[591px]", "[204px][99px]"));
 
 		pnInfoTarjeta = new JPanel();
 		pnInfoTarjeta.setBorder(new LineBorder(new Color(0, 0, 0), 3));
@@ -225,7 +225,7 @@ public class PagoPedidoView extends JDialog {
 
 		pnTransaccion = new JPanel();
 		frmPago.getContentPane().add(pnTransaccion, "Transaccion");
-		pnTransaccion.setLayout(new MigLayout("", "[562px]", "[204px][99px]"));
+		pnTransaccion.setLayout(new MigLayout("", "[591px]", "[204px][99px]"));
 
 		pnInfoTransaccion = new JPanel();
 		pnInfoTransaccion.setBorder(new LineBorder(new Color(0, 0, 0), 3));
