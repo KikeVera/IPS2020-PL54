@@ -165,6 +165,32 @@ public class PaqueteController implements Controller {
 			public void actionPerformed(ActionEvent e) {
 				
 				generarPaquete();
+				int selected=getSelected();
+				if(empaquetado.isVacio(selected)) {
+					if(ot.getIdPedido().endsWith("F")) {
+						actualizarEstado();
+						if(pedidoTroceadoTerminado()) {
+							terminarPedido();
+						}
+					}
+						
+					
+					else {
+						
+						terminarPedido();
+					}
+					
+				}
+				
+				if(empaquetado.isVacio(selected)) {
+					empaquetado.terminado[selected]=true;
+					inicializarTabla();
+				}
+				
+				if(empaquetado.isTerminado()) {
+					view.getBtTerminar().setEnabled(true);
+				}
+				
 				
 			}
 		});
@@ -172,19 +198,9 @@ public class PaqueteController implements Controller {
 		this.view.getBtTerminar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(ot.getIdPedido().endsWith("F")) {
-					actualizarEstado();
-					if(pedidoTroceadoTerminado()) {
-						terminarPedidos();
-					}
-				}
-					
 				
-				else {
-					actualizarEstado();
-					terminarPedidos();
-				}
 				
+				actualizarEstado();
 				otm.updateStatus(ot.getIdOt(), "TERMINADO");
 				
 				view.getFrame().dispose();
@@ -218,6 +234,20 @@ public class PaqueteController implements Controller {
 		//}
 		
 	//}
+	
+	private int getSelected() {
+		PedidoUse pedido=empaquetado.getPendientes().get(view.getTablePedidos().getSelectedRow());
+		int index=0;
+		for(PedidoUse p:empaquetado.getPedidos()) {
+			if(p.getId()==pedido.getId()) {
+				return index;
+			}
+			
+			index++;
+		}
+		
+		return -1;
+	}
 	
 	private void actualizarEstado() {
 		
@@ -257,7 +287,7 @@ public class PaqueteController implements Controller {
 	}
 	
 	private void generarPaquete() {
-		int selected=view.getTablePedidos().getSelectedRow();
+		int selected=getSelected();
 		if(selected==-1) {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Ningún pedido seleccionado","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 		}
@@ -272,13 +302,7 @@ public class PaqueteController implements Controller {
 		File etiqueta = new File ("files","etiqueta" + idPaquete + ".txt");
 		generarEtiqueta(etiqueta,pedidoEntity,idPaquete,fecha);
 		pam.createPaquete(idPedido,idPaquete,fecha);
-		if(empaquetado.isVacio(selected)) {
-			empaquetado.terminado[selected]=true;
-		}
 		
-		if(empaquetado.isTerminado()) {
-			view.getBtTerminar().setEnabled(true);
-		}
 		
 		empaquetado.posibleEmpaquetado[selected]=false;
 		view.getBtEmpaquetar().setEnabled(false);
@@ -288,14 +312,14 @@ public class PaqueteController implements Controller {
 	
 	
 	
-	private void terminarPedidos() {
-		for(PedidoUse pedido: empaquetado.getPedidos()) {
+	private void terminarPedido() {
+			PedidoUse pedido=empaquetado.getPedidos().get(getSelected());
 			
 			String fecha=Util.dateToIsoString(new Date());
 			
 			File albaran = new File ("files","albaran" + pedido.getId() + ".txt");
 			generarAlbaran(albaran,this.pem.getPedido(pedido.getId()),fecha);
-		}
+		
 	}
 	
 	private boolean pedidoTroceadoTerminado() {
@@ -456,7 +480,7 @@ public class PaqueteController implements Controller {
 			JOptionPane.showMessageDialog(view.getFrame(), "ERROR: Ningún pedido seleccionado","Advertencia escaner", JOptionPane.WARNING_MESSAGE);
 			
 		}
-		int idPedido=empaquetado.getPedidos().get(view.getTablePedidos().getSelectedRow()).getId();
+		int idPedido=empaquetado.getPedidos().get(getSelected()).getId();
 		
 		
 		
@@ -495,7 +519,7 @@ public class PaqueteController implements Controller {
 		}
 		
 		if(codeResultado==0) {
-			empaquetado.posibleEmpaquetado[view.getTablePedidos().getSelectedRow()]=true;
+			empaquetado.posibleEmpaquetado[getSelected()]=true;
 			view.getBtEmpaquetar().setEnabled(true);
 		}
 		
@@ -506,7 +530,7 @@ public class PaqueteController implements Controller {
 		
 		//Actualizamos la tabla correspondiente al pedido 
 		if(view.getTablePedidos().getSelectedRow()!=-1) {
-			PedidoUse pedido=empaquetado.getPedidos().get(view.getTablePedidos().getSelectedRow());
+			PedidoUse pedido=empaquetado.getPedidos().get(getSelected());
 			
 			
 			List<ProductoOT> productos=Util.hashMapToProductsList(pedido.getProductos(), empaquetado.getCatalogo());
@@ -514,7 +538,7 @@ public class PaqueteController implements Controller {
 			
 			this.view.getTableProductos().setModel(tmodel);
 			
-			if(empaquetado.posibleEmpaquetado[view.getTablePedidos().getSelectedRow()])
+			if(empaquetado.posibleEmpaquetado[getSelected()])
 				view.getBtEmpaquetar().setEnabled(true);
 			else
 				view.getBtEmpaquetar().setEnabled(false);
@@ -539,7 +563,7 @@ public class PaqueteController implements Controller {
 	
 	private void inicializarTabla() {
 		
-		TableModel tmodel= SwingUtil.getTableModelFromPojos(empaquetado.getPedidos(),new String[] {"id","fecha","tamaño"});
+		TableModel tmodel= SwingUtil.getTableModelFromPojos(empaquetado.getPendientes(),new String[] {"id","fecha","tamaño"});
 		
 		this.view.getTablePedidos().setModel(tmodel);
 		view.getBtTerminar().setEnabled(false);

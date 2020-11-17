@@ -257,7 +257,7 @@ public class RecogidaController implements Controller {
 		
 		//Actualizamos la tabla correspondiente al pedido 
 		List<ProductoOT> productos=recogida.getOT();
-		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades","pasillo","estanteria","altura"});
+		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades","pasillo","estanteria","altura"},new String[] {"id","nom","uds","pas","est","alt"});
 		
 		this.view.getTableProductos().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTableProductos());
@@ -295,7 +295,7 @@ public class RecogidaController implements Controller {
 	
 	private void inicializarTabla() {
 		List<ProductoOT> productos=recogida.getOT();
-		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades","pasillo","estanteria","altura"});
+		TableModel tmodel= SwingUtil.getTableModelFromPojos(productos,new String[] {"id","nombre","unidades","pasillo","estanteria","altura"},new String[] {"id","nom","uds","pas","est","alt"});
 		
 		this.view.getTableProductos().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTableProductos());

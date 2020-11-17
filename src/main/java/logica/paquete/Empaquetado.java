@@ -3,6 +3,7 @@ package logica.paquete;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import logica.pedido.PedidoUse;
@@ -124,6 +125,23 @@ public class Empaquetado {
 		
 		return true;
 	}
+	
+	public List<PedidoUse> getPendientes(){
+		List<PedidoUse> pendientes= new ArrayList<>();
+		int index=0;
+		for(PedidoUse p:pedidos) {
+			if(!terminado[index]) {
+				pendientes.add(p);
+			}
+			
+			index++;
+		}
+		
+		return pendientes;
+		
+	}
+	
+	
 	
 	public boolean isTerminado() {
 		for(int i=0;i<terminado.length;i++) {

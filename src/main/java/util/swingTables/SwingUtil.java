@@ -122,6 +122,29 @@ public class SwingUtil {
 		return tm;
 	}
 	
+	public static <E> TableModel getTableModelFromPojos(List<E> pojos, String[] colProperties,String[] nameColumns) {
+		//Creacion inicial del tablemodel y dimensionamiento
+		//tener en cuenta que para que la tabla pueda mostrar las columnas debera estar dentro de un JScrollPane
+		TableModel tm;
+		if (pojos==null) //solo las columnas (p.e. para inicializaciones)
+			return new DefaultTableModel(colProperties,0);
+		else
+			tm=new DefaultTableModel(nameColumns, pojos.size());
+		//carga cada uno de los valores de pojos usando PropertyUtils (de apache coommons beanutils)
+		for (int i=0; i<pojos.size(); i++) {
+			for (int j=0; j<colProperties.length; j++) {
+				try {
+					Object pojo=pojos.get(i);
+					Object value=PropertyUtils.getSimpleProperty(pojo, colProperties[j]);
+					tm.setValueAt(value, i, j);
+				} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+					throw new UnexpectedException(e);
+				}
+			}
+		}
+		return tm;
+	}
+	
 	
 	/**
 	 * Devuelve un modelo de tabla pedido a partir de un carrito.
