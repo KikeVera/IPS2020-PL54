@@ -6,7 +6,8 @@ delete from Incidencia;
 delete from OrdenTrabajo;
 delete from Almacenero;
 delete from Paquete;
-delete from Usuario; 
+delete from Usuario;
+delete from Venta;
 delete from Estado;
 insert into Categoria(nombreCategoria) values 
 	('Informática'),
