@@ -24,7 +24,7 @@ public class ProductoEntity{
 	
 	public ProductoEntity(int rowId, String rowNombre, String rowDescripcion, double rowPrecioNormal,
 			double rowPrecioEmpresa,int rowPasillo,int rowEstanteria, int rowAltura, String rowNombreCategoria,
-			int st,int stmin,int strepo) {
+			int rowStock,int rowStockMin,int rowStockReposicion) {
 		this.id = rowId;
 		this.nombre = rowNombre;
 		this.descripcion = rowDescripcion;
@@ -32,11 +32,11 @@ public class ProductoEntity{
 		this.precioEmpresa = rowPrecioEmpresa; 
 		this.pasillo = rowPasillo;
 		this.estanteria = rowEstanteria; 
-		this.altura=rowAltura;
+		this.altura= rowAltura;
 		this.nombreCategoria = rowNombreCategoria; 
-		this.stock=st;
-		this.stockMin=stmin;
-		this.stockReposicion=strepo;
+		this.stock= rowStock;
+		this.stockMin= rowStockMin;
+		this.stockReposicion= rowStockReposicion;
 	}
 	
 	@Override

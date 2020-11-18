@@ -197,7 +197,7 @@ public class ProductosController implements Controller {
 		}
 		else {
 			tmodel = SwingUtil.getTableModelFromPojos(productos,
-					new String[] { "id", "nombre", "descripcion","precioNormal" });
+					new String[] { "id", "nombre", "descripcion","precioNormal"});
 			
 			// Se cambia tambien la columna del precio para expresar la moneda usada
 			view.getTabProductos().setModel(tmodel);
