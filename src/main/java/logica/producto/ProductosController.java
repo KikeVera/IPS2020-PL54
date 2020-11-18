@@ -55,7 +55,7 @@ public class ProductosController implements Controller {
 		this.venta.setEmpresa(Util.dateToIsoString(new Date()));
 		this.lastSelectedPedidoRow = 0;
 		this.navegacion = new Stack<TableModel>();
-		this.pagoPedido = new PagoPedidoController(new PagoPedidoView(),this.view);
+		this.pagoPedido = new PagoPedidoController(new PagoPedidoView(),this.view,venta);
 		this.initView(usuario);
 		
 	}
@@ -365,6 +365,8 @@ public class ProductosController implements Controller {
 			UsuarioModel um = new UsuarioModel(); 
 			um.setUsuario(carrito.getUsuario().getIdUsuario(), "Anónimo", this.view.getTextDireccionEnvio().getText());
 		}
+		
+		this.venta.setImporte(Double.parseDouble(view.getTextPrecio().getText()));
 		view.getFrame().dispose();
 		SwingMain frame = new SwingMain();
 		frame.setLocationRelativeTo(null);

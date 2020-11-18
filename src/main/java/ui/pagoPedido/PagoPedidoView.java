@@ -338,4 +338,8 @@ public class PagoPedidoView extends JDialog {
 	public JTextField getTextImporteTransaccion() {
 		return textImporteTransaccion; 
 	}
+	
+	public ButtonGroup getButtonGroup() {
+		return buttonGroup;
+	} 
 }
