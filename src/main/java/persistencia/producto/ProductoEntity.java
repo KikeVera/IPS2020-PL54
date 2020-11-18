@@ -15,12 +15,16 @@ public class ProductoEntity{
 	private int pasillo; 
 	private int estanteria; 
 	private int altura;
+	private int stock;
+	private int stockMin;
+	private int stockReposicion;
 	private String nombreCategoria; 
 
 	public ProductoEntity() {}
 	
 	public ProductoEntity(int rowId, String rowNombre, String rowDescripcion, double rowPrecioNormal,
-			double rowPrecioEmpresa,int rowPasillo,int rowEstanteria, int rowAltura, String rowNombreCategoria) {
+			double rowPrecioEmpresa,int rowPasillo,int rowEstanteria, int rowAltura, String rowNombreCategoria,
+			int st,int stmin,int strepo) {
 		this.id = rowId;
 		this.nombre = rowNombre;
 		this.descripcion = rowDescripcion;
@@ -30,6 +34,9 @@ public class ProductoEntity{
 		this.estanteria = rowEstanteria; 
 		this.altura=rowAltura;
 		this.nombreCategoria = rowNombreCategoria; 
+		this.stock=st;
+		this.stockMin=stmin;
+		this.stockReposicion=strepo;
 	}
 	
 	@Override
@@ -47,7 +54,10 @@ public class ProductoEntity{
 	public int getEstanteria() {return this.estanteria;}
 	public int getAltura() { return altura;}
 	public String getNombreCategoria() { return this.nombreCategoria; }
-	
+	public int getStock() {return stock;}
+	public int getStockMin() {return stockMin;}
+	public int getStockReposicion() {return stockReposicion;}
+
 	public void setId(int value) { this.id=value; }
 	public void setNombre(String value) { this.nombre=value; }
 	public void setDescripcion(String value) { this.descripcion=value; }
@@ -57,7 +67,9 @@ public class ProductoEntity{
 	public void setEstanteria(int estanteria) {this.estanteria=estanteria;}
 	public void setAltura(int altura) { this.altura = altura; }
 	public void setNombreCategoria(String value) { this.nombreCategoria=value; }
-
+	public void setStockReposicion(int stockReposicion) {this.stockReposicion = stockReposicion;}
+	public void setStock(int stock) {this.stock = stock;}
+	public void setStockMin(int stockMin) {this.stockMin = stockMin;}
 
 
 }
