@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Stack;
 
@@ -31,6 +32,7 @@ import persistencia.usuario.UsuarioModel;
 import ui.SwingMain;
 import ui.pagoPedido.PagoPedidoView;
 import ui.producto.ProductosView;
+import util.Util;
 import util.swingTables.SwingUtil;
 
 public class ProductosController implements Controller {
@@ -43,15 +45,19 @@ public class ProductosController implements Controller {
 	private Stack<TableModel> navegacion; // Almacena el registro de la navegacion a traves de los menus de categorias y
 											// subcategorias
 	private PagoPedidoController pagoPedido;
+	private Venta venta;
 
 	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem, UsuarioEntity usuario) {
 		this.pedidoModel = pem;
 		this.model = m;
 		this.view = v;
+		this.venta=new Venta();
+		this.venta.setEmpresa(Util.dateToIsoString(new Date()));
 		this.lastSelectedPedidoRow = 0;
 		this.navegacion = new Stack<TableModel>();
 		this.pagoPedido = new PagoPedidoController(new PagoPedidoView(),this.view);
 		this.initView(usuario);
+		
 	}
 
 	@Override
@@ -82,12 +88,14 @@ public class ProductosController implements Controller {
 		this.navegacion.push(createNavegacionCategorias(m.getCategorias()));
 
 		// Establcemos direccion
+		this.venta.setTipoUsuario(this.carrito.getUsuario().getTipo());
 		if (!this.carrito.getUsuario().getTipo().equals("Anónimo")) {
 			this.view.getTextDireccionEnvio().setText(this.carrito.getUsuario().getDireccion());
 		}
 		if (!this.carrito.getUsuario().getTipo().equals("Empresa")) {
 			this.view.getBtnPagarPedido().setEnabled(true);
 			this.view.getBtnFinalizarPedido().setEnabled(false);
+			this.venta.setEmpresa(this.carrito.getUsuario().getIdUsuario());
 		}
 
 		// Abre la ventana (sustituye al main generado por WindowBuilder)
