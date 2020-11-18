@@ -301,7 +301,11 @@ public class PaqueteController implements Controller {
 		
 		File etiqueta = new File ("files","etiqueta" + idPaquete + ".txt");
 		generarEtiqueta(etiqueta,pedidoEntity,idPaquete,fecha);
-		pam.createPaquete(idPedido,idPaquete,fecha);
+		
+		
+		
+		UsuarioEntity usuario = new UsuarioModel().getUsuario(pedido.getIdUsuario());
+		pam.createPaquete(idPedido,idPaquete,fecha,ot.getIdAlmacenero(),usuario.getDireccion());
 		
 		
 		empaquetado.posibleEmpaquetado[selected]=false;
