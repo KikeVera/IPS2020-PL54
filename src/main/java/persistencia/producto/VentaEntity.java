@@ -1,12 +1,24 @@
-package logica.producto;
+package persistencia.producto;
 
-public class Venta {
+public class VentaEntity {
 
 	private String fecha;
 	private String tipoPago;
 	private String tipoUsuario;
 	private String empresa;
 	private double importe;
+	
+	public VentaEntity() {}
+	
+	public VentaEntity(String fecha,String tipoPago,String tipoUsuario,String empresa,double importe) {
+		this.fecha=fecha;
+		this.tipoPago=tipoPago;
+		this.tipoUsuario=tipoUsuario;
+		this.empresa=empresa;
+		this.importe=importe;
+		
+	}
+	
 	public String getFecha() {
 		return fecha;
 	}

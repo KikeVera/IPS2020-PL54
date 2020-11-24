@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import logica.Controller;
-import logica.producto.Venta;
+import persistencia.producto.VentaEntity;
 import ui.pagoPedido.PagoPedidoView;
 import ui.producto.ProductosView;
 
@@ -22,7 +22,7 @@ public class PagoPedidoController implements Controller {
 
 	private PagoPedidoView view; // Vista de la ventana de pago pedido
 	private ProductosView tienda;
-	private Venta venta;// Referencia a la vista de la tienda online
+	private VentaEntity venta;// Referencia a la vista de la tienda online
 
 	/**
 	 * Constructor
@@ -30,7 +30,7 @@ public class PagoPedidoController implements Controller {
 	 * @param v      Vista
 	 * @param tienda Referencia a la vista de la tienda online
 	 */
-	public PagoPedidoController(PagoPedidoView v, ProductosView tienda, Venta venta) {
+	public PagoPedidoController(PagoPedidoView v, ProductosView tienda, VentaEntity venta) {
 		this.view = v;
 		this.tienda = tienda;
 		this.venta=venta;

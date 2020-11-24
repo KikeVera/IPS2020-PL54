@@ -9,6 +9,7 @@ import logica.Controller;
 import logica.producto.ProductosController;
 import persistencia.pedido.PedidosModel;
 import persistencia.producto.ProductosModel;
+import persistencia.producto.VentasModel;
 import persistencia.usuario.UsuarioEntity;
 import persistencia.usuario.UsuarioModel;
 import ui.producto.ProductosView;
@@ -95,7 +96,7 @@ public class UsuarioController implements Controller{
 	 * @param user Usuario que ha iniciado sesion 
 	 */
 	private void createTienda(UsuarioEntity user) {
-		ProductosController controller = new ProductosController(new ProductosModel(), new ProductosView(),new PedidosModel(),user);
+		ProductosController controller = new ProductosController(new ProductosModel(), new ProductosView(),new PedidosModel(),new VentasModel(),user);
 		controller.initController();
 		this.view.getFrame().dispose();
 	}

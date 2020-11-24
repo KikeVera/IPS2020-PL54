@@ -25,6 +25,8 @@ import persistencia.pertenece.PerteneceEntity;
 import persistencia.pertenece.PerteneceModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
+import persistencia.producto.VentaEntity;
+import persistencia.producto.VentasModel;
 import persistencia.subcategoria.SubcategoriaEntity;
 import persistencia.subcategoria.SubcategoriaModel;
 import persistencia.usuario.UsuarioEntity;
@@ -45,13 +47,15 @@ public class ProductosController implements Controller {
 	private Stack<TableModel> navegacion; // Almacena el registro de la navegacion a traves de los menus de categorias y
 											// subcategorias
 	private PagoPedidoController pagoPedido;
-	private Venta venta;
+	private VentaEntity venta;
+	private VentasModel vm;
 
-	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem, UsuarioEntity usuario) {
+	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem,VentasModel vm, UsuarioEntity usuario) {
 		this.pedidoModel = pem;
 		this.model = m;
 		this.view = v;
-		this.venta=new Venta();
+		this.venta=new VentaEntity();
+		this.vm=vm;
 		this.venta.setEmpresa(Util.dateToIsoString(new Date()));
 		this.lastSelectedPedidoRow = 0;
 		this.navegacion = new Stack<TableModel>();
@@ -88,14 +92,14 @@ public class ProductosController implements Controller {
 		this.navegacion.push(createNavegacionCategorias(m.getCategorias()));
 
 		// Establcemos direccion
-		this.venta.setTipoUsuario(this.carrito.getUsuario().getTipo());
+		
 		if (!this.carrito.getUsuario().getTipo().equals("Anónimo")) {
 			this.view.getTextDireccionEnvio().setText(this.carrito.getUsuario().getDireccion());
 		}
 		if (!this.carrito.getUsuario().getTipo().equals("Empresa")) {
 			this.view.getBtnPagarPedido().setEnabled(true);
 			this.view.getBtnFinalizarPedido().setEnabled(false);
-			this.venta.setEmpresa(this.carrito.getUsuario().getIdUsuario());
+			
 		}
 
 		// Abre la ventana (sustituye al main generado por WindowBuilder)
@@ -366,12 +370,27 @@ public class ProductosController implements Controller {
 			um.setUsuario(carrito.getUsuario().getIdUsuario(), "Anónimo", this.view.getTextDireccionEnvio().getText());
 		}
 		
-		this.venta.setImporte(Double.parseDouble(view.getTextPrecio().getText()));
+		
+		guardarVenta();
 		view.getFrame().dispose();
 		SwingMain frame = new SwingMain();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
+	}
+	
+	/**
+	 * Guarda en la base de datos la venta
+	 */
+	
+	private void guardarVenta() {
+		this.venta.setTipoUsuario(this.carrito.getUsuario().getTipo());
+		if (this.carrito.getUsuario().getTipo().equals("Empresa")) {
+			this.venta.setEmpresa(this.carrito.getUsuario().getIdUsuario());
+		}
+		this.venta.setImporte(this.carrito.calcPrecio(carrito.getUsuario().getTipo()));
+		this.venta.setFecha(new Date().toString());
+		vm.setVenta(venta.getFecha(), venta.getTipoPago(), venta.getTipoUsuario(), venta.getEmpresa(), venta.getImporte());
 	}
 
 	/**
