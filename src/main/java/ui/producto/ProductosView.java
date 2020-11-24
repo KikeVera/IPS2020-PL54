@@ -16,11 +16,12 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import net.miginfocom.swing.MigLayout;
-import javax.swing.SpinnerNumberModel;
+import ui.util.MiRenderer;
 
 /**
  * Clase encargada de la interfaz de usuario de la tienda online.
@@ -92,6 +93,7 @@ public class ProductosView {
 		tabProductos.setName("tabProductos");
 		tabProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabProductos.setDefaultEditor(Object.class, null);
+		tabProductos.setDefaultRenderer(Object.class, new MiRenderer());
 		JScrollPane tablePanel = new JScrollPane(tabProductos);
 		pnSuperiorIzquierdo.add(tablePanel);
 
