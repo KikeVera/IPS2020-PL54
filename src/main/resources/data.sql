@@ -38,7 +38,8 @@ insert into Producto(id,nombre,descripcion,precioNormal,precioEmpresa,pasillo,es
 	(104,'Bolígrafo borrable rojo','Con tinta roja que se puede borrar.',1.95,1,1,2,2,'Oficina',4,1,10),
 	(105,'Auriculares Corsair','Con excelente calida de sonido.',95.22,90.99,1,4,1,'Informatica',4,1,10),
     (106,'Producto G','G',14.34,14,1,2,5,'Pruebas',4,1,10),
-    (107,'Producto H','H',8.5,8.25,1,2,7,'Pruebas',4,1,10);
+    (107,'Producto H','H',8.5,8.25,1,2,7,'Pruebas',4,1,10),
+	(108,'Pisapapeles','Circular',2,1.25,2,2,7,'Oficina',4,1,10);
 insert into Usuario(idUsuario,tipo,direccion) values 
 	('usuario','Particular','calle1'),
 	('empresa','Empresa','calle 2');
