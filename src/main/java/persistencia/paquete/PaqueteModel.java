@@ -30,11 +30,17 @@ public class PaqueteModel {
 	
 	public List<PaqueteEntity> getPaquetes() {
 		
-		String sql= "Select idPaquete,idPedido,fecha,idalmacenero,direccion from Paquete";
+		String sql= "Select idPaquete,idPedido,fecha,idAlmacenero,direccion from Paquete order by fecha";
 		
 	
 		return db.executeQueryPojo(PaqueteEntity.class, sql);
 	}
 	
+	
+	public List<PaqueteEntity> getPaquetesByFechaAndAlmacenero(String fecha,int idAlmacenero){
+		String sql= "Select * from Paquete where fecha = ? and idAlmacenero=?";
+		return db.executeQueryPojo(PaqueteEntity.class, sql,fecha,idAlmacenero);
+		
+	}
 	
 }

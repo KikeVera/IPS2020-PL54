@@ -2,19 +2,19 @@ package ui.informe;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
+
 import java.awt.Font;
 import java.awt.GridLayout;
 
-import javax.swing.JButton;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.LineBorder;
+
+
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
 
 /**
  * Clase encargada de la interfaz de usuario de la tienda online.
@@ -27,6 +27,9 @@ public class InformePaquetesView {
 	private JPanel pnContenido;
 	private JLabel lbTitulo;
 	private JPanel pnTabla;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JScrollPane scTabla;
 	
 	/**
 	 * Create the application.
@@ -44,7 +47,7 @@ public class InformePaquetesView {
 		frmTiendaOnline = new JFrame();
 		frmTiendaOnline.setTitle("Almac\u00E9n");
 		frmTiendaOnline.setName("Almac\u00E9n");
-		frmTiendaOnline.setBounds(0,0,596,483);
+		frmTiendaOnline.setBounds(0,0,752,493);
 		frmTiendaOnline.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmTiendaOnline.setLocationRelativeTo(null);
 		frmTiendaOnline.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -52,18 +55,37 @@ public class InformePaquetesView {
 		
 		pnContenido = new JPanel();
 		
+		pnContenido.setBackground(Color.WHITE);
+		
 		frmTiendaOnline.getContentPane().add(pnContenido);
 		pnContenido.setLayout(new BorderLayout(0, 0));
 		
 		lbTitulo = new JLabel("Cajas empaquetadas");
+	
+		
+	
+		
+	
+		lbTitulo.setForeground(Color.BLACK);
+		
 		lbTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lbTitulo.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		pnContenido.add(lbTitulo, BorderLayout.NORTH);
 		
 		pnTabla = new JPanel();
 		pnTabla.setBackground(Color.WHITE);
-		pnContenido.add(pnTabla, BorderLayout.CENTER);
+		
+		
 		pnTabla.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		scTabla = new JScrollPane();
+		scTabla.setViewportView(pnTabla);
+		pnContenido.add(scTabla, BorderLayout.CENTER);
+		
+	
+		
+		
+		
 
 		
 	}

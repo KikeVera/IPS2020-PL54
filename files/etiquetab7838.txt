@@ -1,0 +1,7 @@
+----Etiqueta----
+Id paquete: b7838
+Id pedido: 1
+Usuario: ce7e7
+Tipo de usuario: Anónimo
+Dirección de envío: h
+Fecha de envio: 2020-11-24

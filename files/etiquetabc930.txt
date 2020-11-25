@@ -1,0 +1,7 @@
+----Etiqueta----
+Id paquete: bc930
+Id pedido: 2
+Usuario: 779f7
+Tipo de usuario: Anónimo
+Dirección de envío: g
+Fecha de envio: 2020-11-24
