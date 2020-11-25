@@ -12,23 +12,23 @@ public class OTModel {
 					
 	public List<Object[]> getOTsArray() {
 		
-		String sql= "Select idot,estado,idalmacenero,idpedido,capacidad from ordentrabajo";
+		String sql= "Select idot,estado,idalmacenero,fecha,idpedido,capacidad from ordentrabajo";
 		return db.executeQueryArray(sql);
 	}
 	
 	public List<OTEntity> getOTs() {
-		String sql= "Select idot,estado,idalmacenero,idpedido,capacidad from ordentrabajo";		
+		String sql= "Select idot,estado,idalmacenero,fecha,idpedido,capacidad from ordentrabajo";		
 		
 		return db.executeQueryPojo(OTEntity.class, sql);
 	}
 	
 	public List<OTEntity> getOTByIdPedido(String idpedido) {
-		String sql= "Select idot,estado,idalmacenero,idpedido,capacidad from ordentrabajo where idpedido = ?";			
+		String sql= "Select idot,estado,idalmacenero,fecha,idpedido,capacidad from ordentrabajo where idpedido = ?";			
 		return db.executeQueryPojo(OTEntity.class, sql,idpedido);
 	}
 	
 	public List<OTEntity> getOTsByStatus(String status) {
-		String sql= "Select idot,estado,idalmacenero,idpedido,capacidad from ordentrabajo where estado = ?";		
+		String sql= "Select idot,estado,idalmacenero,fecha,idpedido,capacidad from ordentrabajo where estado = ?";		
 		
 		return db.executeQueryPojo(OTEntity.class, sql,status);
 	}
@@ -38,8 +38,9 @@ public class OTModel {
 		int idalmacenero=1; //De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
 		String estado="ASIGNADO"; 
 		String idpedidos=Util.pedidosToString(idpedidos_arg);
-		String sql="insert into ordentrabajo values (?,?,?,?,?)";
-		db.executeUpdate(sql,idot,estado,idalmacenero,idpedidos,capacidad);		
+		String fecha=Util.dateToIsoString(new Date());
+		String sql="insert into ordentrabajo values (?,?,?,?,?,?)";
+		db.executeUpdate(sql,idot,estado,idalmacenero,fecha,idpedidos,capacidad);		
 	}
 	/**
 	 * Metodo para saber el numero de ots asignadas por almacenero y dia 
@@ -47,10 +48,9 @@ public class OTModel {
 	 * @param fecha
 	 * @return
 	 */
-	public int getNumOT(int id_almacenero, Date fecha) {
-		String fecha_procesada=Util.dateToIsoString(fecha);
-		String sql="select count(*) from ordentrabajo where idalmacenero = ? and fecha = ?";
-		return db.executePojo(Integer.class, sql, id_almacenero,fecha_procesada);
+	public List<OTEntity> getNumOT(String fecha,int id_almacenero) {
+		String sql="select * from ordentrabajo where idalmacenero = ? and fecha = ?";
+		return db.executeQueryPojo(OTEntity.class, sql, id_almacenero,fecha);
 	}
 	
 	/**
@@ -62,8 +62,9 @@ public class OTModel {
 		int idot=getOTs().size()+1;		
 		int idalmacenero=1; //De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
 		String estado="ASIGNADO"; 
-		String sql="insert into ordentrabajo values (?,?,?,?,?)";
-		db.executeUpdate(sql,idot,estado,idalmacenero,idpedido_arg,capacidad);		
+		String fecha=Util.dateToIsoString(new Date());
+		String sql="insert into ordentrabajo values (?,?,?,?,?,?)";
+		db.executeUpdate(sql,idot,estado,idalmacenero,fecha,idpedido_arg,capacidad);		
 	}
 	
 	
