@@ -50,9 +50,9 @@ public class PaqueteModel {
 	}
 	
 	
-	public List<PaqueteEntity> updateStatus(String estado,int idPedido){
+	public void updateStatus(String estado,int idPedido){
 		String sql="update Paquete set estado = ? where idPedido = ?";
-		return db.executeQueryPojo(PaqueteEntity.class, sql,estado,idPedido);
+		db.executeUpdate(sql,estado,idPedido);		
 		
 	}
 	
