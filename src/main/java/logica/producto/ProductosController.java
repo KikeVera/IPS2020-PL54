@@ -20,8 +20,8 @@ import persistencia.categoria.CategoriaModel;
 import persistencia.contiene.ContieneEntity;
 import persistencia.contiene.ContieneModel;
 import persistencia.pedido.PedidosModel;
-import persistencia.pertenece.PerteneceEntity;
-import persistencia.pertenece.PerteneceModel;
+import persistencia.pertenece.subcategorias.PerteneceSubcategoriaEntity;
+import persistencia.pertenece.subcategorias.PerteneceSubcategoriaModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
 import persistencia.producto.VentaEntity;
@@ -403,7 +403,7 @@ public class ProductosController implements Controller {
 		// Iniciamos modelos necesarios
 		SubcategoriaModel modelS = new SubcategoriaModel();
 		ContieneModel modelCon = new ContieneModel();
-		PerteneceModel modelP = new PerteneceModel();
+		PerteneceSubcategoriaModel modelP = new PerteneceSubcategoriaModel();
 
 		// Cogemos categoria/subcatgoria seleccionada y lanzamos mensaje en caso de que
 		// no se haya seleccionado
@@ -415,7 +415,12 @@ public class ProductosController implements Controller {
 					"Debe seleccionar una categoría/subcategoría disponible para " + "entrar en ella.",
 					"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
 
-		} else {
+		} else if(view.getTabProductos().getValueAt(selectedRow, 0) != null) {
+			JOptionPane.showMessageDialog(this.view.getFrame(),
+					"Solo puede entrar a categorías o subcategorías.",
+					"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
+		}	
+		else {
 
 			// Cogemos el nombre de la categoria/subcategoria/producto
 			String nombre = (String) view.getTabProductos().getValueAt(selectedRow, 1);
@@ -445,10 +450,10 @@ public class ProductosController implements Controller {
 				}
 
 				// Obtenemos la relacion que encaja con la subcategoria
-				List<PerteneceEntity> relacionesP = modelP.getPerteneceBySubcategoria(nombre);
+				List<PerteneceSubcategoriaEntity> relacionesP = modelP.getPerteneceBySubcategoria(nombre);
 				// Creamos la lista de productos directos
 				List<ProductoEntity> productos = new ArrayList<ProductoEntity>();
-				for (PerteneceEntity p : relacionesP) {
+				for (PerteneceSubcategoriaEntity p : relacionesP) {
 					if (checkProducto(p.getIdProducto(), subcategorias)) {
 						productos.add(this.model.findProductById(p.getIdProducto()).get(0));
 					}
@@ -479,7 +484,7 @@ public class ProductosController implements Controller {
 	 *         caso contrario
 	 */
 	private boolean checkProducto(int idProducto, List<SubcategoriaEntity> subcategorias) {
-		PerteneceModel model = new PerteneceModel();
+		PerteneceSubcategoriaModel model = new PerteneceSubcategoriaModel();
 		boolean aux = true;
 		for (SubcategoriaEntity subcategoria : subcategorias) {
 			if (!model.findByIdAndName(idProducto, subcategoria.getNombreSubcategoria()).isEmpty()) {

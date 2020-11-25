@@ -1,18 +1,18 @@
-package persistencia.pertenece;
+package persistencia.pertenece.subcategorias;
 
 /**
  * Representa relación entre una subcategoría y sus productos. 
  * @author Moises
  *
  */
-public class PerteneceEntity {
+public class PerteneceSubcategoriaEntity {
 	
 	private int idProducto; 
 	private String nombreSubcategoria; 
 	
-	public PerteneceEntity() {}
+	public PerteneceSubcategoriaEntity() {}
 	
-	public PerteneceEntity(int rowIdProducto, String rowNombreSubcategoria) {
+	public PerteneceSubcategoriaEntity(int rowIdProducto, String rowNombreSubcategoria) {
 		this.idProducto = rowIdProducto; 
 		this.nombreSubcategoria = rowNombreSubcategoria; 
 	}

@@ -94,7 +94,7 @@ insert into Subcategoria(nombreSubcategoria,nombreCategoria) values
 	('Audio','Informatica');
 insert into Contiene(nombreSubcategoriaOrigen,nombreSubcategoriaContenida) values 
 	('Periféricos','Audio');
-insert into Pertenece(idProducto,nombreSubcategoria) values 
+insert into PerteneceSubcategoria(idProducto,nombreSubcategoria) values 
 	(100,'Impresoras'),
 	(101,'Bolígrafos'),
 	(102,'Audio'),
@@ -115,8 +115,7 @@ insert into Producto(id,nombre,descripcion,precioNormal,precioEmpresa,pasillo,es
 insert into Usuario(idUsuario,tipo,direccion) values 
 	('usuario','Particular','calle1'),
 	('empresa','Empresa','calle 2'),
-    ('empresa2','Empresa','calle 3'),
-    ('empresa3','Empresa','calle 4');
-
+    	('empresa2','Empresa','calle 3'),
+    	('empresa3','Empresa','calle 4');
 
 	
