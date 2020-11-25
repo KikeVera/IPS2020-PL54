@@ -15,6 +15,7 @@ import persistencia.pedido.PedidosModel;
 import persistencia.pedido.TrozoEntity;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductoInfo;
+import persistencia.producto.VentaEntity;
 import util.exception.ApplicationException;
 
 
@@ -260,6 +261,16 @@ public class Util {
 		}
 		
 		return array;
+		
+	}
+	
+	public static double sumaImportes(List<VentaEntity> ventas) {
+		double total=0;
+		for(VentaEntity venta: ventas) {
+			total+=venta.getImporte();
+		}
+		
+		return total;
 		
 	}
 		

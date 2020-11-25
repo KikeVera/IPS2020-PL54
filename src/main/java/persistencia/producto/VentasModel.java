@@ -38,6 +38,23 @@ public class VentasModel {
 		
 	}
 	
+	public List<VentaEntity> getVentasByTipoPagoAndFecha(String fecha,String tipoPago) {
+		String sql= "Select * from Venta where fecha = ? and tipoPago=?";
+		return db.executeQueryPojo(VentaEntity.class, sql,fecha,tipoPago);
+		
+	}
+	
+	public List<VentaEntity> getVentasByTipoUsuarioAndFecha(String fecha,String tipoUsuario) {
+		String sql= "Select * from Venta where fecha = ? and tipoUsuario=?";
+		return db.executeQueryPojo(VentaEntity.class, sql,fecha,tipoUsuario);
+		
+	}
+	
+	public List<VentaEntity> getVentasByEmpresaAndFecha(String fecha,String empresa) {
+		String sql= "Select * from Venta where fecha = ? and empresa=?";
+		return db.executeQueryPojo(VentaEntity.class, sql,fecha,empresa);
+		
+	}
 	
 	
 	

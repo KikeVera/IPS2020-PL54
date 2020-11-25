@@ -56,7 +56,7 @@ public class ProductosController implements Controller {
 		this.view = v;
 		this.venta = new VentaEntity();
 		this.vm = vm;
-		this.venta.setEmpresa(Util.dateToIsoString(new Date()));
+		
 		this.lastSelectedPedidoRow = 0;
 		this.navegacion = new Stack<TableModel>();
 		this.pagoPedido = new PagoPedidoController(new PagoPedidoView(), this.view, venta);
@@ -99,7 +99,7 @@ public class ProductosController implements Controller {
 		if (!this.carrito.getUsuario().getTipo().equals("Empresa")) {
 			this.view.getBtnPagarPedido().setEnabled(true);
 			this.view.getBtnFinalizarPedido().setEnabled(false);
-			this.venta.setEmpresa(this.carrito.getUsuario().getIdUsuario());
+			
 		}
 
 		// Abre la ventana (sustituye al main generado por WindowBuilder)
@@ -390,7 +390,7 @@ public class ProductosController implements Controller {
 			this.venta.setEmpresa(this.carrito.getUsuario().getIdUsuario());
 		}
 		this.venta.setImporte(this.carrito.calcPrecio(carrito.getUsuario().getTipo()));
-		this.venta.setFecha(new Date().toString());
+		this.venta.setFecha(Util.dateToIsoString(new Date()));
 		vm.setVenta(venta.getFecha(), venta.getTipoPago(), venta.getTipoUsuario(), venta.getEmpresa(),
 				venta.getImporte());
 	}

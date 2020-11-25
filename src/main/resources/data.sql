@@ -9,6 +9,44 @@ delete from Paquete;
 delete from Usuario;
 delete from Venta;
 delete from Estado;
+insert into Venta values
+('2020-11-23','Contrareembolso','Anónimo',null,'2.28'),
+('2020-11-23',null,'Empresa','empresa','6.8'),
+('2020-11-23','Transferencia','Particular',null,'50.6'),
+('2020-11-23','Transferencia','Anónimo',null,'66,6'),
+('2020-11-23','Tarjeta','Particular',null,'35.45'),
+('2020-11-23','Tarjeta','Anónimo',null,'24,66'),
+('2020-11-23',null,'Empresa','empresa2','20.16'),
+('2020-11-23','Contrareembolso','Particular',null,'4.6'),
+
+('2020-11-22','Contrareembolso','Anónimo',null,'67.8'),
+('2020-11-22',null,'Empresa','empresa','6.9'),
+('2020-11-22','Transferencia','Particular',null,'55.8'),
+('2020-11-22','Transferencia','Anónimo',null,'134.8'),
+('2020-11-22',null,'Empresa','empresa2','67.7'),
+('2020-11-22','Tarjeta','Particular',null,'63.57'),
+('2020-11-22','Tarjeta','Anónimo',null,'405.4'),
+('2020-11-22','Contrareembolso','Particular',null,'2.8'),
+('2020-11-22',null,'Empresa','empresa3','135.5'),
+
+('2020-11-21','Contrareembolso','Anónimo',null,'200.4'),
+('2020-11-21',null,'Empresa','empresa','66.8'),
+('2020-11-21','Transferencia','Particular',null,'3.8'),
+('2020-11-21','Transferencia','Anónimo',null,'77.6'),
+('2020-11-21',null,'Empresa','empresa2','20.2'),
+('2020-11-21','Contrareembolso','Particular',null,'668.9'),
+
+('2020-11-20','Contrareembolso','Anónimo',null,'24.5'),
+('2020-11-20',null,'Empresa','empresa','53.3'),
+('2020-11-20','Transferencia','Particular',null,'10.3'),
+('2020-11-20','Transferencia','Anónimo',null,'4.5'),
+('2020-11-20','Tarjeta','Particular',null,'67.7'),
+('2020-11-20','Tarjeta','Anónimo',null,'65.5'),
+('2020-11-20',null,'Empresa','empresa2','4.2'),
+('2020-11-20','Contrareembolso','Particular',null,'80.5'),
+('2020-11-20',null,'Empresa','empresa3','255.2');
+
+
 insert into Paquete values 
 ('0001','3','2020-11-23','2','calle1'),
 ('0002','3','2020-11-23','2','calle1'),
@@ -77,6 +115,9 @@ insert into Producto(id,nombre,descripcion,precioNormal,precioEmpresa,pasillo,es
 	(108,'Pisapapeles','Circular',2,1.25,2,2,7,'Oficina',4,1,10);
 insert into Usuario(idUsuario,tipo,direccion) values 
 	('usuario','Particular','calle1'),
-	('empresa','Empresa','calle 2');
+	('empresa','Empresa','calle 2'),
+    ('empresa2','Empresa','calle 3'),
+    ('empresa3','Empresa','calle 4');
+
 
 	

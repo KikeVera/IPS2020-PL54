@@ -1,13 +1,19 @@
 package logica.informes;
 
+import logica.informes.InformeImporteVentaController.InformeVenta;
 import persistencia.paquete.PaqueteModel;
+import persistencia.producto.VentasModel;
 import ui.informe.InformePaquetesView;
+import ui.informe.InformeImporteVentaView;
 
 public class PruebaInformes {
 
 	public static void main(String[] args) {
-		System.out.println(new PaqueteModel().getPaquetes().get(0).getIdPedido());
+		
 		InformePaquetesController informe= new InformePaquetesController(new PaqueteModel(), new InformePaquetesView());
+		InformeImporteVentaController informe2= new InformeImporteVentaController(new VentasModel(), new InformeImporteVentaView(),InformeVenta.tipoPago);
+		InformeImporteVentaController informe3= new InformeImporteVentaController(new VentasModel(), new InformeImporteVentaView(),InformeVenta.tipoUsuario);
+		InformeImporteVentaController informe4= new InformeImporteVentaController(new VentasModel(), new InformeImporteVentaView(),InformeVenta.empresa);
 
 	}
 

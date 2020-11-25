@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
+
 import javax.swing.JScrollPane;
 
 /**
@@ -21,20 +21,19 @@ import javax.swing.JScrollPane;
  * @author Moises
  *
  */
-public class InformePaquetesView {
+public class InformeImporteVentaView {
 	
 	private JFrame frmTiendaOnline;
 	private JPanel pnContenido;
 	private JLabel lbTitulo;
 	private JPanel pnTabla;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
+	
 	private JScrollPane scTabla;
 	
 	/**
 	 * Create the application.
 	 */
-	public InformePaquetesView() {
+	public InformeImporteVentaView() {
 		initialize();
 	}
 
@@ -60,7 +59,7 @@ public class InformePaquetesView {
 		frmTiendaOnline.getContentPane().add(pnContenido);
 		pnContenido.setLayout(new BorderLayout(0, 0));
 		
-		lbTitulo = new JLabel("Cajas empaquetadas");
+		lbTitulo = new JLabel("");
 	
 		
 	
@@ -96,6 +95,10 @@ public class InformePaquetesView {
 	
 	public JPanel getPanel() {
 		return this.pnTabla;
+	}
+	
+	public JLabel getLbTitulo() {
+		return this.lbTitulo;
 	}
 	
 }

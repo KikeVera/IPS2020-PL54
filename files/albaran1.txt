@@ -1,10 +1,10 @@
 ----Albaran----
 Id pedido: 1
-Usuario: ce7e7
+Usuario: 4ec2c
 Tipo de usuario: Anónimo
-Dirección de envío: h
-Fecha de envio: 2020-11-24
+Dirección de envío: micasa
+Fecha de envio: 2020-11-25
 Tamaño total: 7
-Lista productos: [id = 106 ,nombre = Producto G ,número unidades = 4 uds]
-[id = 107 ,nombre = Producto H ,número unidades = 3 uds]
+Lista productos: [id = 106 ,nombre = Producto G ,número unidades = 5 uds]
+[id = 107 ,nombre = Producto H ,número unidades = 2 uds]
 
