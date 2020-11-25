@@ -179,6 +179,13 @@ public class ProductosController implements Controller {
 
 	}
 
+	
+	/**
+	 * Crea el modelo de tablas para la siguiente fase de navegacion 
+	 * @param subCategorias Lista de subcategorias para la siguiente fase 
+	 * @param productos Lista de productos para la siguiente fase
+	 * @return El modelo de tabla correspondiente 
+	 */
 	private TableModel createNavegacion(List<SubcategoriaEntity> subCategorias, List<ProductoEntity> productos) {
 
 		// Array que representa las propiedades que se mostraran
@@ -223,9 +230,9 @@ public class ProductosController implements Controller {
 	}
 
 	/**
-	 * Crea un modelo de tabla para una lista de categorias
+	 * Crea el primer modelo de navegacion 
 	 * 
-	 * @param productos Lista de categorias
+	 * @param productos Lista de categorias del modelo 
 	 * @return modelo de tabla para esa lista de categorias
 	 */
 	private TableModel createFirstNavegacion(List<CategoriaEntity> list) {

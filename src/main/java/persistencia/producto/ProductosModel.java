@@ -1,8 +1,10 @@
 package persistencia.producto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import persistencia.database.Database;
+import persistencia.pertenece.categorias.PerteneceCategoriaEntity;
 
 /**
  * Clase encargada de acceder a la base de datos en el ambito de productos 
@@ -13,7 +15,7 @@ public class ProductosModel {
 
 	public static final String SQL_LISTA_PRODUCTOS = "SELECT * from Producto";
 	
-	public static final String SQL_BY_CATEGORIA = "select * from producto where nombreCategoria = ?";
+	public static final String SQL_BY_CATEGORIA = "select * from PerteneceCategoria where nombreCategoria = ?";
 	
 	public static final String SQL_FIND_BY_ID = "select * from producto where id = ?";
 
@@ -37,7 +39,13 @@ public class ProductosModel {
 	 */
 	public List<ProductoEntity> getListaProductosByCategoria(String nombreCategoria) {
 		String sql = SQL_BY_CATEGORIA;
-		return db.executeQueryPojo(ProductoEntity.class, sql,nombreCategoria); 
+		ProductosModel pm = new ProductosModel(); 
+		List<ProductoEntity> productos = new ArrayList<ProductoEntity>(); 
+		List<PerteneceCategoriaEntity> relaciones = db.executeQueryPojo(PerteneceCategoriaEntity.class, sql,nombreCategoria);
+		for(PerteneceCategoriaEntity relacion : relaciones) {
+			productos.add(pm.findProductById(relacion.getIdProducto()).get(0)); 
+		}
+		return productos; 
 	}
 	
 	/**

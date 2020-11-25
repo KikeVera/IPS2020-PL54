@@ -8,6 +8,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import persistencia.subcategoria.SubcategoriaModel;
 
+/**
+ * Clase para clasificar por colores las tablas de navegación en la tienda online 
+ * @author Moises
+ *
+ */
 public class MiRenderer extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = 1L;
