@@ -10,15 +10,21 @@ public class PaqueteEntity {
 	
 
 	private String direccion;
+	private int uds; 
+	
+
+	private String estado;
 	
 	public PaqueteEntity() {}
 	
-	public PaqueteEntity(String rowIdPaquete, int rowIdPedido, String rowFecha,int idAlmacenero,String direccion) {
+	public PaqueteEntity(String rowIdPaquete, int rowIdPedido, String rowFecha,int idAlmacenero,String direccion,int uds, String estado) {
 		this.idPaquete = rowIdPaquete; 
 		this.idPedido = rowIdPedido; 
 		this.fecha = rowFecha; 
 		this.idAlmacenero=idAlmacenero;
 		this.direccion=direccion;
+		this.uds=uds;
+		this.estado=estado;
 	}
 	
 	public String getIdPaquete() { return this.idPaquete;}
@@ -44,6 +50,22 @@ public class PaqueteEntity {
 
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
+	}
+	
+	public int getUds() {
+		return uds;
+	}
+
+	public void setUds(int uds) {
+		this.uds = uds;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	

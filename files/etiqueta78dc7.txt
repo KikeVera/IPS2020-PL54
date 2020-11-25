@@ -1,0 +1,7 @@
+----Etiqueta----
+Id paquete: 78dc7
+Id pedido: 1
+Usuario: f8f4d
+Tipo de usuario: Anónimo
+Dirección de envío: g
+Fecha de envio: 2020-11-25

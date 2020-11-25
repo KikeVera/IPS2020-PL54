@@ -305,7 +305,7 @@ public class PaqueteController implements Controller {
 		
 		
 		UsuarioEntity usuario = new UsuarioModel().getUsuario(pedido.getIdUsuario());
-		pam.createPaquete(idPedido,idPaquete,fecha,ot.getIdAlmacenero(),usuario.getDireccion());
+		pam.createPaquete(idPedido,idPaquete,fecha,ot.getIdAlmacenero(),usuario.getDireccion(),0,"PENDING");
 		
 		
 		empaquetado.posibleEmpaquetado[selected]=false;

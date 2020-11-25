@@ -23,7 +23,7 @@ create table Incidencia (idPedido int  not null, descripcion varchar(1000),FOREI
 create table Almacenero(idalmacenero int primary key not null);
 create table OrdenTrabajo (idot int primary key not null, estado varchar(20), idalmacenero int not null, idpedido varchar(1000) not null , capacidad int,  FOREIGN KEY (idalmacenero) REFERENCES Almacenero(idalmacenero), FOREIGN KEY (idpedido) REFERENCES Pedido(id));
 create table Estado (idot int  not null, terminado varchar(100),posibleEmpaquetado varchar(100),maps varchar(8000),FOREIGN KEY (idot) REFERENCES OrdenTrabajo(idot));
-create table Paquete (idPaquete varchar(5) primary key not null, idPedido int not null, fecha varchar(32) not null,idAlmacenero int not null,direccion varchar(20) not null,FOREIGN KEY (idPedido) REFERENCES Pedido(id));
+create table Paquete (idPaquete varchar(5) primary key not null, idPedido int not null, fecha varchar(32) not null,idAlmacenero int not null,direccion varchar(20) not null,uds int not null,estado varchar(32) ,FOREIGN KEY (idPedido) REFERENCES Pedido(id));
 create table Usuario (idUsuario varchar(10) primary key not null, tipo varchar(10) not null, direccion varchar(20) not null);
 create table Venta (fecha varchar(32) not null,tipoPago varchar(32),tipoUsuario varchar(32),empresa varchar(32) ,importe decimal(11,2));
 create table Categoria (nombreCategoria varchar(20) primary key not null); 

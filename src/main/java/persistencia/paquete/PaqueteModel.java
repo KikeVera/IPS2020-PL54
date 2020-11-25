@@ -6,7 +6,7 @@ import persistencia.database.Database;
 
 public class PaqueteModel {
 	
-	public static final String SQL_CREATE_PAQUETE = "insert into Paquete values (?,?,?,?,?)";
+	public static final String SQL_CREATE_PAQUETE = "insert into Paquete values (?,?,?,?,?,?,?)";
 	public static final String SQL_DELETE_PAQUETE = "delete from Paquete where idPedido = ?";
 	
 	private Database db=new Database();
@@ -19,8 +19,8 @@ public class PaqueteModel {
 	 * @param idPaquete Id que tendra el paquete generado
 	 * @param fecha Fecha en la que se crea el paquete 
 	 */
-	public void createPaquete(int idPedido, String idPaquete, String fecha,int idAlmacenero,String direccion) {
-		db.executeUpdate(SQL_CREATE_PAQUETE,idPaquete,idPedido,fecha,idAlmacenero,direccion);
+	public void createPaquete(int idPedido, String idPaquete, String fecha,int idAlmacenero,String direccion,int uds,String estado) {
+		db.executeUpdate(SQL_CREATE_PAQUETE,idPaquete,idPedido,fecha,idAlmacenero,direccion,uds,estado);
 	}
 	
 	
@@ -30,7 +30,7 @@ public class PaqueteModel {
 	
 	public List<PaqueteEntity> getPaquetes() {
 		
-		String sql= "Select idPaquete,idPedido,fecha,idAlmacenero,direccion from Paquete order by fecha";
+		String sql= "Select idPaquete,idPedido,fecha,idAlmacenero,direccion,uds,estado from Paquete order by fecha";
 		
 	
 		return db.executeQueryPojo(PaqueteEntity.class, sql);
