@@ -43,4 +43,10 @@ public class PaqueteModel {
 		
 	}
 	
+	public List<PaqueteEntity> getPaquetesByStatus(String estado){
+		String sql= "Select * from Paquete where estado = ?";
+		return db.executeQueryPojo(PaqueteEntity.class, sql,estado);
+		
+	}
+	
 }

@@ -5,6 +5,7 @@ import persistencia.paquete.PaqueteModel;
 import persistencia.producto.VentasModel;
 import ui.informe.InformePaquetesView;
 import ui.informe.InformeImporteVentaView;
+import ui.informe.InformePaquetesListosView;
 
 public class PruebaInformes {
 
@@ -14,6 +15,7 @@ public class PruebaInformes {
 		InformeImporteVentaController informe2= new InformeImporteVentaController(new VentasModel(), new InformeImporteVentaView(),InformeVenta.tipoPago);
 		InformeImporteVentaController informe3= new InformeImporteVentaController(new VentasModel(), new InformeImporteVentaView(),InformeVenta.tipoUsuario);
 		InformeImporteVentaController informe4= new InformeImporteVentaController(new VentasModel(), new InformeImporteVentaView(),InformeVenta.empresa);
+		InformePaquetesListosController informe5= new InformePaquetesListosController(new PaqueteModel(), new InformePaquetesListosView());
 
 	}
 
