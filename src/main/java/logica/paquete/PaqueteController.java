@@ -58,6 +58,7 @@ public class PaqueteController implements Controller {
 	private EstadoModel em;
 	private PaqueteModel pam;
 	private TrozosModel tm;
+	private int escaneadas=0;
 
 	
 	/**
@@ -305,7 +306,8 @@ public class PaqueteController implements Controller {
 		
 		
 		UsuarioEntity usuario = new UsuarioModel().getUsuario(pedido.getIdUsuario());
-		pam.createPaquete(idPedido,idPaquete,fecha,ot.getIdAlmacenero(),usuario.getDireccion(),0,"PENDING");
+		pam.createPaquete(idPedido,idPaquete,fecha,ot.getIdAlmacenero(),usuario.getDireccion(),escaneadas,"PENDING");
+		escaneadas=0;
 		
 		
 		empaquetado.posibleEmpaquetado[selected]=false;
@@ -323,6 +325,7 @@ public class PaqueteController implements Controller {
 			
 			File albaran = new File ("files","albaran" + pedido.getId() + ".txt");
 			generarAlbaran(albaran,this.pem.getPedido(pedido.getId()),fecha);
+			pam.updateStatus("READY", pedido.getId());
 		
 	}
 	
@@ -525,6 +528,7 @@ public class PaqueteController implements Controller {
 		if(codeResultado==0) {
 			empaquetado.posibleEmpaquetado[getSelected()]=true;
 			view.getBtEmpaquetar().setEnabled(true);
+			escaneadas++;
 		}
 		
 		view.getSpUnidades().setValue(1);
