@@ -56,7 +56,7 @@ public class ProductosController implements Controller {
 		this.view = v;
 		this.venta = new VentaEntity();
 		this.vm = vm;
-		
+
 		this.lastSelectedPedidoRow = 0;
 		this.navegacion = new Stack<TableModel>();
 		this.pagoPedido = new PagoPedidoController(new PagoPedidoView(), this.view, venta);
@@ -99,7 +99,7 @@ public class ProductosController implements Controller {
 		if (!this.carrito.getUsuario().getTipo().equals("Empresa")) {
 			this.view.getBtnPagarPedido().setEnabled(true);
 			this.view.getBtnFinalizarPedido().setEnabled(false);
-			
+
 		}
 
 		// Abre la ventana (sustituye al main generado por WindowBuilder)
@@ -179,13 +179,6 @@ public class ProductosController implements Controller {
 
 	}
 
-	
-	/**
-	 * Crea el modelo de tablas para la siguiente fase de navegacion 
-	 * @param subCategorias Lista de subcategorias para la siguiente fase 
-	 * @param productos Lista de productos para la siguiente fase
-	 * @return El modelo de tabla correspondiente 
-	 */
 	private TableModel createNavegacion(List<SubcategoriaEntity> subCategorias, List<ProductoEntity> productos) {
 
 		// Array que representa las propiedades que se mostraran
@@ -230,9 +223,9 @@ public class ProductosController implements Controller {
 	}
 
 	/**
-	 * Crea el primer modelo de navegacion 
+	 * Crea un modelo de tabla para una lista de categorias
 	 * 
-	 * @param productos Lista de categorias del modelo 
+	 * @param productos Lista de categorias
 	 * @return modelo de tabla para esa lista de categorias
 	 */
 	private TableModel createFirstNavegacion(List<CategoriaEntity> list) {
@@ -268,7 +261,8 @@ public class ProductosController implements Controller {
 	 * usuario
 	 */
 	private void inicializarTablaPedido() {
-		TableModel tmodel = new DefaultTableModel(new String[] { "id", "nombre", "unidades", "precio total(€)" }, 0);
+		TableModel tmodel = new DefaultTableModel(
+				new String[] { "id", "nombre", "unidades", "precio bruto total(€)", "precio neto total(€)", "IVA" }, 0);
 
 		view.getTabPedido().setModel(tmodel);
 		SwingUtil.autoAdjustColumns(view.getTabPedido());
@@ -289,15 +283,20 @@ public class ProductosController implements Controller {
 	public void updateDetail() {
 
 		// Actualizamos la tabla correspondiente al pedido
-		String[] properties = new String[] { "id", "nombre", "unidades", "precio total(€)" };
+		String[] properties = new String[] { "id", "nombre", "unidades", "precio bruto total(€)",
+				"precio neto total(€)", "IVA" };
 		TableModel tm = SwingUtil.getTableModelFromPedido(properties, carrito);
 		this.view.getTabPedido().setModel(tm);
+		SwingUtil.autoAdjustColumns(view.getTabPedido());
 		this.view.getTabPedido().getSelectionModel().setSelectionInterval(lastSelectedPedidoRow, lastSelectedPedidoRow);
 
 		// Actualizamos el precio
-		this.view.getTextPrecio()
-				.setText(String.format("%.2f", this.carrito.calcPrecio(carrito.getUsuario().getTipo())) + "€");
+		this.view.getTextPrecioNeto()
+				.setText(String.format("%.2f", this.carrito.calcPrecioNeto(carrito.getUsuario().getTipo())) + "€");
 		this.view.getSpUnidades().setValue(1);
+
+		this.view.getTextPrecioBruto()
+				.setText(String.format("%.2f", this.carrito.calcPrecioBruto(carrito.getUsuario().getTipo())) + "€");
 	}
 
 	/**
@@ -396,7 +395,7 @@ public class ProductosController implements Controller {
 		if (this.carrito.getUsuario().getTipo().equals("Empresa")) {
 			this.venta.setEmpresa(this.carrito.getUsuario().getIdUsuario());
 		}
-		this.venta.setImporte(this.carrito.calcPrecio(carrito.getUsuario().getTipo()));
+		this.venta.setImporte(this.carrito.calcPrecioBruto(carrito.getUsuario().getTipo()));
 		this.venta.setFecha(Util.dateToIsoString(new Date()));
 		vm.setVenta(venta.getFecha(), venta.getTipoPago(), venta.getTipoUsuario(), venta.getEmpresa(),
 				venta.getImporte());
@@ -422,12 +421,10 @@ public class ProductosController implements Controller {
 					"Debe seleccionar una categoría/subcategoría disponible para " + "entrar en ella.",
 					"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
 
-		} else if(view.getTabProductos().getValueAt(selectedRow, 0) != null) {
-			JOptionPane.showMessageDialog(this.view.getFrame(),
-					"Solo puede entrar a categorías o subcategorías.",
+		} else if (view.getTabProductos().getValueAt(selectedRow, 0) != null) {
+			JOptionPane.showMessageDialog(this.view.getFrame(), "Solo puede entrar a categorías o subcategorías.",
 					"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
-		}	
-		else {
+		} else {
 
 			// Cogemos el nombre de la categoria/subcategoria/producto
 			String nombre = (String) view.getTabProductos().getValueAt(selectedRow, 1);
@@ -503,8 +500,9 @@ public class ProductosController implements Controller {
 
 	/**
 	 * Actualiza los botones de la tienda en funcion del siguiente "next"
-	 * @param subcategorias Lista de subcategorias 
-	 * @param productos Lista de productos 
+	 * 
+	 * @param subcategorias Lista de subcategorias
+	 * @param productos     Lista de productos
 	 */
 	private void buttonControl(List<SubcategoriaEntity> subcategorias, List<ProductoEntity> productos) {
 		if (productos.size() > 0) {

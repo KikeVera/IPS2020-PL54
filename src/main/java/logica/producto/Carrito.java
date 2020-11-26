@@ -8,29 +8,32 @@ import persistencia.usuario.UsuarioEntity;
 
 /**
  * Esta clase representa el carrito de la compra en la pagina web.
+ * 
  * @author Moises
  *
  */
 public class Carrito {
 
-	//Representa el pedido donde la clave es el id del producto y el valor el numero de uds pedidas.
-	private HashMap<Integer, Integer> pedido = new HashMap<Integer,Integer>(); 
-	
-	//Copia de la lista de productos disponibles.
-	private List<ProductoEntity> catalogo; 
-	
-	//Representa al usuario que esta realizando la compra 
+	// Representa el pedido donde la clave es el id del producto y el valor el
+	// numero de uds pedidas.
+	private HashMap<Integer, Integer> pedido = new HashMap<Integer, Integer>();
+
+	// Copia de la lista de productos disponibles.
+	private List<ProductoEntity> catalogo;
+
+	// Representa al usuario que esta realizando la compra
 	private UsuarioEntity usuario;
-	
+
 	/**
-	 * Constructor 
-	 * @param catalogo Lista de productos disponibles 
+	 * Constructor
+	 * 
+	 * @param catalogo Lista de productos disponibles
 	 */
-	public Carrito(List<ProductoEntity> catalogo,UsuarioEntity usuario) {
+	public Carrito(List<ProductoEntity> catalogo, UsuarioEntity usuario) {
 		this.catalogo = catalogo;
-		this.usuario = usuario; 
+		this.usuario = usuario;
 	}
-	
+
 	/**
 	 * Añade un producto al pedido. Se le pasa el id del producto a anadir junto con
 	 * el numero de uds deseadas.
@@ -38,31 +41,27 @@ public class Carrito {
 	public void addProduct(int id, int ud) {
 		if (!this.pedido.containsKey(id)) {
 			this.pedido.put(id, ud);
-		}
-		else {
-			int actualUd = this.pedido.get(id); 
+		} else {
+			int actualUd = this.pedido.get(id);
 			this.pedido.put(id, actualUd + ud);
 		}
 	}
-	
+
 	/**
-	 * Elimina un producto del pedido. Se le pasa el id del producto a eliminar junto con
-	 * el numero de uds deseadas.
+	 * Elimina un producto del pedido. Se le pasa el id del producto a eliminar
+	 * junto con el numero de uds deseadas.
 	 */
 	public void removeProduct(int id, int ud) {
-		if(this.pedido.containsKey(id)) {
-			int actualUd = this.pedido.get(id); 
-			if(actualUd - ud <= 0) {
+		if (this.pedido.containsKey(id)) {
+			int actualUd = this.pedido.get(id);
+			if (actualUd - ud <= 0) {
 				this.pedido.remove(id);
-			}
-			else {
-				this.pedido.put(id, actualUd - ud); 
+			} else {
+				this.pedido.put(id, actualUd - ud);
 			}
 		}
 	}
-	
-	
-	
+
 	/**
 	 * Representa el pedido actual con una cadena.
 	 */
@@ -70,61 +69,88 @@ public class Carrito {
 	public String toString() {
 		String cadena = "";
 		for (int id : this.pedido.keySet()) {
-			ProductoEntity producto = searchProductById(id); 
-			cadena += producto + " UD:" + this.pedido.get(id); 
+			ProductoEntity producto = searchProductById(id);
+			cadena += producto + " UD:" + this.pedido.get(id);
 		}
-		return cadena; 
+		return cadena;
 	}
-	
+
 	/**
 	 * Busca un producto por id.
-	 * @param id para identificar el producto a buscar 
+	 * 
+	 * @param id para identificar el producto a buscar
 	 * @return Producto encontrado o null si no lo encuentra.
 	 */
 	public ProductoEntity searchProductById(int id) {
-		for(ProductoEntity producto : this.catalogo) {
-			if(producto.getId() == id) {
-				return producto; 
+		for (ProductoEntity producto : this.catalogo) {
+			if (producto.getId() == id) {
+				return producto;
 			}
 		}
-		return null; 
+		return null;
 	}
-	
+
 	/**
 	 * Calcula el precio actual de nuestro pedido.
-	 * @return Precio actual 
+	 * 
+	 * @return Precio actual
 	 */
-	public double calcPrecio(String tipo) {
+	public double calcPrecioBruto(String tipo) {
 		double precio = 0;
-		
-		if(tipo.equals("Empresa")) {
+
+		if (tipo.equals("Empresa")) {
 			for (int id : this.pedido.keySet()) {
-				ProductoEntity producto = searchProductById(id); 
-				precio += producto.getPrecioEmpresa()*this.pedido.get(id);  
+				ProductoEntity producto = searchProductById(id);
+				precio += producto.getPrecioEmpresa() * this.pedido.get(id);
+			}
+		} else {
+			for (int id : this.pedido.keySet()) {
+				ProductoEntity producto = searchProductById(id);
+				precio += producto.getPrecioNormal() * this.pedido.get(id);
 			}
 		}
-		else {
-			for (int id : this.pedido.keySet()) {
-				ProductoEntity producto = searchProductById(id); 
-				precio += producto.getPrecioNormal()*this.pedido.get(id);  
-			}
-		}
-		return precio; 
+		return precio;
 	}
-	
+
+	/**
+	 * Calcula el precio actual de nuestro pedido.
+	 * 
+	 * @return Precio actual
+	 */
+	public double calcPrecioNeto(String tipo) {
+		double precio = 0;
+
+		if (tipo.equals("Empresa")) {
+			for (int id : this.pedido.keySet()) {
+				ProductoEntity producto = searchProductById(id);
+				double auxiliar = (producto.getIVA() / 100.0) * producto.getPrecioEmpresa(); 
+				precio += (producto.getPrecioEmpresa() + auxiliar) * this.pedido.get(id);
+			}
+		} else {
+			for (int id : this.pedido.keySet()) {
+				ProductoEntity producto = searchProductById(id);
+				double auxiliar = (producto.getIVA() / 100.0) * producto.getPrecioNormal();
+				precio += (producto.getPrecioNormal() + auxiliar) * this.pedido.get(id);
+			}
+		}
+		return precio;
+	}
+
 	/**
 	 * Devuelve el pedido.
+	 * 
 	 * @return Pedido actual
 	 */
 	public HashMap<Integer, Integer> getPedido() {
-		return this.pedido; 
+		return this.pedido;
 	}
-	
+
 	/**
 	 * Devuelve el usuario que esta realizando el pedido
+	 * 
 	 * @return Usuario actual
 	 */
 	public UsuarioEntity getUsuario() {
-		return this.usuario; 
+		return this.usuario;
 	}
 }

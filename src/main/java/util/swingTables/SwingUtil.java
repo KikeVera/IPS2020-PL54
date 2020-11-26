@@ -167,19 +167,27 @@ public class SwingUtil {
 			ProductoEntity producto = carrito.searchProductById(id);
 			String nombre = producto.getNombre();
 			int ud = carrito.getPedido().get(id);
-			String precioTotal = ""; 
+			String precioTotalBruto = "";
+			String precioTotalNeto = ""; 
+			String IVA = producto.getIVA() + " %"; 
 			
 			if(carrito.getUsuario().getTipo().equals("Empresa")) {
-				precioTotal = String.format("%.2f",producto.getPrecioEmpresa() * ud); 
+				precioTotalBruto = String.format("%.2f",producto.getPrecioEmpresa() * ud);
+				double auxiliar = producto.getPrecioEmpresa() * (producto.getIVA()/100.0); 
+				precioTotalNeto = String.format("%.2f",(producto.getPrecioEmpresa() + auxiliar) * ud); 
 			}
 			else {
-				precioTotal = String.format("%.2f",producto.getPrecioNormal() * ud);
+				precioTotalBruto = String.format("%.2f",producto.getPrecioNormal() * ud);
+				double auxiliar = producto.getPrecioNormal() * (producto.getIVA()/100.0); 
+				precioTotalNeto = String.format("%.2f",(producto.getPrecioNormal() + auxiliar) * ud); 
 			}
 			
 			tm.setValueAt(id, i, 0);
 			tm.setValueAt(nombre, i, 1);
 			tm.setValueAt(ud, i, 2);
-			tm.setValueAt(precioTotal, i, 3);
+			tm.setValueAt(precioTotalBruto, i, 3);
+			tm.setValueAt(precioTotalNeto, i, 4);
+			tm.setValueAt(IVA, i, 5);
 			i++; 
 		}
 		return tm;

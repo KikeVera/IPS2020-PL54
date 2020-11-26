@@ -18,13 +18,14 @@ public class ProductoEntity{
 	private int stock;
 	private int stockMin;
 	private int stockReposicion;
-	private String nombreCategoria; 
+	private String nombreCategoria;
+	private int IVA; 
 
 	public ProductoEntity() {}
 	
 	public ProductoEntity(int rowId, String rowNombre, String rowDescripcion, double rowPrecioNormal,
 			double rowPrecioEmpresa,int rowPasillo,int rowEstanteria, int rowAltura, String rowNombreCategoria,
-			int rowStock,int rowStockMin,int rowStockReposicion) {
+			int rowStock,int rowStockMin,int rowStockReposicion,int rowIVA) {
 		this.id = rowId;
 		this.nombre = rowNombre;
 		this.descripcion = rowDescripcion;
@@ -37,6 +38,7 @@ public class ProductoEntity{
 		this.stock= rowStock;
 		this.stockMin= rowStockMin;
 		this.stockReposicion= rowStockReposicion;
+		this.IVA = rowIVA; 
 	}
 	
 	@Override
@@ -57,6 +59,7 @@ public class ProductoEntity{
 	public int getStock() {return stock;}
 	public int getStockMin() {return stockMin;}
 	public int getStockReposicion() {return stockReposicion;}
+	public int getIVA() {return IVA;}
 
 	public void setId(int value) { this.id=value; }
 	public void setNombre(String value) { this.nombre=value; }
@@ -70,6 +73,8 @@ public class ProductoEntity{
 	public void setStockReposicion(int stockReposicion) {this.stockReposicion = stockReposicion;}
 	public void setStock(int stock) {this.stock = stock;}
 	public void setStockMin(int stockMin) {this.stockMin = stockMin;}
+	public void setIVA(int value) {this.IVA = value;}
 
 
 }
+

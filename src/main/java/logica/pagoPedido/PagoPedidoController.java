@@ -92,7 +92,7 @@ public class PagoPedidoController implements Controller {
 	public void initView() {
 		
 		//Para visualizar el precio del pedido 
-		String precio = this.tienda.getTextPrecio().getText(); 
+		String precio = this.tienda.getTextPrecioBruto().getText(); 
 		this.view.getTextImporteInicio().setText(precio);
 		this.view.getTextImporteTarjeta().setText(precio);
 		this.view.getTextImporteTransaccion().setText(precio);
