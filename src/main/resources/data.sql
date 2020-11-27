@@ -103,7 +103,7 @@ insert into PerteneceSubcategoria(idProducto,nombreSubcategoria) values
 	(105,'Audio'),
 	(100,'Periféricos');
 insert into Producto(id,nombre,descripcion,precioNormal,precioEmpresa,pasillo,estanteria,altura,stock,stockMin,stockReposicion,IVA) values 
-	(100,'Impresora HP Laserjet','Imprime cualquier documento a la mejor calidad.',122.22,110.12,0,1,3,4,1,10,12),
+	(100,'Impresora HP Laserjet','Imprime cualquier documento a la mejor calidad.',122.22,110.12,0,1,3,4,5,10,12),
 	(101,'Pack 6 bolígrafos','Bolígrafos bic de tinta azul a estrenar.',3.2,2.75,1,1,0,4,1,10,10),
 	(102,'Micrófono Yeti Nano','Con 3 condensadores.',100.99,99.03,2,2,5,4,1,10,4),
 	(103,'Cable USB','3 metros y de color negro.',10.30,5.25,5,4,2,4,1,10,3),

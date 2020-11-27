@@ -121,7 +121,44 @@ public class SwingUtil {
 		}
 		return tm;
 	}
-	
+	public static <E> TableModel getTableModelFromPojosToProducts(List<E> pojos, String[] colProperties,String columnExtra) {
+		//Creacion inicial del tablemodel y dimensionamiento
+		//tener en cuenta que para que la tabla pueda mostrar las columnas debera estar dentro de un JScrollPane
+		TableModel tm;
+		
+		String[] colPropertiesModified= new String[colProperties.length+1];
+		for(int i=0;i<=colProperties.length;i++) {
+			if(i!=colProperties.length)
+				colPropertiesModified[i]=colProperties[i];
+			else
+				colPropertiesModified[i]=columnExtra;
+		}
+		
+		if (pojos==null) //solo las columnas (p.e. para inicializaciones)
+			return new DefaultTableModel(colPropertiesModified,0);
+		else
+			tm=new DefaultTableModel(colPropertiesModified, pojos.size());
+		//carga cada uno de los valores de pojos usando PropertyUtils (de apache coommons beanutils)
+		for (int i=0; i<pojos.size(); i++) {
+			for (int j=0; j<colPropertiesModified.length; j++) {
+				try {
+					if(j!=colPropertiesModified.length-1) {					
+						Object pojo=pojos.get(i);
+						Object value=PropertyUtils.getSimpleProperty(pojo, colPropertiesModified[j]);
+						tm.setValueAt(value, i, j);
+					}else {
+						ProductoEntity pojo=(ProductoEntity) pojos.get(i);
+						int cantidadAPedir=pojo.getStockReposicion()-pojo.getStock();
+						tm.setValueAt(cantidadAPedir, i, j);
+					}
+					
+				} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+					throw new UnexpectedException(e);
+				}
+			}
+		}
+		return tm;
+	}
 	public static <E> TableModel getTableModelFromPojos(List<E> pojos, String[] colProperties,String[] nameColumns) {
 		//Creacion inicial del tablemodel y dimensionamiento
 		//tener en cuenta que para que la tabla pueda mostrar las columnas debera estar dentro de un JScrollPane
