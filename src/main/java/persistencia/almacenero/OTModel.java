@@ -17,7 +17,7 @@ public class OTModel {
 	}
 	
 	public List<OTEntity> getOTs() {
-		String sql= "Select idot,estado,idalmacenero,fecha,idpedido,capacidad from ordentrabajo";		
+		String sql= "Select * from ordentrabajo";		
 		
 		return db.executeQueryPojo(OTEntity.class, sql);
 	}
@@ -35,7 +35,7 @@ public class OTModel {
 	
 	public void setOT(List<String> idpedidos_arg,int capacidad) {
 		int idot=getOTs().size()+1;		
-		int idalmacenero=1; //De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
+		int idalmacenero=(int) (Math.random() * 5) + 1; 
 		String estado="ASIGNADO"; 
 		String idpedidos=Util.pedidosToString(idpedidos_arg);
 		String fecha=Util.dateToIsoString(new Date());
@@ -60,8 +60,11 @@ public class OTModel {
 	 */
 	public void setTrozoOT(String idpedido_arg,int capacidad) {
 		int idot=getOTs().size()+1;		
-		int idalmacenero=1; //De momento le vamos a pasar el id de almacenero 1 ya que solo hay 1 almacenero
+		int idalmacenero=(int) (Math.random() * 5) + 1; //Almacenero aleatorio hasta 5
 		String estado="ASIGNADO"; 
+		//int dia=(int) (Math.random() * 31) + 1;
+		//int mes=(int) (Math.random() * 12) + 1;
+		//String fecha="2020-"+Integer.toString(mes)+"-"+Integer.toString(dia);
 		String fecha=Util.dateToIsoString(new Date());
 		String sql="insert into ordentrabajo values (?,?,?,?,?,?)";
 		db.executeUpdate(sql,idot,estado,idalmacenero,fecha,idpedido_arg,capacidad);		

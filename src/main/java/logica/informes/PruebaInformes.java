@@ -1,10 +1,12 @@
 package logica.informes;
 
 import logica.informes.InformeImporteVentaController.InformeVenta;
+import persistencia.almacenero.OTModel;
 import persistencia.paquete.PaqueteModel;
 import persistencia.producto.VentasModel;
 import ui.informe.InformePaquetesView;
 import ui.informe.InformeImporteVentaView;
+import ui.informe.InformeOTsView;
 import ui.informe.InformePaquetesListosView;
 
 public class PruebaInformes {
@@ -16,6 +18,7 @@ public class PruebaInformes {
 		InformeImporteVentaController informe3= new InformeImporteVentaController(new VentasModel(), new InformeImporteVentaView(),InformeVenta.tipoUsuario);
 		InformeImporteVentaController informe4= new InformeImporteVentaController(new VentasModel(), new InformeImporteVentaView(),InformeVenta.empresa);
 		InformePaquetesListosController informe5= new InformePaquetesListosController(new PaqueteModel(), new InformePaquetesListosView());
+		InformeOTsController informe6= new InformeOTsController(new OTModel(), new InformeOTsView());
 
 	}
 

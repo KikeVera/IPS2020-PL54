@@ -77,7 +77,7 @@ public class InformeOTsController implements Controller {
 		
 		Collections.sort(fechas);
 		Collections.sort(idAlmaceneros);
-		view.getPanel().setLayout(new GridLayout(fechas.size()+1, idAlmaceneros.size()+1, 0, 0));
+		view.getPanel().setLayout(new GridLayout(fechas.size()+1, 5, 0, 0));
 		
 		JLabel label;
 		
