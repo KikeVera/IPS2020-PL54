@@ -43,12 +43,13 @@ public class ProductosController implements Controller {
 	private Carrito carrito; // Carrito que contiene al pedido
 	private PedidosModel pedidoModel;
 	private int lastSelectedPedidoRow; // Almacena ultima seleccion en la tabla productos
+	private int lastSelectedProductosRow; 
 	private Stack<TableModel> navegacion; // Almacena el registro de la navegacion a traves de los menus de categorias y
 											// subcategorias
 	private PagoPedidoController pagoPedido;
 	private VentaEntity venta;
 	private VentasModel vm;
-
+	
 	public ProductosController(ProductosModel m, ProductosView v, PedidosModel pem, VentasModel vm,
 			UsuarioEntity usuario) {
 		this.pedidoModel = pem;
@@ -58,6 +59,7 @@ public class ProductosController implements Controller {
 		this.vm = vm;
 
 		this.lastSelectedPedidoRow = 0;
+		this.lastSelectedProductosRow = 0; 
 		this.navegacion = new Stack<TableModel>();
 		this.pagoPedido = new PagoPedidoController(new PagoPedidoView(), this.view, venta);
 		this.initView(usuario);
@@ -185,7 +187,7 @@ public class ProductosController implements Controller {
 		String[] colProperties = null;
 
 		// En funcion del tipo de usuario, se muestra un precio en especifico
-		colProperties = new String[] { "id", "nombre", "descripcion", "precio IVA incluido(€)","info" };
+		colProperties = new String[] { "id", "nombre", "descripcion", "precio IVA incluido(€)", "info" };
 
 		// Iniciamos el modelo de la tabla
 		TableModel tm = new DefaultTableModel(colProperties, subCategorias.size() + productos.size());
@@ -205,18 +207,17 @@ public class ProductosController implements Controller {
 
 			// Cuidado con el precio a modificar
 			if (carrito.getUsuario().getTipo().equals("Empresa")) {
-				double auxiliar = producto.getPrecioEmpresa() * (producto.getIVA() / 100.0); 
+				double auxiliar = producto.getPrecioEmpresa() * (producto.getIVA() / 100.0);
 				tm.setValueAt(String.format("%.2f", producto.getPrecioEmpresa() + auxiliar), i, 3);
 			} else {
 				double auxiliar = producto.getPrecioNormal() * (producto.getIVA() / 100.0);
 				tm.setValueAt(String.format("%.2f", producto.getPrecioNormal() + auxiliar), i, 3);
 			}
-			
-			//Formamos el mensaje de estado 
-			if(producto.getStock() < producto.getStockMin()) {
+
+			// Formamos el mensaje de estado
+			if (producto.getStock() < producto.getStockMin()) {
 				tm.setValueAt("¡Solo quedan " + producto.getStock() + "!", i, 4);
-			}
-			else {
+			} else {
 				tm.setValueAt("Stock disponible", i, 4);
 			}
 			i++;
@@ -244,7 +245,7 @@ public class ProductosController implements Controller {
 		String[] colProperties = null;
 
 		// En funcion del tipo de usuario, se muestra un precio en especifico
-		colProperties = new String[] { "id", "nombre", "descripcion", "precio IVA incluido(€)","info" };
+		colProperties = new String[] { "id", "nombre", "descripcion", "precio IVA incluido(€)", "info" };
 
 		// Iniciamos el modelo de la tabla
 		TableModel tm = new DefaultTableModel(colProperties, list.size());
@@ -307,6 +308,7 @@ public class ProductosController implements Controller {
 
 		this.view.getTextPrecioBruto()
 				.setText(String.format("%.2f", this.carrito.calcPrecioBruto(carrito.getUsuario().getTipo())) + "€");
+
 	}
 
 	/**
@@ -329,13 +331,26 @@ public class ProductosController implements Controller {
 				JOptionPane.showMessageDialog(this.view.getFrame(), "Solo puede agregar productos al carrito.",
 						"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
 			} else {
+				ProductosModel pm = new ProductosModel();
 				int id = (int) aux;
-				this.carrito.addProduct(id, ud);
-				updateDetail();
+				Integer udCarrito = this.carrito.getPedido().get(id);
+				if (udCarrito == null) {
+					udCarrito = 0;
+				}
+				if ((ud + udCarrito) > pm.findProductById(id).get(0).getStock()) {
+					JOptionPane.showMessageDialog(this.view.getFrame(), "Insuficiente stock disponible",
+							"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
+				} else {
+					this.carrito.addProduct(id, ud);
+					updateDetail();
+					this.lastSelectedProductosRow = selectedRow; 
+					actualizarStockProducto(id, -ud);
+				}
+
 			}
 		}
 	}
-
+	
 	/**
 	 * Elimina un producto del carrito. Es el actionListener perteneciente al boton
 	 * eliminar. En caso de que no haya ningun producto a eliminar , se mostrará un
@@ -350,13 +365,35 @@ public class ProductosController implements Controller {
 		} else {
 			int selectedRow = view.getTabPedido().getSelectedRow();
 			int ud = (int) view.getSpUnidades().getValue();
-
-			int id = (int) view.getTabPedido().getValueAt(selectedRow, 0);
-
+			int id = (int) this.view.getTabPedido().getValueAt(selectedRow, 0); 
 			this.carrito.removeProduct(id, ud);
 			updateDetail();
+			actualizarStockProducto(id, ud);
 		}
 
+	}
+
+	
+	/**
+	 * Añade al stock de un producto, una cantidad negativa o positiva
+	 * @param id Id del producto
+	 * @param cantidad Cantidad a añadir o extraer del stock
+	 */
+	private void actualizarStockProducto(int id,int cantidad) {
+		ProductosModel pm = new ProductosModel(); 
+		ProductoEntity producto = pm.findProductById(id).get(0); 
+		int newStock = producto.getStock() + cantidad; 
+		
+		pm.updateStock(id, newStock);
+		TableModel tm = this.view.getTabProductos().getModel(); 
+		
+		if (newStock < producto.getStockMin()) {
+			tm.setValueAt("¡Solo quedan " + newStock + "!", this.lastSelectedProductosRow, 4);
+		} else {
+			tm.setValueAt("Stock disponible", this.lastSelectedProductosRow, 4);
+		}
+		this.view.getTabProductos().repaint();
+		
 	}
 
 	/**
@@ -386,6 +423,7 @@ public class ProductosController implements Controller {
 		if (this.carrito.getUsuario().getTipo().equals("Anónimo")) {
 			UsuarioModel um = new UsuarioModel();
 			um.setUsuario(carrito.getUsuario().getIdUsuario(), "Anónimo", this.view.getTextDireccionEnvio().getText());
+			// Reducir stock
 		}
 
 		guardarVenta();
@@ -449,6 +487,7 @@ public class ProductosController implements Controller {
 						productos.add(p);
 					}
 				}
+				
 
 				// Control de botones
 				buttonControl(subcategorias, productos);
@@ -472,6 +511,7 @@ public class ProductosController implements Controller {
 						productos.add(this.model.findProductById(p.getIdProducto()).get(0));
 					}
 				}
+
 
 				// Control de botones
 				buttonControl(subcategorias, productos);

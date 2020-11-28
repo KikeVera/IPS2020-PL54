@@ -18,7 +18,9 @@ public class ProductosModel {
 	public static final String SQL_BY_CATEGORIA = "select * from PerteneceCategoria where nombreCategoria = ?";
 	
 	public static final String SQL_FIND_BY_ID = "select * from producto where id = ?";
-
+	
+	public static final String SQL_UPDATE_STOCK = "update producto set stock = ? where id = ?";
+	
 	
 	private Database db=new Database();
 
@@ -56,6 +58,11 @@ public class ProductosModel {
 	public List<ProductoEntity> findProductById(int id) {
 		String sql = SQL_FIND_BY_ID;
 		return db.executeQueryPojo(ProductoEntity.class, sql,id); 
+	}
+	
+	public void updateStock(int id,int newStock) {
+		String sql = SQL_UPDATE_STOCK;
+		db.executeUpdate(sql, newStock, id);
 	}
 	
 	

@@ -288,6 +288,6 @@ public class ProductosView {
 	public JPanel getPnDireccion() {return pnDireccion;}
 	public JLabel getLblDireccion() { return lblDireccion;}	
 	public JPanel getPnAuxiliar() {return pnAuxiliar;}
-
+	
 
 }
