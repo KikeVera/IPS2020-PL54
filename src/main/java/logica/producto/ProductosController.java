@@ -185,7 +185,7 @@ public class ProductosController implements Controller {
 		String[] colProperties = null;
 
 		// En funcion del tipo de usuario, se muestra un precio en especifico
-		colProperties = new String[] { "id", "nombre", "descripcion", "precio(€)" };
+		colProperties = new String[] { "id", "nombre", "descripcion", "precio IVA incluido(€)" };
 
 		// Iniciamos el modelo de la tabla
 		TableModel tm = new DefaultTableModel(colProperties, subCategorias.size() + productos.size());
@@ -205,9 +205,11 @@ public class ProductosController implements Controller {
 
 			// Cuidado con el precio a modificar
 			if (carrito.getUsuario().getTipo().equals("Empresa")) {
-				tm.setValueAt(producto.getPrecioEmpresa(), i, 3);
+				double auxiliar = producto.getPrecioEmpresa() * (producto.getIVA() / 100.0); 
+				tm.setValueAt(String.format("%.2f", producto.getPrecioEmpresa() + auxiliar), i, 3);
 			} else {
-				tm.setValueAt(producto.getPrecioNormal(), i, 3);
+				double auxiliar = producto.getPrecioNormal() * (producto.getIVA() / 100.0);
+				tm.setValueAt(String.format("%.2f", producto.getPrecioNormal() + auxiliar), i, 3);
 			}
 			i++;
 		}
@@ -234,7 +236,7 @@ public class ProductosController implements Controller {
 		String[] colProperties = null;
 
 		// En funcion del tipo de usuario, se muestra un precio en especifico
-		colProperties = new String[] { "id", "nombre", "descripcion", "precio(€)" };
+		colProperties = new String[] { "id", "nombre", "descripcion", "precio IVA incluido(€)" };
 
 		// Iniciamos el modelo de la tabla
 		TableModel tm = new DefaultTableModel(colProperties, list.size());

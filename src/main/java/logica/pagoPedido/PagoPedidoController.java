@@ -33,7 +33,7 @@ public class PagoPedidoController implements Controller {
 	public PagoPedidoController(PagoPedidoView v, ProductosView tienda, VentaEntity venta) {
 		this.view = v;
 		this.tienda = tienda;
-		this.venta=venta;
+		this.venta = venta;
 		this.initController();
 	}
 
@@ -90,14 +90,15 @@ public class PagoPedidoController implements Controller {
 	 */
 	@Override
 	public void initView() {
-		
-		//Para visualizar el precio del pedido 
-		String precio = this.tienda.getTextPrecioBruto().getText(); 
+
+		// Para visualizar el precio del pedido
+		String precio = "Precio actual (bruto): " + this.tienda.getTextPrecioBruto().getText()
+				+ "\nPrecio actual (neto): " + this.tienda.getTextPrecioNeto().getText();
 		this.view.getTextImporteInicio().setText(precio);
 		this.view.getTextImporteTarjeta().setText(precio);
 		this.view.getTextImporteTransaccion().setText(precio);
-		
-		//Iniciamos vista 
+
+		// Iniciamos vista
 		this.view.getFrame().setVisible(true);
 	}
 
@@ -105,21 +106,19 @@ public class PagoPedidoController implements Controller {
 	 * Avanza al siguiente panel seleccionado
 	 */
 	private void next() {
-        
-		
-		if(view.getRdbContrareembolso().isSelected()) {
+
+		if (view.getRdbContrareembolso().isSelected()) {
 			this.venta.setTipoPago("Contrareembolso");
 		}
-		
-		else if(view.getRdbTarjeta().isSelected()) {
+
+		else if (view.getRdbTarjeta().isSelected()) {
 			this.venta.setTipoPago("Tarjeta");
 		}
-		
-		else if(view.getRdbTransferencia().isSelected()) {
+
+		else if (view.getRdbTransferencia().isSelected()) {
 			this.venta.setTipoPago("Transferencia");
 		}
-		
-		
+
 		CardLayout c = (CardLayout) this.view.getFrame().getContentPane().getLayout();
 
 		if (this.view.getRdbTarjeta().isSelected()) {

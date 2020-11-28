@@ -1,5 +1,6 @@
 package ui.pagoPedido;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,6 +15,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
@@ -61,13 +63,13 @@ public class PagoPedidoView extends JDialog {
 	private JTextArea textAreaTransaccion;
 	private JPanel pnImporteInicio;
 	private JLabel lblImporte;
-	private JTextField textImporteInicio;
 	private JPanel pnImporteTarjeta;
 	private JLabel lblImporteTarjeta;
-	private JTextField textImporteTarjeta;
 	private JPanel pnImporteTransaccion;
 	private JLabel lblImporteTransaccion;
-	private JTextField textImporteTransaccion;
+	private JTextPane txtImporteInicio;
+	private JTextPane txtImporteTarjeta;
+	private JTextPane txtImporteTransaccion;
 
 	/**
 	 * Constructor
@@ -83,14 +85,17 @@ public class PagoPedidoView extends JDialog {
 	 */
 	private void initialize() {
 
-		// Inicializa la ventana principal
+		txtImporteInicio = new JTextPane();
+		txtImporteInicio.setBackground(Color.LIGHT_GRAY);
+		txtImporteInicio.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtImporteInicio.setEditable(false);
 
 		scpTransaccion = new JScrollPane();
 
 		textAreaTransaccion = new JTextArea();
 		textAreaTransaccion.setEditable(false);
 		textAreaTransaccion.setText(
-				"Debe realizar un ingreso con el correspondiente importe del pedido al siguiente n\u00FAmero de cuenta: \r\n\r\nXXXX-XXXX-XX-XXXXXXXXXX ");
+				"Debe realizar un ingreso con el correspondiente importe del pedido \r\nal siguiente n\u00FAmero de cuenta: \r\n\r\nXXXX-XXXX-XX-XXXXXXXXXX ");
 		scpTransaccion.setViewportView(textAreaTransaccion);
 
 		lblInformacinParaRealizar = new JLabel("Informaci\u00F3n para realizar la transacci\u00F3n:");
@@ -125,38 +130,32 @@ public class PagoPedidoView extends JDialog {
 		pnBotonesInicio = new JPanel();
 		pnBotonesInicio.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		pnInicio.add(pnBotonesInicio, "cell 0 1,grow");
-		pnBotonesInicio.setLayout(new MigLayout("", "[350px,center][75px][109px]", "[54px,grow]"));
+		pnBotonesInicio.setLayout(new MigLayout("", "[350px,center][75px,grow,center][109px,grow]", "[54px,grow]"));
 
 		pnImporteInicio = new JPanel();
 		pnImporteInicio.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnBotonesInicio.add(pnImporteInicio, "cell 0 0,alignx left,aligny center");
-		pnImporteInicio.setLayout(new GridLayout(2, 1, 0, 0));
+		pnBotonesInicio.add(pnImporteInicio, "cell 0 0,alignx left,aligny center,grow");
+		pnImporteInicio.setLayout(new BorderLayout(0, 0));
 
-		lblImporte = new JLabel("Importe del pedido a pagar");
+		lblImporte = new JLabel("Importe del pedido a pagar:");
 		lblImporte.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnImporteInicio.add(lblImporte);
-
-		textImporteInicio = new JTextField();
-		textImporteInicio.setBackground(Color.LIGHT_GRAY);
-		textImporteInicio.setEditable(false);
-		textImporteInicio.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnImporteInicio.add(textImporteInicio);
-		textImporteInicio.setColumns(10);
+		pnImporteInicio.add(lblImporte, BorderLayout.NORTH);
+		pnImporteInicio.add(getTxtImporteInicio());
 
 		btnAtrasInicio = new JButton("Atr\u00E1s");
 		btnAtrasInicio.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnAtrasInicio.setBackground(Color.RED);
-		pnBotonesInicio.add(btnAtrasInicio, "cell 1 0,alignx left,aligny center");
+		pnBotonesInicio.add(btnAtrasInicio, "cell 1 0,alignx right,aligny center");
 
 		btnSiguienteInicio = new JButton("Siguiente");
 		btnSiguienteInicio.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnSiguienteInicio.setBackground(new Color(50, 205, 50));
-		pnBotonesInicio.add(btnSiguienteInicio, "cell 2 0,alignx left,aligny center");
+		pnBotonesInicio.add(btnSiguienteInicio, "cell 2 0,alignx center,aligny center");
 
 		frmPago = new JDialog();
 		frmPago.setTitle("Tienda online: pago de pedido");
 		frmPago.setName("Tienda online: pago de pedido");
-		frmPago.setBounds(0, 0, 607, 303);
+		frmPago.setBounds(0, 0, 607, 371);
 		frmPago.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		frmPago.setLocationRelativeTo(null);
 		frmPago.getContentPane().setLayout(new CardLayout(0, 0));
@@ -195,33 +194,31 @@ public class PagoPedidoView extends JDialog {
 		pnBotonesTarjeta = new JPanel();
 		pnBotonesTarjeta.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		pnTarjeta.add(pnBotonesTarjeta, "cell 0 1,grow");
-		pnBotonesTarjeta.setLayout(new MigLayout("", "[350px,center][75px][109px]", "[54px,grow]"));
+		pnBotonesTarjeta.setLayout(new MigLayout("", "[350px,center][75px,grow,center][109px,grow]", "[54px,grow]"));
 
 		pnImporteTarjeta = new JPanel();
 		pnImporteTarjeta.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnBotonesTarjeta.add(pnImporteTarjeta, "cell 0 0,alignx left,aligny top");
-		pnImporteTarjeta.setLayout(new GridLayout(2, 1, 0, 0));
+		pnBotonesTarjeta.add(pnImporteTarjeta, "cell 0 0,grow");
+		pnImporteTarjeta.setLayout(new BorderLayout(0, 0));
 
-		lblImporteTarjeta = new JLabel("Importe del pedido a pagar");
+		lblImporteTarjeta = new JLabel("Importe del pedido a pagar:");
 		lblImporteTarjeta.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnImporteTarjeta.add(lblImporteTarjeta);
-
-		textImporteTarjeta = new JTextField();
-		textImporteTarjeta.setFont(new Font("Tahoma", Font.BOLD, 16));
-		textImporteTarjeta.setEditable(false);
-		textImporteTarjeta.setColumns(10);
-		textImporteTarjeta.setBackground(Color.LIGHT_GRAY);
-		pnImporteTarjeta.add(textImporteTarjeta);
+		pnImporteTarjeta.add(lblImporteTarjeta, BorderLayout.NORTH);
+		
+		txtImporteTarjeta = new JTextPane();
+		txtImporteTarjeta.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtImporteTarjeta.setBackground(Color.LIGHT_GRAY);
+		pnImporteTarjeta.add(txtImporteTarjeta);
 
 		btnAtrasTarjeta = new JButton("Atr\u00E1s");
 		btnAtrasTarjeta.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnAtrasTarjeta.setBackground(Color.RED);
-		pnBotonesTarjeta.add(btnAtrasTarjeta, "cell 1 0,alignx left,aligny center");
+		pnBotonesTarjeta.add(btnAtrasTarjeta, "cell 1 0,alignx right,aligny center");
 
 		btnSiguienteTarjeta = new JButton("Siguiente");
 		btnSiguienteTarjeta.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnSiguienteTarjeta.setBackground(new Color(50, 205, 50));
-		pnBotonesTarjeta.add(btnSiguienteTarjeta, "cell 2 0,alignx left,aligny center");
+		pnBotonesTarjeta.add(btnSiguienteTarjeta, "cell 2 0,alignx center,aligny center");
 
 		pnTransaccion = new JPanel();
 		frmPago.getContentPane().add(pnTransaccion, "Transaccion");
@@ -229,41 +226,39 @@ public class PagoPedidoView extends JDialog {
 
 		pnInfoTransaccion = new JPanel();
 		pnInfoTransaccion.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		pnTransaccion.add(pnInfoTransaccion, "cell 0 0,alignx center,aligny center");
-		pnInfoTransaccion.setLayout(new MigLayout("", "[562px]", "[][]"));
-		pnInfoTransaccion.add(getLblInformacinParaRealizar(), "cell 0 0,grow");
-		pnInfoTransaccion.add(getScpTransaccion(), "cell 0 1,grow");
+		pnTransaccion.add(pnInfoTransaccion, "cell 0 0,grow");
+		pnInfoTransaccion.setLayout(new BorderLayout(0, 0));
+		pnInfoTransaccion.add(getLblInformacinParaRealizar(), BorderLayout.NORTH);
+		pnInfoTransaccion.add(getScpTransaccion());
 
 		pnBotonesTransaccion = new JPanel();
 		pnBotonesTransaccion.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		pnTransaccion.add(pnBotonesTransaccion, "cell 0 1,grow");
-		pnBotonesTransaccion.setLayout(new MigLayout("", "[350px,center][75px][109px]", "[54px,grow]"));
+		pnBotonesTransaccion.setLayout(new MigLayout("", "[350px,center][75px,grow,center][109px,grow]", "[54px,grow]"));
 
 		pnImporteTransaccion = new JPanel();
 		pnImporteTransaccion.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnBotonesTransaccion.add(pnImporteTransaccion, "cell 0 0,alignx left,aligny top");
-		pnImporteTransaccion.setLayout(new GridLayout(2, 1, 0, 0));
+		pnBotonesTransaccion.add(pnImporteTransaccion, "cell 0 0,grow");
+		pnImporteTransaccion.setLayout(new BorderLayout(0, 0));
 
-		lblImporteTransaccion = new JLabel("Importe del pedido a pagar");
+		lblImporteTransaccion = new JLabel("Importe del pedido a pagar:");
 		lblImporteTransaccion.setFont(new Font("Tahoma", Font.BOLD, 16));
-		pnImporteTransaccion.add(lblImporteTransaccion);
-
-		textImporteTransaccion = new JTextField();
-		textImporteTransaccion.setFont(new Font("Tahoma", Font.BOLD, 16));
-		textImporteTransaccion.setEditable(false);
-		textImporteTransaccion.setColumns(10);
-		textImporteTransaccion.setBackground(Color.LIGHT_GRAY);
-		pnImporteTransaccion.add(textImporteTransaccion);
+		pnImporteTransaccion.add(lblImporteTransaccion, BorderLayout.NORTH);
+		
+		txtImporteTransaccion = new JTextPane();
+		txtImporteTransaccion.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtImporteTransaccion.setBackground(Color.LIGHT_GRAY);
+		pnImporteTransaccion.add(txtImporteTransaccion);
 
 		btnAtrasTransaccion = new JButton("Atr\u00E1s");
 		btnAtrasTransaccion.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnAtrasTransaccion.setBackground(Color.RED);
-		pnBotonesTransaccion.add(btnAtrasTransaccion, "cell 1 0,alignx left,aligny center");
+		pnBotonesTransaccion.add(btnAtrasTransaccion, "cell 1 0,alignx right,aligny center");
 
 		btnSiguienteTransaccion = new JButton("Siguiente");
 		btnSiguienteTransaccion.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnSiguienteTransaccion.setBackground(new Color(50, 205, 50));
-		pnBotonesTransaccion.add(btnSiguienteTransaccion, "cell 2 0,alignx left,aligny center");
+		pnBotonesTransaccion.add(btnSiguienteTransaccion, "cell 2 0,alignx center,aligny center");
 
 	}
 
@@ -327,19 +322,22 @@ public class PagoPedidoView extends JDialog {
 		return lblInformacinParaRealizar;
 	}
 	
-	public JTextField getTextImporteInicio() {
-		return textImporteInicio; 
+	public JTextPane getTextImporteInicio() {
+		return txtImporteInicio; 
 	}
 	
-	public JTextField getTextImporteTarjeta() {
-		return textImporteTarjeta; 
+	public JTextPane getTextImporteTarjeta() {
+		return txtImporteTarjeta; 
 	}
 	
-	public JTextField getTextImporteTransaccion() {
-		return textImporteTransaccion; 
+	public JTextPane getTextImporteTransaccion() {
+		return txtImporteTransaccion; 
 	}
 	
 	public ButtonGroup getButtonGroup() {
 		return buttonGroup;
 	} 
+	private JTextPane getTxtImporteInicio() {
+		return txtImporteInicio;
+	}
 }
