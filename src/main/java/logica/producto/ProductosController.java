@@ -185,7 +185,7 @@ public class ProductosController implements Controller {
 		String[] colProperties = null;
 
 		// En funcion del tipo de usuario, se muestra un precio en especifico
-		colProperties = new String[] { "id", "nombre", "descripcion", "precio IVA incluido(€)" };
+		colProperties = new String[] { "id", "nombre", "descripcion", "precio IVA incluido(€)","info" };
 
 		// Iniciamos el modelo de la tabla
 		TableModel tm = new DefaultTableModel(colProperties, subCategorias.size() + productos.size());
@@ -210,6 +210,14 @@ public class ProductosController implements Controller {
 			} else {
 				double auxiliar = producto.getPrecioNormal() * (producto.getIVA() / 100.0);
 				tm.setValueAt(String.format("%.2f", producto.getPrecioNormal() + auxiliar), i, 3);
+			}
+			
+			//Formamos el mensaje de estado 
+			if(producto.getStock() < producto.getStockMin()) {
+				tm.setValueAt("¡Solo quedan " + producto.getStock() + "!", i, 4);
+			}
+			else {
+				tm.setValueAt("Stock disponible", i, 4);
 			}
 			i++;
 		}
@@ -236,7 +244,7 @@ public class ProductosController implements Controller {
 		String[] colProperties = null;
 
 		// En funcion del tipo de usuario, se muestra un precio en especifico
-		colProperties = new String[] { "id", "nombre", "descripcion", "precio IVA incluido(€)" };
+		colProperties = new String[] { "id", "nombre", "descripcion", "precio IVA incluido(€)","info" };
 
 		// Iniciamos el modelo de la tabla
 		TableModel tm = new DefaultTableModel(colProperties, list.size());
