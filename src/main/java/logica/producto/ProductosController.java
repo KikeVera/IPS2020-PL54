@@ -337,14 +337,15 @@ public class ProductosController implements Controller {
 				if (udCarrito == null) {
 					udCarrito = 0;
 				}
-				if ((ud + udCarrito) > pm.findProductById(id).get(0).getStock()) {
+				int total = ud + udCarrito; //Cuidado no es stock global del producto 
+				if (total >= pm.findProductById(id).get(0).getStock()) {
 					JOptionPane.showMessageDialog(this.view.getFrame(), "Insuficiente stock disponible",
 							"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
 				} else {
 					this.carrito.addProduct(id, ud);
 					updateDetail();
 					this.lastSelectedProductosRow = selectedRow; 
-					actualizarStockProducto(id, -ud);
+					actualizarVistaStockProducto();
 				}
 
 			}
@@ -368,32 +369,31 @@ public class ProductosController implements Controller {
 			int id = (int) this.view.getTabPedido().getValueAt(selectedRow, 0); 
 			this.carrito.removeProduct(id, ud);
 			updateDetail();
-			actualizarStockProducto(id, ud);
+			actualizarVistaStockProducto();
 		}
 
 	}
 
 	
 	/**
-	 * Añade al stock de un producto, una cantidad negativa o positiva
-	 * @param id Id del producto
-	 * @param cantidad Cantidad a añadir o extraer del stock
+	 * Actualiza la vista (parte referente al stock) de la tabla que muestra los productos 
 	 */
-	private void actualizarStockProducto(int id,int cantidad) {
+	private void actualizarVistaStockProducto() {
+		
 		ProductosModel pm = new ProductosModel(); 
-		ProductoEntity producto = pm.findProductById(id).get(0); 
-		int newStock = producto.getStock() + cantidad; 
-		
-		pm.updateStock(id, newStock);
-		TableModel tm = this.view.getTabProductos().getModel(); 
-		
-		if (newStock < producto.getStockMin()) {
-			tm.setValueAt("¡Solo quedan " + newStock + "!", this.lastSelectedProductosRow, 4);
-		} else {
-			tm.setValueAt("Stock disponible", this.lastSelectedProductosRow, 4);
+		TableModel tm = this.view.getTabProductos().getModel();
+		for(int id : this.carrito.getPedido().keySet()) {
+			ProductoEntity producto = pm.findProductById(id).get(0);
+			int uds = this.carrito.getPedido().get(id);
+			int newStock = producto.getStock() - uds; 
+			if (newStock < producto.getStockMin()) {
+				tm.setValueAt("¡Solo quedan " + newStock + "!", this.lastSelectedProductosRow, 4);
+			} else {
+				tm.setValueAt("Stock disponible", this.lastSelectedProductosRow, 4);
+			}
+			
 		}
 		this.view.getTabProductos().repaint();
-		
 	}
 
 	/**
@@ -423,8 +423,10 @@ public class ProductosController implements Controller {
 		if (this.carrito.getUsuario().getTipo().equals("Anónimo")) {
 			UsuarioModel um = new UsuarioModel();
 			um.setUsuario(carrito.getUsuario().getIdUsuario(), "Anónimo", this.view.getTextDireccionEnvio().getText());
-			// Reducir stock
 		}
+		
+		//Actualizamos sotcks 
+		actualizarStocks(); 
 
 		guardarVenta();
 		view.getFrame().dispose();
@@ -432,6 +434,17 @@ public class ProductosController implements Controller {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
+	}
+	
+	/**
+	 * Actualiza el stock de los productos en la base de datos, una vez hecho/confirmado el pedido 
+	 */
+	private void actualizarStocks() {
+		ProductosModel pm = new ProductosModel(); 
+		for (int id : this.carrito.getPedido().keySet()) {
+			ProductoEntity producto = pm.findProductById(id).get(0); 
+			pm.updateStock(id, producto.getStock() - (this.carrito.getPedido().get(id)));
+		}
 	}
 
 	/**

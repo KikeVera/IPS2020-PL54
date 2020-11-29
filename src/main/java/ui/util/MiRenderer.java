@@ -6,8 +6,6 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import persistencia.producto.ProductoEntity;
-import persistencia.producto.ProductosModel;
 import persistencia.subcategoria.SubcategoriaModel;
 
 /**
@@ -26,6 +24,7 @@ public class MiRenderer extends DefaultTableCellRenderer {
 			int row, int column) {
 
 		Object id = table.getValueAt(row, 0);
+		String mensaje = (String) table.getValueAt(row, 4);
 		SubcategoriaModel sModel = new SubcategoriaModel();
 
 		// Si no es un producto
@@ -41,11 +40,9 @@ public class MiRenderer extends DefaultTableCellRenderer {
 				setBackground(new Color(94, 208, 237));
 			}
 		} else { // Si es un producto
-			ProductosModel pm = new ProductosModel();
-			ProductoEntity producto = pm.findProductById((int) id).get(0);
 			setBackground(Color.LIGHT_GRAY);
 			// Si el stock actual esta por debajo del stock minimo
-			if (producto.getStock() < producto.getStockMin()) { 
+			if (mensaje.startsWith("¡Solo quedan")) { 
 				setForeground(Color.RED);
 			} else {
 				setForeground(Color.BLACK);
