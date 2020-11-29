@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import logica.informes.InformesController;
 import logica.pedido.AlmacenController;
 import logica.usuario.UsuarioController;
 import persistencia.almacenero.OTModel;
@@ -20,6 +21,7 @@ import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductosModel;
 import persistencia.usuario.UsuarioModel;
 import ui.almacen.AlmacenView;
+import ui.informe.MenuInformes;
 import ui.usuario.UsuarioView;
 
 public class SwingMain extends JFrame {
@@ -34,6 +36,8 @@ public class SwingMain extends JFrame {
 	private JButton btnCrearBD;
 	private JButton btnCargarDatosBD;
 	private JButton btnLanzarPaginaWeb;
+	private JButton btnLanzarVistaInformes;
+
 
 	/**
 	 * Launch the application.
@@ -67,6 +71,7 @@ public class SwingMain extends JFrame {
 		panelPrincipal.add(getBtnLanzarAplicacionAlmacen());
 		panelPrincipal.add(getBtnCargarDatosBD());
 		panelPrincipal.add(getBtnCrearBD());
+		panelPrincipal.add(getBtnLanzarVistaInformes());
 	}
 
 	private JButton getBtnLanzarAplicacionAlmacen() {
@@ -122,5 +127,18 @@ public class SwingMain extends JFrame {
 			btnLanzarPaginaWeb.setFont(new Font("Tahoma", Font.BOLD, 20));
 		}
 		return btnLanzarPaginaWeb;
+	}
+	
+	private JButton getBtnLanzarVistaInformes() {
+		if (btnLanzarVistaInformes == null) {
+			btnLanzarVistaInformes = new JButton("Informes");
+			btnLanzarVistaInformes.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new InformesController(new MenuInformes());
+				}
+			});
+			btnLanzarVistaInformes.setFont(new Font("Tahoma", Font.BOLD, 20));
+		}
+		return btnLanzarVistaInformes;
 	}
 }
