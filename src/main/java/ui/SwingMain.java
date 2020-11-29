@@ -66,12 +66,13 @@ public class SwingMain extends JFrame {
 		panelPrincipal = new JPanel();
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelPrincipal);
-		panelPrincipal.setLayout(new GridLayout(4, 2, 0, 0));
+		panelPrincipal.setLayout(new GridLayout(5, 1, 0, 0));
 		panelPrincipal.add(getBtnLanzarPaginaWeb());
 		panelPrincipal.add(getBtnLanzarAplicacionAlmacen());
+		panelPrincipal.add(getBtnLanzarVistaInformes());
 		panelPrincipal.add(getBtnCargarDatosBD());
 		panelPrincipal.add(getBtnCrearBD());
-		panelPrincipal.add(getBtnLanzarVistaInformes());
+		
 	}
 
 	private JButton getBtnLanzarAplicacionAlmacen() {

@@ -263,11 +263,11 @@ public class PaqueteController implements Controller {
 		if(em.getEstadoFromOT(ot.getIdOt()).isEmpty()) {
 			
 			
-			em.createEstado(ot.getIdOt(),terminado , posibleEmpaquetado,Util.ListProductostoString(maps));
+			em.createEstado(ot.getIdOt(),terminado , posibleEmpaquetado,Util.ListProductostoString(maps),escaneadas);
 		}
 		
 		else {
-			em.updateEstado(ot.getIdOt(), terminado, posibleEmpaquetado,Util.ListProductostoString(maps));
+			em.updateEstado(ot.getIdOt(), terminado, posibleEmpaquetado,Util.ListProductostoString(maps), escaneadas);
 		}
 		
 		
@@ -275,6 +275,7 @@ public class PaqueteController implements Controller {
 	
 	private void cargarEstado() {
 		EstadoEntity estado=em.getEstadoFromOT(ot.getIdOt()).get(0);
+		escaneadas=estado.getnProductos();
 		boolean [] terminadoEst=Util.persistStringToBooleanArray(estado.getTerminado());
 		boolean [] posibleEmpaquetadoEst=Util.persistStringToBooleanArray(estado.getPosibleEmpaquetado());
 		empaquetado.terminado=terminadoEst;

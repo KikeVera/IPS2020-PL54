@@ -21,6 +21,7 @@ import persistencia.almacenero.OTModel;
 import persistencia.paquete.PaqueteModel;
 import persistencia.producto.ProductosModel;
 import persistencia.producto.VentasModel;
+import java.awt.Color;
 
 public class MenuInformes extends JFrame {
 
@@ -56,8 +57,8 @@ public class MenuInformes extends JFrame {
 		frmInformes.setTitle("Informes");
 		panelPrincipal = new JPanel();
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(panelPrincipal);
-		panelPrincipal.setLayout(new GridLayout(4, 2, 0, 0));
+		
+		panelPrincipal.setLayout(new GridLayout(0, 1, 0, 0));
 		panelPrincipal.add(getBtnInformeImporteVentaTipoPago());
 		panelPrincipal.add(getBtnInformeImporteVentaTipoUsuario());
 		panelPrincipal.add(getBtnInformeImporteVentaEmpresa());
@@ -79,20 +80,21 @@ public class MenuInformes extends JFrame {
 					controller.initController();
 				}
 			});
-			btnLanzarInformeImporteTipoPago.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnLanzarInformeImporteTipoPago.setFont(new Font("Open Sans", Font.BOLD, 15));
 		}
 		return btnLanzarInformeImporteTipoPago;
 	}
 	private JButton getBtnInformeImporteVentaTipoUsuario() {
 		if (btnLanzarInformeImporteTipoUsuario == null) {
 			btnLanzarInformeImporteTipoUsuario = new JButton("Informe importe venta tipo de usuario");
+			
 			btnLanzarInformeImporteTipoUsuario.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					InformeImporteVentaController controller = new InformeImporteVentaController(new VentasModel(), new InformeImporteVentaView(),InformeVenta.tipoUsuario);
 					controller.initController();
 				}
 			});
-			btnLanzarInformeImporteTipoUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnLanzarInformeImporteTipoUsuario.setFont(new Font("Open Sans", Font.BOLD, 15));
 		}
 		return btnLanzarInformeImporteTipoUsuario;
 	}
@@ -106,7 +108,7 @@ public class MenuInformes extends JFrame {
 					controller.initController();
 				}
 			});
-			btnLanzarInformeImporteEmpresa.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnLanzarInformeImporteEmpresa.setFont(new Font("Open Sans", Font.BOLD, 15));
 		}
 		return btnLanzarInformeImporteEmpresa;
 	}
@@ -120,7 +122,7 @@ public class MenuInformes extends JFrame {
 					controller.initController();
 				}
 			});
-			btnLanzarInformePaquetes.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnLanzarInformePaquetes.setFont(new Font("Open Sans", Font.BOLD, 15));
 		}
 		return btnLanzarInformePaquetes;
 	}
@@ -134,7 +136,7 @@ public class MenuInformes extends JFrame {
 					controller.initController();
 				}
 			});
-			btnLanzarInformePaquetesListos.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnLanzarInformePaquetesListos.setFont(new Font("Open Sans", Font.BOLD, 15));
 		}
 		return btnLanzarInformePaquetesListos;
 	}
@@ -148,7 +150,7 @@ public class MenuInformes extends JFrame {
 					controller.initController();
 				}
 			});
-			btnLanzarInformeOTs.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnLanzarInformeOTs.setFont(new Font("Open Sans", Font.BOLD, 15));
 		}
 		return btnLanzarInformeOTs;
 	}
@@ -162,7 +164,7 @@ public class MenuInformes extends JFrame {
 					controller.initController();
 				}
 			});
-			btnLanzarInformeProductos.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnLanzarInformeProductos.setFont(new Font("Open Sans", Font.BOLD, 15));
 		}
 		return btnLanzarInformeProductos;
 	}

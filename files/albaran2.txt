@@ -1,10 +1,10 @@
 ----Albaran----
 Id pedido: 2
-Usuario: 779f7
-Tipo de usuario: Anónimo
-Dirección de envío: g
-Fecha de envio: 2020-11-24
-Tamaño total: 5
-Lista productos: [id = 106 ,nombre = Producto G ,número unidades = 3 uds]
-[id = 107 ,nombre = Producto H ,número unidades = 2 uds]
+Usuario: empresa3
+Tipo de usuario: Empresa
+Dirección de envío: calle 4
+Fecha de envio: 2020-11-29
+Tamaño total: 3
+Lista productos: [id = 106 ,nombre = Producto G ,número unidades = 2 uds]
+[id = 107 ,nombre = Producto H ,número unidades = 1 uds]
 
