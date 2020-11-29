@@ -42,7 +42,7 @@ public class MiRenderer extends DefaultTableCellRenderer {
 		} else { // Si es un producto
 			setBackground(Color.LIGHT_GRAY);
 			// Si el stock actual esta por debajo del stock minimo
-			if (mensaje.startsWith("¡Solo quedan")) { 
+			if (mensaje.startsWith("¡Solo quedan") || mensaje.equals("¡Agotado!")) { 
 				setForeground(Color.RED);
 			} else {
 				setForeground(Color.BLACK);

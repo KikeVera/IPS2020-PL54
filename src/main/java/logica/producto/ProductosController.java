@@ -338,7 +338,7 @@ public class ProductosController implements Controller {
 					udCarrito = 0;
 				}
 				int total = ud + udCarrito; //Cuidado no es stock global del producto 
-				if (total >= pm.findProductById(id).get(0).getStock()) {
+				if (total > pm.findProductById(id).get(0).getStock()) {
 					JOptionPane.showMessageDialog(this.view.getFrame(), "Insuficiente stock disponible",
 							"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
 				} else {
@@ -386,9 +386,13 @@ public class ProductosController implements Controller {
 			ProductoEntity producto = pm.findProductById(id).get(0);
 			int uds = this.carrito.getPedido().get(id);
 			int newStock = producto.getStock() - uds; 
-			if (newStock < producto.getStockMin()) {
+			if(newStock == 0) {
+				tm.setValueAt("¡Agotado!",  this.lastSelectedProductosRow, 4);
+			}
+			else if (newStock < producto.getStockMin()) {
 				tm.setValueAt("¡Solo quedan " + newStock + "!", this.lastSelectedProductosRow, 4);
-			} else {
+			} 
+			else {
 				tm.setValueAt("Stock disponible", this.lastSelectedProductosRow, 4);
 			}
 			
