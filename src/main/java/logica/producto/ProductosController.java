@@ -43,7 +43,7 @@ public class ProductosController implements Controller {
 	private Carrito carrito; // Carrito que contiene al pedido
 	private PedidosModel pedidoModel;
 	private int lastSelectedPedidoRow; // Almacena ultima seleccion en la tabla productos
-	private int lastSelectedProductosRow; 
+
 	private Stack<TableModel> navegacion; // Almacena el registro de la navegacion a traves de los menus de categorias y
 											// subcategorias
 	private PagoPedidoController pagoPedido;
@@ -59,7 +59,7 @@ public class ProductosController implements Controller {
 		this.vm = vm;
 
 		this.lastSelectedPedidoRow = 0;
-		this.lastSelectedProductosRow = 0; 
+
 		this.navegacion = new Stack<TableModel>();
 		this.pagoPedido = new PagoPedidoController(new PagoPedidoView(), this.view, venta);
 		this.initView(usuario);
@@ -339,7 +339,6 @@ public class ProductosController implements Controller {
 				} else {
 					this.carrito.addProduct(id, ud);
 					updateDetail();
-					this.lastSelectedProductosRow = selectedRow;
 					pm.updateStock(id, pm.findProductById(id).get(0).getStock() - ud);
 					actualizarVistaStockProducto();
 				}
@@ -367,6 +366,7 @@ public class ProductosController implements Controller {
 			this.carrito.removeProduct(id, ud);
 			updateDetail();
 			pm.updateStock(id, pm.findProductById(id).get(0).getStock() + ud);
+			System.out.println("Stcok nuevo " + pm.findProductById(id).get(0).getStock());
 			actualizarVistaStockProducto(); 
 		}
 
@@ -377,25 +377,48 @@ public class ProductosController implements Controller {
 	 * Actualiza la vista (parte referente al stock) de la tabla que muestra los productos 
 	 */
 	private void actualizarVistaStockProducto() {
+		ProductosModel model = new ProductosModel(); 
 		
-		ProductosModel pm = new ProductosModel(); 
-		TableModel tm = this.view.getTabProductos().getModel();
-		for(int id : this.carrito.getPedido().keySet()) {
-			ProductoEntity producto = pm.findProductById(id).get(0);
-			int stock = producto.getStock();  
-			if(stock == 0) {
-				tm.setValueAt("¡Agotado!",  this.lastSelectedProductosRow, 4);
+		TableModel tm = this.view.getTabProductos().getModel(); 
+		for(int i = 0;i < tm.getRowCount();i++) {
+			Integer aux = (Integer) tm.getValueAt(i, 0); 
+			if(aux != null) {
+				int id = (int) aux; 
+				int index = searchIdInTable(id);
+				if(index != -1) {
+					ProductoEntity producto = model.findProductById(id).get(0); 
+					int stock = producto.getStock(); 
+					if(stock == 0) {
+						tm.setValueAt("¡Agotado!",  index, 4);
+					}
+					else if (stock < producto.getStockMin()) {
+						tm.setValueAt("¡Solo quedan " + stock + "!", index, 4);
+					} 
+					else {
+						tm.setValueAt("Stock disponible", index, 4);
+					}
+				}
 			}
-			else if (stock < producto.getStockMin()) {
-				tm.setValueAt("¡Solo quedan " + stock + "!", this.lastSelectedProductosRow, 4);
-			} 
-			else {
-				tm.setValueAt("Stock disponible", this.lastSelectedProductosRow, 4);
-			}
-			
+
+			this.view.getTabProductos().repaint();
 		}
-		this.view.getTabProductos().repaint();
+
 	}
+	
+	private int searchIdInTable(int id) {
+		for(int i = 0; i < this.view.getTabProductos().getRowCount(); i++) {
+			Integer aux = (Integer) this.view.getTabProductos().getValueAt(i, 0); 
+			if(aux == null) {
+				aux = -1; 
+			}
+			if( aux == id) {
+				return i; 
+			}
+		}
+		return -1; 
+	}
+	
+
 
 	/**
 	 * Actualiza la ultima seleccion en la tabla referente al pedido
@@ -426,6 +449,7 @@ public class ProductosController implements Controller {
 			um.setUsuario(carrito.getUsuario().getIdUsuario(), "Anónimo", this.view.getTextDireccionEnvio().getText());
 		}
 		
+
 
 		guardarVenta();
 		view.getFrame().dispose();
@@ -521,6 +545,8 @@ public class ProductosController implements Controller {
 				this.navegacion.push(createNavegacion(subcategorias, productos));
 
 			}
+			
+			actualizarVistaStockProducto(); 
 		}
 
 		// Control de botones
@@ -530,8 +556,6 @@ public class ProductosController implements Controller {
 			this.view.getBtnAtras().setEnabled(false);
 		}
 		
-		actualizarVistaStockProducto(); 
-
 	}
 
 	/**
@@ -591,6 +615,8 @@ public class ProductosController implements Controller {
 		this.view.getBtnAnadir().setEnabled(false);
 		this.view.getBtnEliminar().setEnabled(false);
 		this.view.getBtnSiguiente().setEnabled(true);
+		
+		actualizarVistaStockProducto();
 	}
 
 	private void iniciarPago() {
