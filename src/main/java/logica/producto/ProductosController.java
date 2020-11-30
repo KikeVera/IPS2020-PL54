@@ -333,18 +333,14 @@ public class ProductosController implements Controller {
 			} else {
 				ProductosModel pm = new ProductosModel();
 				int id = (int) aux;
-				Integer udCarrito = this.carrito.getPedido().get(id);
-				if (udCarrito == null) {
-					udCarrito = 0;
-				}
-				int total = ud + udCarrito; //Cuidado no es stock global del producto 
-				if (total > pm.findProductById(id).get(0).getStock()) {
+				if (ud > pm.findProductById(id).get(0).getStock()) {
 					JOptionPane.showMessageDialog(this.view.getFrame(), "Insuficiente stock disponible",
 							"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
 				} else {
 					this.carrito.addProduct(id, ud);
 					updateDetail();
 					this.lastSelectedProductosRow = selectedRow; 
+					pm.updateStock(id, pm.findProductById(id).get(0).getStock() - ud);
 					actualizarVistaStockProducto();
 				}
 
@@ -364,12 +360,15 @@ public class ProductosController implements Controller {
 					"Debe seleccionar el producto que desea eliminar de su carrito para " + "elimnarlo",
 					"Tienda online: Advertencia", JOptionPane.WARNING_MESSAGE);
 		} else {
+			ProductosModel pm = new ProductosModel(); 
 			int selectedRow = view.getTabPedido().getSelectedRow();
 			int ud = (int) view.getSpUnidades().getValue();
 			int id = (int) this.view.getTabPedido().getValueAt(selectedRow, 0); 
 			this.carrito.removeProduct(id, ud);
 			updateDetail();
-			actualizarVistaStockProducto();
+			pm.updateStock(id, pm.findProductById(id).get(0).getStock() + ud);
+			
+			actualizarVistaStockProducto(); 
 		}
 
 	}
@@ -384,13 +383,12 @@ public class ProductosController implements Controller {
 		TableModel tm = this.view.getTabProductos().getModel();
 		for(int id : this.carrito.getPedido().keySet()) {
 			ProductoEntity producto = pm.findProductById(id).get(0);
-			int uds = this.carrito.getPedido().get(id);
-			int newStock = producto.getStock() - uds; 
-			if(newStock == 0) {
+			int stock = producto.getStock();  
+			if(stock == 0) {
 				tm.setValueAt("¡Agotado!",  this.lastSelectedProductosRow, 4);
 			}
-			else if (newStock < producto.getStockMin()) {
-				tm.setValueAt("¡Solo quedan " + newStock + "!", this.lastSelectedProductosRow, 4);
+			else if (stock < producto.getStockMin()) {
+				tm.setValueAt("¡Solo quedan " + stock + "!", this.lastSelectedProductosRow, 4);
 			} 
 			else {
 				tm.setValueAt("Stock disponible", this.lastSelectedProductosRow, 4);
@@ -543,6 +541,8 @@ public class ProductosController implements Controller {
 		} else { // Si no hay mas menus hacia atras
 			this.view.getBtnAtras().setEnabled(false);
 		}
+		
+		actualizarVistaStockProducto(); 
 
 	}
 
