@@ -339,7 +339,7 @@ public class ProductosController implements Controller {
 				} else {
 					this.carrito.addProduct(id, ud);
 					updateDetail();
-					this.lastSelectedProductosRow = selectedRow; 
+					this.lastSelectedProductosRow = selectedRow;
 					pm.updateStock(id, pm.findProductById(id).get(0).getStock() - ud);
 					actualizarVistaStockProducto();
 				}
@@ -367,7 +367,6 @@ public class ProductosController implements Controller {
 			this.carrito.removeProduct(id, ud);
 			updateDetail();
 			pm.updateStock(id, pm.findProductById(id).get(0).getStock() + ud);
-			
 			actualizarVistaStockProducto(); 
 		}
 
@@ -427,8 +426,6 @@ public class ProductosController implements Controller {
 			um.setUsuario(carrito.getUsuario().getIdUsuario(), "Anónimo", this.view.getTextDireccionEnvio().getText());
 		}
 		
-		//Actualizamos sotcks 
-		actualizarStocks(); 
 
 		guardarVenta();
 		view.getFrame().dispose();
@@ -438,16 +435,7 @@ public class ProductosController implements Controller {
 
 	}
 	
-	/**
-	 * Actualiza el stock de los productos en la base de datos, una vez hecho/confirmado el pedido 
-	 */
-	private void actualizarStocks() {
-		ProductosModel pm = new ProductosModel(); 
-		for (int id : this.carrito.getPedido().keySet()) {
-			ProductoEntity producto = pm.findProductById(id).get(0); 
-			pm.updateStock(id, producto.getStock() - (this.carrito.getPedido().get(id)));
-		}
-	}
+
 
 	/**
 	 * Guarda en la base de datos la venta
