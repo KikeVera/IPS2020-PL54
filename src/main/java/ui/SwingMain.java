@@ -82,7 +82,7 @@ public class SwingMain extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					AlmacenController controller = new AlmacenController(new ProductosModel(), new AlmacenView(),new PedidosModel(),new OTModel(),new TrozosModel());
 					controller.initController();
-					dispose();
+					
 				}
 			});
 			btnLanzarAplicacionAlmacen.setFont(new Font("Tahoma", Font.BOLD, 20));

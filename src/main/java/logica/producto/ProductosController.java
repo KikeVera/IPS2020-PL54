@@ -366,7 +366,6 @@ public class ProductosController implements Controller {
 			this.carrito.removeProduct(id, ud);
 			updateDetail();
 			pm.updateStock(id, pm.findProductById(id).get(0).getStock() + ud);
-			System.out.println("Stcok nuevo " + pm.findProductById(id).get(0).getStock());
 			actualizarVistaStockProducto(); 
 		}
 
@@ -453,9 +452,6 @@ public class ProductosController implements Controller {
 
 		guardarVenta();
 		view.getFrame().dispose();
-		SwingMain frame = new SwingMain();
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
 
 	}
 	

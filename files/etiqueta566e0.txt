@@ -1,7 +1,0 @@
-----Etiqueta----
-Id paquete: 566e0
-Id pedido: 1
-Usuario: 4ec2c
-Tipo de usuario: Anónimo
-Dirección de envío: micasa
-Fecha de envio: 2020-11-25

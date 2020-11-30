@@ -87,9 +87,6 @@ public class AlmacenController implements Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.getFrame().dispose();
-				SwingMain frame = new SwingMain();
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
 			}
 		});
 		

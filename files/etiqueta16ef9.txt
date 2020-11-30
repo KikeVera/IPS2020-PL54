@@ -1,0 +1,7 @@
+----Etiqueta----
+Id paquete: 16ef9
+Id pedido: 1
+Usuario: cdb3d
+Tipo de usuario: Anónimo
+Dirección de envío: aethae
+Fecha de envio: 2020-12-01
