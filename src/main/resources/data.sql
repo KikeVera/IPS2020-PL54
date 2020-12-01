@@ -80,6 +80,13 @@ insert into Paquete values
 ('0023','105','2020-11-20','3','calle3','3','READY'),
 ('0024','105','2020-11-20','6','calle3','2','READY');
 
+insert into OrdenTrabajo values 
+(1000,'TERMINADO',1,'2020-11-23','240',15),
+(1001,'TERMINADO',2,'2020-11-24','240',15),
+(1002,'TERMINADO',3,'2020-11-25','240',15),
+(1003,'TERMINADO',4,'2020-11-26','240',15),
+(1004,'TERMINADO',5,'2020-11-27','240',15),
+(1005,'TERMINADO',1,'2020-11-28','240',15);
 
                                                                   
 insert into Categoria(nombreCategoria) values 

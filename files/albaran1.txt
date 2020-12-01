@@ -1,0 +1,11 @@
+----Albaran----
+Id pedido: 1
+Usuario: cdb3d
+Tipo de usuario: Anónimo
+Dirección de envío: aethae
+Fecha de envio: 2020-12-01
+Tamaño total: 18
+Lista productos: [id = 100 ,nombre = Impresora HP Laserjet ,número unidades = 4 uds]
+[id = 104 ,nombre = Bolígrafo borrable ,número unidades = 10 uds]
+[id = 108 ,nombre = Pisapapeles ,número unidades = 4 uds]
+
