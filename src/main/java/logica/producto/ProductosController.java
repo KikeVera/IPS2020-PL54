@@ -30,7 +30,7 @@ import persistencia.subcategoria.SubcategoriaEntity;
 import persistencia.subcategoria.SubcategoriaModel;
 import persistencia.usuario.UsuarioEntity;
 import persistencia.usuario.UsuarioModel;
-import ui.SwingMain;
+
 import ui.pagoPedido.PagoPedidoView;
 import ui.producto.ProductosView;
 import util.Util;

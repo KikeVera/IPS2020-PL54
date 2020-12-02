@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
+
 import javax.swing.JScrollPane;
 
 /**
@@ -27,8 +27,7 @@ public class InformePaquetesView {
 	private JPanel pnContenido;
 	private JLabel lbTitulo;
 	private JPanel pnTabla;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
+	
 	private JScrollPane scTabla;
 	
 	/**

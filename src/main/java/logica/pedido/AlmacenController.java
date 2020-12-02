@@ -19,7 +19,7 @@ import persistencia.pedido.TrozoEntity;
 import persistencia.pedido.TrozosModel;
 import persistencia.producto.ProductoEntity;
 import persistencia.producto.ProductosModel;
-import ui.SwingMain;
+
 import ui.almacen.AlmacenView;
 import ui.almacen.OperacionesOTView;
 import util.Util;

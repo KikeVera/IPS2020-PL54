@@ -21,7 +21,7 @@ import persistencia.almacenero.OTModel;
 import persistencia.paquete.PaqueteModel;
 import persistencia.producto.ProductosModel;
 import persistencia.producto.VentasModel;
-import java.awt.Color;
+
 
 public class MenuInformes extends JFrame {
 
